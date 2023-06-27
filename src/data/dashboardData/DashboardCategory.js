@@ -4,7 +4,10 @@ const DashboardCategory = [
   { name: "Accessories", count: 20 },
   { name: "Consumables", count: 20 },
   { name: "Components", count: 20 },
-  { name: "People", count: 20 },
+  { name: "Users", count: 20 },
+  { name: "All Tickets", count: 95 },
+  { name: "Closed Tickets", count: 65 },
+  { name: "Open Tickets", count: 30 },
   // Add other categories here
 ];
 

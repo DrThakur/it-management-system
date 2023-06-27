@@ -23,7 +23,13 @@ import Table from "./components/Table/Table";
 import AssetForm from "./components/Asset/AssetForm/AssetForm";
 import UserLayout from "./components/UserLayout/UserLayout";
 // import Login from "./pages/login";
-import DashboardCategory from "./data/dashboardData/DashboardCategory";
+import Dashboard from "./pages/FinalDashboard/Dashboard";
+import RecentActivityPage from "./pages/RecentActivityPage";
+import accessoryCategory from "./data/AccessoriesData/AccessoriesCategory";
+import consumablesCategory from "./data/Consumables/ConsumablesCategory";
+import componentsCategory from "./data/Components/ComponentsCategory";
+import Reports from "./pages/Reports";
+import AdminRights from "./pages/AdminRights";
 // import PieChart from "./components/PieChart/PieChart";
 
 function App() {
@@ -52,11 +58,19 @@ function App() {
         {/* <Route path="/" element={<Dashboard />} /> */}
         {/* <Route path="/" element={<Notification />} /> */}
 
-        <Route
+        {/* <Route
           path="/"
           element={
             <Layout>
               <InfoBox categories={DashboardCategory} />
+            </Layout>
+          }
+        /> */}
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Dashboard />
             </Layout>
           }
         />
@@ -64,7 +78,31 @@ function App() {
           path="/assets"
           element={
             <Layout>
-              <InfoBox categories={assetCategory} />
+              <InfoBox categories={assetCategory} title="Assets" />
+            </Layout>
+          }
+        />
+        <Route
+          path="/accessories"
+          element={
+            <Layout>
+              <InfoBox categories={accessoryCategory} title="Accessories" />
+            </Layout>
+          }
+        />
+        <Route
+          path="/consumables"
+          element={
+            <Layout>
+              <InfoBox categories={consumablesCategory} title="Consumables" />
+            </Layout>
+          }
+        />
+        <Route
+          path="/components"
+          element={
+            <Layout>
+              <InfoBox categories={componentsCategory} title="Components" />
             </Layout>
           }
         />
@@ -72,15 +110,16 @@ function App() {
           path="/licences"
           element={
             <Layout>
-              <InfoBox categories={softwareCategory} />
+              <InfoBox categories={softwareCategory} title="Licences" />
             </Layout>
           }
         />
+
         <Route
           path="/it-support"
           element={
             <Layout>
-              <InfoBox categories={ticketCategory} />
+              <InfoBox categories={ticketCategory} title="IT Support" />
             </Layout>
           }
         />
@@ -88,7 +127,24 @@ function App() {
           path="/self-support"
           element={
             <Layout>
-              <InfoBox categories={selfSupportCategory} />
+              <InfoBox categories={selfSupportCategory} title="Self Support" />
+            </Layout>
+          }
+        />
+
+        {/* <Route
+          path="/admin-rights"
+          element={
+            <UserLayout>
+              <AssetForm />
+            </UserLayout>
+          }
+        /> */}
+        <Route
+          path="/admin-rights"
+          element={
+            <Layout>
+              <AdminRights />
             </Layout>
           }
         />
@@ -108,19 +164,29 @@ function App() {
             </Layout>
           }
         /> */}
-        <Route
-          path="/admin-rights"
-          element={
-            <UserLayout>
-              <AssetForm />
-            </UserLayout>
-          }
-        />
+
         <Route
           path="/:category"
           element={
             <Layout>
               <Table selectedCategory={selectedCategory} />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/recent-activity"
+          element={
+            <Layout>
+              <RecentActivityPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <Layout>
+              <Reports />
             </Layout>
           }
         />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const InfoBox = ({ categories }) => {
+const InfoBox = ({ categories, title }) => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const navigate = useNavigate();
 
@@ -33,12 +33,12 @@ const InfoBox = ({ categories }) => {
   };
   return (
     <div className="w-full h-full ml-1 mr-0">
-      <h1 className="mb-2 ml-2 font-semibold text-2xl">Dashboard</h1>
+      <h1 className="mb-2 ml-2 font-semibold text-2xl">{title}</h1>
       <div className="grid grid-cols-6 gap-4">
         {categories.map((category, index) => (
           <div
             key={index}
-            className={`rounded-lg shadow-md flex flex-col justify-center items-center cursor-pointer p-8 ${
+            className={`rounded-lg shadow-md flex flex-col justify-center items-center cursor-pointer p-4 ${
               selectedCategory.name === category.name
                 ? "bg-blue-200 rounded-lg"
                 : getRandomColor(index)
@@ -46,7 +46,7 @@ const InfoBox = ({ categories }) => {
             onClick={() => handleCategoryClick(category)}
           >
             {category.count !== undefined && (
-              <h3 className="font-bold text-6xl">{category.count}</h3>
+              <h3 className="font-bold text-4xl">{category.count}</h3>
             )}
             <p className=" text-gray-500 pt-2">{category.name}</p>
           </div>
