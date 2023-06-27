@@ -71,7 +71,7 @@ const Table = ({ filteredCategory }) => {
 
   const actionsMemo = useMemo(
     () => [
-      <div>
+      <div key="actions" className="flex items-center">
         <label className="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" value="" class="sr-only peer" />
           <div
@@ -86,7 +86,7 @@ const Table = ({ filteredCategory }) => {
         </label>
         <button
           key="add-new"
-          className="bg-blue-500 hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded text-sm inline-flex items-center"
+          className="bg-blue-500 hover:bg-blue-500 text-white font-semibold hover:text-white mr-2 py-2 px-4 border border-blue-500 hover:border-transparent rounded text-sm inline-flex items-center"
           onClick={handleAddNew}
         >
           <BsFillPlusCircleFill className="w-4 h-4 mr-2" />
@@ -102,7 +102,7 @@ const Table = ({ filteredCategory }) => {
         </button>
       </div>,
     ],
-    [dense, handleAddNew]
+    [dense]
   );
 
   const handleRowSelected = useCallback((state) => {
@@ -155,7 +155,7 @@ const Table = ({ filteredCategory }) => {
     };
 
     return (
-      <div className="space-x-2">
+      <div className="space-x-2 border-1 shadow-md">
         {selectedRows.length === 1 && (
           <button
             className="bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded text-sm inline-flex items-center"
@@ -299,7 +299,7 @@ const Table = ({ filteredCategory }) => {
   }, [search, filteredCategory, assets]);
   //   console.log(assetData);
   return (
-    <div style={{ maxWidth: "46rem" }} className="">
+    <div style={{ maxWidth: "60rem" }} className="">
       <DataTable
         title="Asset List"
         columns={columns}

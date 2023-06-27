@@ -27,16 +27,24 @@ const Sidebar = () => {
       navigate("/");
     } else if (label === "Assets") {
       navigate("/assets");
+    } else if (label === "Accessories") {
+      navigate("/accessories");
+    } else if (label === "Consumables") {
+      navigate("/consumables");
+    } else if (label === "Components") {
+      navigate("/components");
     } else if (label === "Licences") {
       navigate("/licences");
     } else if (label === "IT Support") {
       navigate("/it-support");
-    } else if (label === "Self-Support") {
+    } else if (label === "Self Support") {
       navigate("/self-support");
     } else if (label === "Admin Rights") {
       navigate("/admin-rights");
     } else if (label === "Users") {
       navigate("/users");
+    } else if (label === "Reports") {
+      navigate("/reports");
     }
   };
 
@@ -59,15 +67,15 @@ const Sidebar = () => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">All</span>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Monitor</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Desktop</span>
             </div>
@@ -80,15 +88,15 @@ const Sidebar = () => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">All</span>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Keyboard</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Mouse</span>
             </div>
@@ -113,15 +121,15 @@ const Sidebar = () => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">All</span>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">FPGA Software</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Hardware Software</span>
             </div>
@@ -134,19 +142,19 @@ const Sidebar = () => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Create New Ticket</span>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Pending Tickets</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Closed Tickets</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">All Tickets</span>
             </div>
