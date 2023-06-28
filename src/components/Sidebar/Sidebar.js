@@ -49,7 +49,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className=" w-64 flex-none flex flex-col h-screen  bg-black text-white rounded-lg overflow-y-auto overflow-x-hidden">
+    <div className=" w-64 flex-none flex flex-col h-screen bg-black text-white rounded-lg overflow-y-auto overflow-x-hidden">
       <div className="top-0 flex items-center justify-center h-28">
         <img src={logo} alt="Logo" className="h-32 w-32 cursor-pointer" />
       </div>

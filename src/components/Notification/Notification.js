@@ -2,7 +2,7 @@ import React from "react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faBell, faEye } from "@fortawesome/free-solid-svg-icons";
 
-const NotificationMenu = () => {
+const NotificationMenu = ({ children }) => {
   const notifications = [
     {
       id: 1,
