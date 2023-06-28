@@ -26,8 +26,9 @@ const Pie = () => (
         id="chart-pie"
         data={pieChartData}
         legendVisiblity
-        height="100%"
+        height="80%"
         width="100%"
+        style={{ marginTop: "10px" }}
       />
     </div>
   </div>

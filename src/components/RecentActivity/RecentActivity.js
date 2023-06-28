@@ -64,7 +64,7 @@ const RecentActivity = () => {
   const visibleActivities = showAll ? activityData : activityData.slice(0, 5);
 
   return (
-    <div className="bg-white p-4 shadow rounded-lg h-108">
+    <div className="bg-white p-4 shadow rounded-lg h-108 -mb-6">
       <h2 className="text-2xl font-bold mb-4">Recent Activity</h2>
       <div className="overflow-x-auto">
         <div
