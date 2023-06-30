@@ -375,7 +375,7 @@ const AssetLocation = () => {
     navigate(`/location/${location}`);
   };
 
-  const visibleLocations = showAll ? locationData : locationData.slice(0, 5);
+  const visibleLocations = showAll ? locationData : locationData.slice(0);
 
   return (
     <div className="bg-white p-2 shadow rounded-lg -mb-6">

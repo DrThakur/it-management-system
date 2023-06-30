@@ -4,6 +4,7 @@ import Pie from "../Pie";
 import DashboardCategory from "../../data/dashboardData/DashboardCategory";
 import RecentActivity from "../../components/RecentActivity/RecentActivity";
 import AssetLocation from "../../components/AssetLocation/AssetLocation";
+import UserCategory from "../../components/UserCategory/UserCategory";
 // import DoughnutChartDemo from "../PieChart";
 
 const Dashboard = () => {
@@ -28,7 +29,7 @@ const Dashboard = () => {
           <AssetLocation />
         </div>
         <div className="w-1/2 shadow-md ml-2 rounded-lg mb-5">
-          {/* Add your second additional component here */}
+          <UserCategory />
         </div>
       </div>
     </div>
