@@ -153,25 +153,22 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      {isSidebarOpen && <Sidebar />}
+    <div className="flex flex-col min-h-screen">
+      <div className="flex flex-grow">
+        {isSidebarOpen && <Sidebar />}
+        <div className="flex flex-col flex-grow relative">
+          <Header
+            toggleSidebar={toggleSidebar}
+            toggleNotificationMenu={toggleNotificationMenu}
+          />
+          <div className="flex-grow p-4">
+            <div className="flex flex-grow relative">
+              {isNotificationMenuOpen && <NotificationMenu />}
+              <div className="flex flex-col flex-grow relative w-3/5">
+                {children}
+              </div>
+            </div>
 
-      <div className="flex flex-col flex-1">
-        {/* Header */}
-        <Header
-          toggleSidebar={toggleSidebar}
-          toggleNotificationMenu={toggleNotificationMenu}
-        />
-
-        {/* Content */}
-        <div className="flex flex-1">
-          {/* Left Content */}
-          <div className="flex-1 p-4">{children}</div>
-
-          {/* Right Content */}
-          <div className="flex">
-            {isNotificationMenuOpen && <NotificationMenu />}
           </div>
         </div>
 

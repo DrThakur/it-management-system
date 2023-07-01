@@ -6,20 +6,20 @@ import PieChart from "../components/PieChart/PieChart";
 
 const Pie = () => (
   <div
-    className="m-2 md:m-2 mt-2 p-2 bg-white dark:bg-secondary-dark-bg rounded-3xl"
-    style={{ width: "50%", minWidth: "300px", padding: "0", margin: "0" }}
+    className="m-2 md:m-2 mt-2 bg-white dark:bg-secondary-dark-bg rounded-3xl"
+    style={{ width: "50%", minWidth: "250px", padding: "0", margin: "auto" }}
   >
     {/* <ChartHeader category="Pie" title="Assets By Status" /> */}
     <div
       className="w-full"
       style={{
         height: "100%",
-        marginLeft: "30px",
+        marginLeft: "-5px",
         marginRight: "20px",
         marginTop: "-50px",
         marginBottom: "-1px",
         zIndex: "100",
-        padding: "-20px",
+        padding: "-5px",
       }}
     >
       <PieChart
