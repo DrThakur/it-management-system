@@ -168,11 +168,8 @@ const Layout = ({ children }) => {
                 {children}
               </div>
             </div>
-
           </div>
         </div>
-
-        {/* Footer */}
         <Footer />
       </div>
     </div>
