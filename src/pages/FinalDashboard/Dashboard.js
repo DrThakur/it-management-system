@@ -5,6 +5,7 @@ import DashboardCategory from "../../data/dashboardData/DashboardCategory";
 import RecentActivity from "../../components/RecentActivity/RecentActivity";
 import AssetLocation from "../../components/AssetLocation/AssetLocation";
 import UserCategory from "../../components/UserCategory/UserCategory";
+// import NewUserCategory from "../../components/NewUserCategory/NewUserCategory";
 // import DoughnutChartDemo from "../PieChart";
 
 const Dashboard = () => {
