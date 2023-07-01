@@ -31,7 +31,7 @@ import componentsCategory from "./data/Components/ComponentsCategory";
 import Reports from "./pages/Reports";
 import AdminRights from "./pages/AdminRights";
 import NotificationMenu from "./components/Notification/Notification";
-// import AssetLocation from "./components/AssetLocation/AssetLocation";
+import AssetLocation from "./components/AssetLocation/AssetLocation";
 import AssetLocationPage from "./pages/AssetLocationPage";
 // import PieChart from "./components/PieChart/PieChart";
 
