@@ -356,6 +356,62 @@ const AssetLocation = () => {
       assigned: 15,
       user: 12,
     },
+    {
+      id: 8,
+      location: "Goa",
+      total: 20,
+      assigned: 15,
+      user: 12,
+    },
+    {
+      id: 9,
+      location: "Bhubneshwar",
+      total: 20,
+      assigned: 15,
+      user: 12,
+    },
+    {
+      id: 10,
+      location: "Odisa",
+      total: 20,
+      assigned: 15,
+      user: 12,
+    },
+    {
+      id: 11,
+      location: "Bihar",
+      total: 20,
+      assigned: 15,
+      user: 12,
+    },
+    {
+      id: 12,
+      location: "Uttar Pradesh",
+      total: 20,
+      assigned: 15,
+      user: 12,
+    },
+    {
+      id: 13,
+      location: "USA",
+      total: 20,
+      assigned: 15,
+      user: 12,
+    },
+    {
+      id: 14,
+      location: "California",
+      total: 20,
+      assigned: 15,
+      user: 12,
+    },
+    {
+      id: 15,
+      location: "New York",
+      total: 20,
+      assigned: 15,
+      user: 12,
+    },
     // Add more location items as needed
   ];
 
@@ -375,10 +431,10 @@ const AssetLocation = () => {
     navigate(`/location/${location}`);
   };
 
-  const visibleLocations = showAll ? locationData : locationData.slice(0, 5);
+  const visibleLocations = showAll ? locationData : locationData.slice(0);
 
   return (
-    <div className="bg-white p-2 shadow rounded-lg -mb-6">
+    <div className="bg-white p-3 shadoow-md h-64 w-full rounded-lg -mb-6">
       <div className="flex justify-between items-center ">
         <h2 className="text-2xl font-bold ml-2">Asset By Location</h2>
         <button
@@ -389,11 +445,11 @@ const AssetLocation = () => {
         </button>
       </div>
       {showContent && (
-        <div className="overflow-x-auto mt-2" style={{ maxHeight: "300px" }}>
-          <div
-            className="max-h-72 overflow-y-auto"
-            style={{ scrollbarWidth: "thin" }}
-          >
+        <div
+          className="overflow-x-auto mt-2 overflow-y-auto"
+          style={{ maxHeight: "200px" }}
+        >
+          <div className="max-h-64 " style={{ scrollbarWidth: "thin" }}>
             <table className="table-auto w-full">
               <thead className="sticky top-0">
                 <tr className="bg-gray-200 text-gray-600">

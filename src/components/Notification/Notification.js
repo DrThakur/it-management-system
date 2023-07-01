@@ -86,7 +86,7 @@ const NotificationMenu = ({ children }) => {
 
   return (
     <div
-      className="fixed z-10 top-0 right-0 h-108 bg-white shadow-lg w-64 p-4"
+      className="absolute z-10 top-0 right-0 h-108 bg-white shadow-lg w-64 p-4"
       style={{ marginTop: "90px" }}
     >
       <div className="flex justify-between items-center mb-4">

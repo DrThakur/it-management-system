@@ -71,9 +71,11 @@ const Layout = ({ children }) => {
             toggleNotificationMenu={toggleNotificationMenu}
           />
           <div className="flex-grow p-4">
-            <div className="flex flex-grow">
-              {/* {isNotificationMenuOpen && <NotificationMenu />} */}
-              <div className="flex flex-col flex-grow relative">{children}</div>
+            <div className="flex flex-grow relative">
+              {isNotificationMenuOpen && <NotificationMenu />}
+              <div className="flex flex-col flex-grow relative w-3/5">
+                {children}
+              </div>
             </div>
           </div>
           <Footer />
