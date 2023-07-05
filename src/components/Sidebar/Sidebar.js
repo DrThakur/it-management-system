@@ -250,7 +250,7 @@ import {
   FiHardDrive,
 } from "react-icons/fi";
 import { MdCable, MdSupportAgent } from "react-icons/md";
-import { FaMouse } from "react-icons/fa";
+import { FaBorderAll, FaMouse } from "react-icons/fa";
 import { TbReportSearch } from "react-icons/tb";
 import { HiOutlineKey } from "react-icons/hi";
 import { ImRadioChecked } from "react-icons/im";
@@ -266,16 +266,24 @@ const Sidebar = ({ isSideOpen }) => {
       navigate("/");
     } else if (label === "Assets") {
       navigate("/assets");
+    } else if (label === "Accessories") {
+      navigate("/accessories");
+    } else if (label === "Consumables") {
+      navigate("/consumables");
+    } else if (label === "Components") {
+      navigate("/components");
     } else if (label === "Licences") {
       navigate("/licences");
     } else if (label === "IT Support") {
       navigate("/it-support");
-    } else if (label === "Self-Support") {
+    } else if (label === "Self Support") {
       navigate("/self-support");
     } else if (label === "Admin Rights") {
       navigate("/admin-rights");
     } else if (label === "Users") {
       navigate("/users");
+    } else if (label === "Reports") {
+      navigate("/reports");
     }
   };
 
@@ -303,7 +311,7 @@ const Sidebar = ({ isSideOpen }) => {
         >
           <div className="flex flex-col">
             <div className="flex items-center mb-4">
-              <ImRadioChecked className="mr-2" />
+              <FaBorderAll className="mr-2" />
               <span className="text-white">All</span>
             </div>
             <div className="flex items-center mb-4">
@@ -435,11 +443,16 @@ const Sidebar = ({ isSideOpen }) => {
 };
 
 const NavItem = ({ icon, label, active, onItemClick, children }) => {
+  const hasSubMenu = !!children;
   const [expandSubMenu, setExpandSubMenu] = useState(false);
 
   const handleItemClick = () => {
-    onItemClick(label);
-    setExpandSubMenu(!expandSubMenu);
+    if (hasSubMenu) {
+      setExpandSubMenu(!expandSubMenu);
+    } else {
+      onItemClick(label);
+      setExpandSubMenu(false);
+    }
   };
 
   return (
@@ -454,13 +467,13 @@ const NavItem = ({ icon, label, active, onItemClick, children }) => {
       >
         <span className="text-xl mr-4">{icon}</span>
         <span className="text-sm text-white font-montserrat ml-4">{label}</span>
-        {children && (
+        {hasSubMenu && (
           <span className="ml-auto">
             {expandSubMenu ? <IoIosArrowDown /> : <IoIosArrowForward />}
           </span>
         )}
       </div>
-      {expandSubMenu && (
+      {expandSubMenu && hasSubMenu && (
         <div className="relative left-10 top-0 bg-black text-white py-2 px-4 rounded-lg mt-1 text-sm ml-4">
           {children}
         </div>

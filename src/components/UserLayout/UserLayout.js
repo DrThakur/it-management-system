@@ -17,17 +17,19 @@ const UserLayout = ({ children }) => {
     setIsNotificationMenuOpen(!isNotificationMenuOpen);
   };
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="flex flex-grow">
+    <div className="flex flex-col h-screen">
+      <div className="flex flex-grow h-screen">
         {isSidebarOpen && <UserSidebar />}
         <div className="flex flex-col flex-grow">
           <Header
             toggleSidebar={toggleSidebar}
             toggleNotificationMenu={toggleNotificationMenu}
+            isSideOpen={isSidebarOpen}
+            isNotificationClicked={isNotificationMenuOpen}
           />
-          <div className="flex-grow p-4">
+          <div className="flex-grow p-4 overflow-y-auto overflow-x-hidden h-screen">
             <div className="flex relative">
-              <div className="flex-grow overscroll-auto">
+              <div className="flex-grow mr-2">
                 {children}
                 <div className="flex-grow">
                   {isNotificationMenuOpen && <NotificationMenu />}
