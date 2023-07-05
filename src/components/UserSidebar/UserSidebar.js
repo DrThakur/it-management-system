@@ -12,6 +12,7 @@ import { MdSupportAgent } from "react-icons/md";
 import { FaMouse } from "react-icons/fa";
 import { ImRadioChecked } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const UserSidebar = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -141,11 +142,16 @@ const UserSidebar = () => {
 };
 
 const NavItem = ({ icon, label, active, onItemClick, children }) => {
+  const hasSubMenu = !!children;
   const [expandSubMenu, setExpandSubMenu] = useState(false);
 
   const handleItemClick = () => {
-    onItemClick(label);
-    setExpandSubMenu(!expandSubMenu);
+    if (hasSubMenu) {
+      setExpandSubMenu(!expandSubMenu);
+    } else {
+      onItemClick(label);
+      setExpandSubMenu(false);
+    }
   };
 
   return (
@@ -160,13 +166,13 @@ const NavItem = ({ icon, label, active, onItemClick, children }) => {
       >
         <span className="text-xl mr-4">{icon}</span>
         <span className="text-sm text-white font-montserrat ml-4">{label}</span>
-        {children && (
+        {hasSubMenu && (
           <span className="ml-auto">
             {expandSubMenu ? <IoIosArrowDown /> : <IoIosArrowForward />}
           </span>
         )}
       </div>
-      {expandSubMenu && (
+      {expandSubMenu && hasSubMenu && (
         <div className="relative left-10 top-0 bg-black text-white py-2 px-4 rounded-lg mt-1 text-sm ml-4">
           {children}
         </div>

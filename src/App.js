@@ -33,6 +33,7 @@ import AdminRights from "./pages/AdminRights";
 import NotificationMenu from "./components/Notification/Notification";
 import AssetLocation from "./components/AssetLocation/AssetLocation";
 import AssetLocationPage from "./pages/AssetLocationPage";
+import UserDashboard from "./pages/UserDashboard/UserDashboard";
 // import PieChart from "./components/PieChart/PieChart";
 
 function App() {
@@ -135,22 +136,23 @@ function App() {
           }
         />
 
-        {/* <Route
+        <Route
           path="/admin-rights"
           element={
             <UserLayout>
-              <AssetForm />
+              {/* <AssetForm /> */}
+              <UserDashboard />
             </UserLayout>
           }
-        /> */}
-        <Route
+        />
+        {/* <Route
           path="/admin-rights"
           element={
             <Layout>
               <AdminRights />
             </Layout>
           }
-        />
+        /> */}
         <Route
           path="/users"
           element={
@@ -204,9 +206,9 @@ function App() {
         {/* <Route
           path="/users"
           element={
-            <Layout>
-              <Login />
-            </Layout>
+            <UserLayout>
+              <Table />
+            </UserLayout>
           }
         /> */}
       </Routes>
