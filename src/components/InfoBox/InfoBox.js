@@ -11,7 +11,7 @@ const InfoBox = ({ categories, title }) => {
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    navigate(`/${category.name.toLowerCase()}`);
+    navigate(`/${category.name.replace(/\s+/g, "-").toLowerCase()}`);
     //  console.log("I am navigating to", category);
     //  console.log(selectedCategory);
   };

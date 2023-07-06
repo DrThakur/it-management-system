@@ -293,7 +293,7 @@ const Sidebar = ({ isSideOpen }) => {
         isSideOpen ? "64" : "8"
       } flex-none flex flex-col h-screen  bg-black text-white rounded-lg overflow-y-auto overflow-x-hidden`}
     >
-      <div className="top-0 flex items-center justify-center h-28">
+      <div className="top-0 flex items-center justify-center">
         <img src={logo} alt="Logo" className="h-32 w-32 cursor-pointer" />
       </div>
       <div className="relative flex flex-col flex-grow ">
@@ -310,7 +310,7 @@ const Sidebar = ({ isSideOpen }) => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 ">
               <FaBorderAll className="mr-2" />
               <span className="text-white">All</span>
             </div>

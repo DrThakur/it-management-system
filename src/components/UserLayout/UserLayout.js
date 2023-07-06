@@ -36,8 +36,8 @@ const UserLayout = ({ children }) => {
                 </div>
               </div>
             </div>
+            <Footer />
           </div>
-          <Footer />
         </div>
       </div>
     </div>

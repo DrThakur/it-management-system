@@ -194,7 +194,6 @@ const Header = ({
               <RxHamburgerMenu className="rotate-90 delay-400 ease-in-out duration-300" />
             )}
           </span>
-          {/* <RxHamburgerMenu /> */}{" "}
         </button>
         <h3 className="text-lg">
           <span className="font-thin">Welcome, </span>
