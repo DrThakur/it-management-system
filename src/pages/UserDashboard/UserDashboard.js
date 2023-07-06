@@ -27,8 +27,7 @@ const UserDashboard = () => {
             <RecentTicket />
           </div>
           <div className="flex-item-2-2 mt-2">{/* <RecentActivity /> */}</div>
-          <div className="flex-item-2-3 mt-10 mb-8 w-full">
-            {/* <AssetLocation /> */}
+          <div className="flex-item-2-3 mt-4 mb-8 w-full">
             <SystemRights
               systemName={systemName}
               systemModel={systemModel}

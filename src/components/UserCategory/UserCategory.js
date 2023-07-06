@@ -531,7 +531,7 @@ const UserCategory = () => {
             <table className="table-auto w-full">
               <thead className="sticky top-0">
                 <tr className="bg-gray-200 text-gray-600">
-                  <th className="py-2 px-4">Category</th>
+                  <th className="py-2 px-4 ">Category</th>
                   <th className="py-2 px-4">Total</th>
                   <th className="py-2 px-4" colSpan="4">
                     Gurgaon
@@ -541,8 +541,8 @@ const UserCategory = () => {
                   </th>
                 </tr>
                 <tr className="bg-gray-200 text-gray-600">
-                  <th className="py-2 px-4">-</th>
-                  <th className="py-2 px-4">-</th>
+                  <th className="py-2 px-4"></th>
+                  <th className="py-2 px-4"></th>
                   <th className="py-2 px-4">Desktop</th>
                   <th className="py-2 px-4">Laptop</th>
                   <th className="py-2 px-4">Tablets</th>
@@ -564,7 +564,7 @@ const UserCategory = () => {
                             e.preventDefault();
                             handleCategoryClick(category.id);
                           }}
-                          className="text-blue-500 hover:underline"
+                          className="text-blue-500 hover:text-blue-700 hover:font-semibold"
                         >
                           {category.name}
                         </a>

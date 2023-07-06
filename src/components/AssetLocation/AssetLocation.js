@@ -434,8 +434,8 @@ const AssetLocation = () => {
   const visibleLocations = showAll ? locationData : locationData.slice(0);
 
   return (
-    <div className="bg-white p-3 shadoow-md h-64 w-full rounded-lg -mb-6">
-      <div className="flex justify-between items-center ">
+    <div className="bg-white p-2 shadow rounded-lg -mb-6">
+      <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold ml-2">Asset By Location</h2>
         <button
           className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-400 hover:bg-blue-600 text-white focus:outline-none mb-2 mt-2 mr-2"
@@ -445,11 +445,8 @@ const AssetLocation = () => {
         </button>
       </div>
       {showContent && (
-        <div
-          className="overflow-x-auto mt-2 overflow-y-auto"
-          style={{ maxHeight: "200px" }}
-        >
-          <div className="max-h-64 " style={{ scrollbarWidth: "thin" }}>
+        <div className="overflow-x-auto mt-2 overflow-y-auto">
+          <div className="max-h-64 overflow-y-auto">
             <table className="table-auto w-full">
               <thead className="sticky top-0">
                 <tr className="bg-gray-200 text-gray-600">
@@ -468,9 +465,9 @@ const AssetLocation = () => {
                     >
                       {location.location}
                     </td>
-                    <td className="py-2 px-4">{location.total}</td>
-                    <td className="py-2 px-4">{location.assigned}</td>
-                    <td className="py-2 px-4">{location.user}</td>
+                    <td className="py-2 px-4 pl-8">{location.total}</td>
+                    <td className="py-2 px-4 pl-12">{location.assigned}</td>
+                    <td className="py-2 px-4 pl-10">{location.user}</td>
                   </tr>
                 ))}
               </tbody>

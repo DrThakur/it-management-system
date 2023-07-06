@@ -34,6 +34,7 @@ import NotificationMenu from "./components/Notification/Notification";
 import AssetLocation from "./components/AssetLocation/AssetLocation";
 import AssetLocationPage from "./pages/AssetLocationPage";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
+import UserAsset from "./components/UserAsset/UserAsset";
 // import PieChart from "./components/PieChart/PieChart";
 
 function App() {
@@ -140,7 +141,6 @@ function App() {
           path="/admin-rights"
           element={
             <UserLayout>
-              {/* <AssetForm /> */}
               <UserDashboard />
             </UserLayout>
           }
@@ -170,14 +170,14 @@ function App() {
           }
         /> */}
 
-        <Route
+        {/* <Route
           path="/:category"
           element={
             <Layout>
               <Table selectedCategory={selectedCategory} />
             </Layout>
           }
-        />
+        /> */}
 
         <Route
           path="/recent-activity"
@@ -211,6 +211,14 @@ function App() {
             </UserLayout>
           }
         /> */}
+        <Route
+          path="/assets-issued"
+          element={
+            <UserLayout>
+              <UserAsset />
+            </UserLayout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

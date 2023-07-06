@@ -51,7 +51,7 @@ import UserCategory from "../../components/UserCategory/UserCategory";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col w-3/4">
+    <div className="flex flex-col w-3/4 ">
       <div className="flex-item-1">
         <InfoBox categories={DashboardCategory} title="Dashboard" />
       </div>
@@ -63,10 +63,10 @@ const Dashboard = () => {
           <div className="flex-item-2-2 mt-2">
             <RecentActivity />
           </div>
-          <div className="flex-item-2-3 mt-10 mb-8">
+          <div className="flex-item-2-3 mt-10 mb-1 w-2/3">
             <AssetLocation />
           </div>
-          <div className="flex-item-2-4 mt-16 mb-6 w-full">
+          <div className="flex-item-2-4 mt-12 mb-6 w-full">
             <UserCategory />
           </div>
         </div>
