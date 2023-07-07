@@ -170,14 +170,14 @@ function App() {
           }
         /> */}
 
-        {/* <Route
+        <Route
           path="/:category"
           element={
             <Layout>
               <Table selectedCategory={selectedCategory} />
             </Layout>
           }
-        /> */}
+        />
 
         <Route
           path="/recent-activity"

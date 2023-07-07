@@ -171,7 +171,7 @@ const AssetsComponent = () => {
 
   return (
     <div className="container mx-auto py-8 flex flex-col">
-      <h1 className="text-2xl font-bold mb-4">Asset Categories</h1>
+      <h1 className="text-2xl font-bold mb-4">Assets Issued</h1>
       <div className="flex mb-4 flex-wrap">
         {assetCategories.map((category, index) => (
           <div

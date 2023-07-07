@@ -4,7 +4,7 @@ import AssetsComponent from "../AssetComponent/AssetComponent";
 
 const UserAsset = () => {
   return (
-    <div className="w-3/4">
+    <div className="w-3/4 h-screen">
       <AssetsComponent />
     </div>
   );
