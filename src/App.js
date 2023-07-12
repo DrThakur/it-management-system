@@ -35,6 +35,7 @@ import AssetLocation from "./components/AssetLocation/AssetLocation";
 import AssetLocationPage from "./pages/AssetLocationPage";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import UserAsset from "./components/UserAsset/UserAsset";
+import UserTable from "./components/UserTable/UserTable";
 // import PieChart from "./components/PieChart/PieChart";
 
 function App() {
@@ -216,6 +217,15 @@ function App() {
           element={
             <UserLayout>
               <UserAsset />
+            </UserLayout>
+          }
+        />
+        <Route
+          path="/accessories-issued"
+          element={
+            <UserLayout>
+              {/* <UserAsset /> */}
+              <UserTable />
             </UserLayout>
           }
         />

@@ -8,114 +8,45 @@ import { LuEdit } from "react-icons/lu";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-function convertArrayOfObjectsToCSV(array, columns) {
-  // let result;
-  // const columnDelimiter = ",";
-  // const lineDelimiter = "\n";
-  // // const keys = Object.keys(array[0]);
-  // const keys = columns.map((column) => column.name);
-
-  // result = "";
-  // result += keys.join(columnDelimiter);
-  // result += lineDelimiter;
-
-  // array.forEach((item) => {
-  //   let ctr = 0;
-  //   keys.forEach((key) => {
-  //     if (ctr > 0) result += columnDelimiter;
-
-  //     result += item[key];
-
-  //     ctr++;
-  //   });
-  //   result += lineDelimiter;
-  // });
-
-  // return result;
-  let result = "";
+function convertArrayOfObjectsToCSV(array) {
+  let result;
   const columnDelimiter = ",";
   const lineDelimiter = "\n";
+  const keys = Object.keys(array[0]);
 
-  // Extract column titles
-  const columnTitles = columns.map((column) => column.name);
-
-  // Add column titles to the CSV string
-  result += columnTitles.join(columnDelimiter);
+  result = "";
+  result += keys.join(columnDelimiter);
   result += lineDelimiter;
 
-  // Iterate over the array and extract data
   array.forEach((item) => {
-    const rowData = columns.map((column) => {
-      const value = column.selector(item);
-      return `"${value}"`; // Wrap value in quotes to handle special characters
-    });
+    let ctr = 0;
+    keys.forEach((key) => {
+      if (ctr > 0) result += columnDelimiter;
 
-    result += rowData.join(columnDelimiter);
+      result += item[key];
+
+      ctr++;
+    });
     result += lineDelimiter;
   });
 
   return result;
 }
 
-function downloadCSV(array, columns) {
-  // const link = document.createElement("a");
-  // let csv = convertArrayOfObjectsToCSV(array, columns);
-  // if (csv == null) return;
-
-  // const filename = "export.csv";
-
-  // if (!csv.match(/^data:text\/csv/i)) {
-  //   csv = `data:text/csv;charset=utf-8,${csv}`;
-  // }
-
-  // link.setAttribute("href", encodeURI(csv));
-  // link.setAttribute("download", filename);
-  // link.click();
-  //....
-  // const csv = convertArrayOfObjectsToCSV(array, columns);
-  // const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-
-  // // Create a temporary anchor element to trigger the file download
-  // const link = document.createElement("a");
-  // if (link.download !== undefined) {
-  //   const url = URL.createObjectURL(blob);
-  //   link.setAttribute("href", url);
-  //   link.setAttribute("download", "export.csv");
-  //   link.style.visibility = "hidden";
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // }
-  const csvContent = [];
-
-  // Add column titles to the CSV content
-  const columnTitles = columns.map((column) => column.name);
-  csvContent.push(columnTitles.join(","));
-
-  // Add data rows to the CSV content
-  array.forEach((item) => {
-    const rowData = columns.map((column) => {
-      const value = column.selector(item);
-      return `"${value}"`; // Wrap value in quotes to handle special characters
-    });
-    csvContent.push(rowData.join(","));
-  });
-
-  // Create the CSV file
-  const csvString = csvContent.join("\n");
-  const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
-
-  // Create a temporary anchor element to trigger the file download
+function downloadCSV(array) {
   const link = document.createElement("a");
-  if (link.download !== undefined) {
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", "export.csv");
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  let csv = convertArrayOfObjectsToCSV(array);
+  if (csv == null) return;
+
+  const filename = "export.csv";
+
+  if (!csv.match(/^data:text\/csv/i)) {
+    csv = `data:text/csv;charset=utf-8,${csv}`;
   }
+
+  link.setAttribute("href", encodeURI(csv));
+  link.setAttribute("download", filename);
+  link.click();
 }
 
 const Table = ({ filteredCategory }) => {
@@ -127,6 +58,8 @@ const Table = ({ filteredCategory }) => {
   const [dense, setDense] = useState(false);
   const navigate = useNavigate();
 
+  const headerClass = "font-bold";
+
   const handleAddNew = () => {
     // Logic to navigate to the add new item page
     // You can implement the desired functionality here
@@ -135,7 +68,7 @@ const Table = ({ filteredCategory }) => {
   };
 
   const handleExport = () => {
-    downloadCSV(filteredAssets, columns);
+    downloadCSV(assetData);
   };
 
   const actionsMemo = useMemo(
@@ -264,6 +197,7 @@ const Table = ({ filteredCategory }) => {
       name: "ID",
       selector: (row) => row.id,
       sortable: true,
+      headerClass: headerClass,
     },
     {
       name: "Location",
@@ -373,6 +307,7 @@ const Table = ({ filteredCategory }) => {
         title="Asset List"
         columns={columns}
         data={filteredAssets}
+        headerClass={headerClass}
         contextActions={contextActions}
         onSelectedRowsChange={handleRowSelected}
         clearSelectedRows={toggleCleared}
