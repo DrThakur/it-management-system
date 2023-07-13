@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../Images/LFT-Logo.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FiHome,
   FiMonitor,
@@ -30,13 +30,13 @@ const UserSidebar = () => {
       navigate("/it-support");
     } else if (label === "Self-Support") {
       navigate("/self-support");
-    } else if (label === "Admin Rights") {
+    } else if (label === "System Rights") {
       navigate("/admin-rights");
     }
   };
 
   return (
-    <div className=" w-64 flex-none flex flex-col h-screen  bg-black text-white rounded-lg overflow-scroll overflow-x-hidden">
+    <div className=" w-64 flex-none flex flex-col h-screen  bg-sky-700 text-white rounded-lg overflow-scroll overflow-y-hidden overflow-x-hidden">
       <div className="top-0  flex items-center justify-center h-28">
         <img src={logo} alt="Logo" className="h-32 w-32 cursor-pointer" />
       </div>
@@ -54,17 +54,23 @@ const UserSidebar = () => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">All</span>
+              <Link to="/all" className="text-white">
+                All
+              </Link>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Monitor</span>
+              <Link to="/user-monitor" className="text-white">
+                Monitor
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Desktop</span>
+              <Link to="/user-desktop" className="text-white">
+                Desktop
+              </Link>
             </div>
           </div>
         </NavItem>
@@ -74,18 +80,24 @@ const UserSidebar = () => {
           active={activeItem === "My Accessories"}
           onItemClick={handleItemClick}
         >
-          <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+          <div className="flex flex-col ">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">All</span>
+              <Link to="/all" className="text-white">
+                All
+              </Link>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Keyboard</span>
+              <Link to="/user-keyboard" className="text-white">
+                Keyboard
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Mouse</span>
+              <Link to="/user-mouse" className="text-white">
+                Mouse
+              </Link>
             </div>
           </div>
         </NavItem>
@@ -96,21 +108,29 @@ const UserSidebar = () => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Create New Ticket</span>
+              <Link to="/new-ticket" className="text-white">
+                Create New Ticket
+              </Link>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Pending Tickets</span>
+              <Link to="/pending-ticket" className="text-white">
+                Pending Tickets
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Closed Tickets</span>
+              <Link to="/closed-ticket" className="text-white">
+                Closed Tickets
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">All Tickets</span>
+              <Link to="/all-tickets" className="text-white">
+                All Tickets
+              </Link>
             </div>
           </div>
         </NavItem>
@@ -122,8 +142,8 @@ const UserSidebar = () => {
         />
         <NavItem
           icon={<FiShield />}
-          label="Admin Rights"
-          active={activeItem === "Admin Rights"}
+          label="System Rights"
+          active={activeItem === "System Rights"}
           onItemClick={handleItemClick}
         />
         <NavItem
@@ -173,7 +193,7 @@ const NavItem = ({ icon, label, active, onItemClick, children }) => {
         )}
       </div>
       {expandSubMenu && hasSubMenu && (
-        <div className="relative left-10 top-0 bg-black text-white py-2 px-4 rounded-lg mt-1 text-sm ml-4">
+        <div className="relative left-10 top-0 bg-sky-700 text-white py-2 px-4 rounded-lg mt-1 text-sm ml-4">
           {children}
         </div>
       )}

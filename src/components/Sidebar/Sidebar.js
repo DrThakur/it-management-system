@@ -239,7 +239,7 @@
 //Copy From Old:
 import React, { useState } from "react";
 import logo from "../../Images/LFT-Logo.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FiHome,
   FiMonitor,
@@ -291,7 +291,7 @@ const Sidebar = ({ isSideOpen }) => {
     <div
       className={`w-${
         isSideOpen ? "64" : "8"
-      } flex-none flex flex-col h-screen  bg-black text-white rounded-lg overflow-y-auto overflow-x-hidden`}
+      } flex-none flex flex-col h-screen  bg-sky-700 text-white rounded-lg overflow-y-auto overflow-x-hidden `}
     >
       <div className="top-0 flex items-center justify-center">
         <img src={logo} alt="Logo" className="h-32 w-32 cursor-pointer" />
@@ -310,15 +310,19 @@ const Sidebar = ({ isSideOpen }) => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4 ">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <FaBorderAll className="mr-2" />
-              <span className="text-white">All</span>
+              <Link to="/assets" className="text-white">
+                All
+              </Link>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Monitor</span>
+              <Link to="/monitor" className="text-white">
+                Monitor
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <span className="text-white">Desktop</span>
             </div>
@@ -331,17 +335,23 @@ const Sidebar = ({ isSideOpen }) => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">All</span>
+              <Link to="/accessories" className="text-white">
+                All
+              </Link>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Keyboard</span>
+              <Link to="/keyboard" className="text-white">
+                Keyboard
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Mouse</span>
+              <Link to="/mouse" className="text-white">
+                Mouse
+              </Link>
             </div>
           </div>
         </NavItem>
@@ -364,17 +374,23 @@ const Sidebar = ({ isSideOpen }) => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">All</span>
+              <Link to="/all" className="text-white cursor-pointer">
+                All
+              </Link>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">FPGA Software</span>
+              <Link to="/fpga" className="text-white">
+                FPGA Software
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Hardware Software</span>
+              <Link to="/hardware" className="text-white">
+                Hardware Software
+              </Link>
             </div>
           </div>
         </NavItem>
@@ -385,21 +401,29 @@ const Sidebar = ({ isSideOpen }) => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Create New Ticket</span>
+              <Link to="/new-ticket" className="text-white">
+                Create New Ticket
+              </Link>
             </div>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Pending Tickets</span>
+              <Link to="/pending-ticket" className="text-white">
+                Pending Tickets
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">Closed Tickets</span>
+              <Link to="/closed-ticket" className="text-white">
+                Closed Tickets
+              </Link>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-white">All Tickets</span>
+              <Link to="/all-tickets" className="text-white">
+                All Tickets
+              </Link>
             </div>
           </div>
         </NavItem>
@@ -474,7 +498,7 @@ const NavItem = ({ icon, label, active, onItemClick, children }) => {
         )}
       </div>
       {expandSubMenu && hasSubMenu && (
-        <div className="relative left-10 top-0 bg-black text-white py-2 px-4 rounded-lg mt-1 text-sm ml-4">
+        <div className="relative left-10 top-0 bg-sky-700 text-white py-2 px-4 rounded-lg mt-1 text-sm ml-4">
           {children}
         </div>
       )}

@@ -51,22 +51,22 @@ import UserCategory from "../../components/UserCategory/UserCategory";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col w-3/4 ">
+    <div className="flex flex-col w-full">
       <div className="flex-item-1">
         <InfoBox categories={DashboardCategory} title="Dashboard" />
       </div>
       <div className="flex-item-2 mt-4">
         <div class="flex-container-2 flex flex-row flex-wrap">
-          <div className="flex-item-2-1">
-            <Pie />
-          </div>
-          <div className="flex-item-2-2 mt-2">
+          <div className="flex-item-2-2 -mt-0">
             <RecentActivity />
           </div>
-          <div className="flex-item-2-3 mt-10 mb-1 w-2/3">
+          <div className="flex-item-2-1 ml-4 flex-grow ">
+            <Pie />
+          </div>
+          <div className="flex-item-2-3 mt-4 mb-1 w-1/2">
             <AssetLocation />
           </div>
-          <div className="flex-item-2-4 mt-12 mb-6 w-full">
+          <div className="flex-item-2-4 mt-4 -ml-6 mb-6 w-1/2">
             <UserCategory />
           </div>
         </div>

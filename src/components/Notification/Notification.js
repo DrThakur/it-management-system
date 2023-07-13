@@ -207,7 +207,7 @@ const NotificationMenu = () => {
   return (
     <div
       className="fixed z-10 -top-0.5 right-0 h-108 bg-white shadow-lg w-64 p-4 h-screen overflow-y-hidden flex flex-col "
-      style={{ marginTop: "90px" }}
+      style={{ marginTop: "97px" }}
     >
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold">Notifications</h3>

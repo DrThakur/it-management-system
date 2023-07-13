@@ -43,7 +43,7 @@ const Pie = () => {
     <div
       style={{
         width: "20vw",
-        height: "60vh",
+        height: "69vh",
         backgroundColor: "green",
         textAlign: "center",
         padding: "20px",
