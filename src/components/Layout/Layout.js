@@ -331,7 +331,7 @@ const Layout = ({ children }) => {
     setIsNotificationMenuOpen(!isNotificationMenuOpen);
   };
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-blue-200">
       <div className="flex flex-grow h-screen">
         {isSidebarOpen && <Sidebar isSideOpen={isSidebarOpen} />}
         <div className="flex flex-col flex-grow">

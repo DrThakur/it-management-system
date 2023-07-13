@@ -302,7 +302,7 @@ const Table = ({ filteredCategory }) => {
   }, [search, filteredCategory, assets]);
   //   console.log(assetData);
   return (
-    <div style={{ maxWidth: "60rem" }} className=" w-3/4 h-screen">
+    <div style={{ maxWidth: "62rem" }} className=" w-full h-screen">
       <DataTable
         title="Asset List"
         columns={columns}

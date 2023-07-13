@@ -142,6 +142,7 @@ import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { FaUser, FaCog, FaLock, FaSignOutAlt } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import dummyProfilePic from "../../Images/dummy-profile-pic.jpg";
+import logo from "../../Images/LFT-Logo.svg";
 
 const Header = ({
   name,
@@ -181,10 +182,10 @@ const Header = ({
   }, []);
 
   return (
-    <div className="px-8 py-6 bg-gray-100 flex items-center justify-between">
+    <div className="px-8 py-6 bg-yellow-500 flex items-center justify-between">
       <div className="flex items-center space-x-4">
         <button
-          className="p-2 rounded-full bg-blue-500 text-white"
+          className="p-2 rounded-full bg-blue-400 text-white"
           onClick={toggleSidebar}
         >
           <span>
@@ -196,9 +197,19 @@ const Header = ({
           </span>
         </button>
         <h3 className="text-lg">
-          <span className="font-thin">Welcome, </span>
-          <span className="text-red-500">{name || "Ankit"} </span>
+          <span className="font-semibold">Welcome, </span>
+          <span className="text-blue-500 font-semibold">
+            {name || "Ankit"}{" "}
+          </span>
         </h3>
+      </div>
+      <div className="text-center ml-24">
+        <img
+          src={logo}
+          alt="Logo"
+          className="cursor-pointer"
+          style={{ width: "50%", height: "50%" }}
+        />
       </div>
       <div className="flex items-center space-x-6 ml-2">
         {" "}

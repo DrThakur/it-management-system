@@ -434,7 +434,7 @@ const AssetLocation = () => {
   const visibleLocations = showAll ? locationData : locationData.slice(0);
 
   return (
-    <div className="bg-white p-2 shadow rounded-lg -mb-6">
+    <div className="bg-blue-50 p-2 shadow rounded-lg -mb-6 w-11/12 h-108">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold ml-2">Asset By Location</h2>
         <button
@@ -446,7 +446,7 @@ const AssetLocation = () => {
       </div>
       {showContent && (
         <div className="overflow-x-auto mt-2 overflow-y-auto">
-          <div className="max-h-64 overflow-y-auto">
+          <div className="max-h-80 overflow-y-auto">
             <table className="table-auto w-full">
               <thead className="sticky top-0">
                 <tr className="bg-gray-200 text-gray-600">

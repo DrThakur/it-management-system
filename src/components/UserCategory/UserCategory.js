@@ -515,7 +515,7 @@ const UserCategory = () => {
   };
 
   return (
-    <div className="bg-white p-2 shadow rounded-lg -mb-6">
+    <div className="bg-blue-50 p-2 shadow rounded-lg -mb-6 w-full h-108">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold ml-2">User Category</h2>
         <button

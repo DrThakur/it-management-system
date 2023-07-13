@@ -53,7 +53,7 @@ const RecentTicket = () => {
   };
 
   return (
-    <div className="flex flex-col bg-white rounded-lg shadow-lg p-4 w-full">
+    <div className="flex flex-col bg-gray-100 rounded-lg shadow-lg p-4 w-full">
       <h2 className="text-xl font-semibold mb-6">Recent Ticket</h2>
       <ProgressBar
         stages={["Created", "Accepted", "In Process", "Resolved"]}
