@@ -7,7 +7,7 @@ import UserSidebar from "../UserSidebar/UserSidebar";
 
 const UserLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(true);
+  const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

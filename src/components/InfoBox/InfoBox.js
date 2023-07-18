@@ -140,16 +140,13 @@ const InfoBox = ({ categories, title }) => {
             }`}
             onClick={() => handleCategoryClick(category)}
           >
-            {category.count !== undefined && (
+            {category.count !== undefined && category.count !== null && (
               <div className="flex flex-row">
                 <div className="flex flex-col justify-center items-center">
                   {/* <span className="text-4xl text-white">{category.icon}</span> */}
                   <h3 className="font-bold text-4xl text-white transition-all duration-300 ease-in-out ">
                     {category.count}
                   </h3>
-                  <p className="text-white font-bold pt-1 text-lg text-center transition-all duration-300 ease-in-out">
-                    {category.name}
-                  </p>
                 </div>
                 {category.assigned !== undefined &&
                   category.remaining !== undefined && (
@@ -162,10 +159,19 @@ const InfoBox = ({ categories, title }) => {
                           key.includes("closed")
                         ) {
                           return (
-                            <h2 className="text-white text-sm" key={key}>
-                              {key.charAt(0).toUpperCase() + key.slice(1)}:{" "}
-                              {category[key]}
-                            </h2>
+                            // <h2 className="text-white text-sm" key={key}>
+                            //   {key.charAt(0).toUpperCase() + key.slice(1)} :
+                            //   {category[key]}
+                            // </h2>
+                            <div className="flex items-center" key={key}>
+                              <h2 className="text-white text-sm">
+                                {key.charAt(0).toUpperCase() + key.slice(1)}
+                              </h2>
+                              <span className="text-white text-sm mx-1">:</span>
+                              <h2 className="text-white text-sm">
+                                {category[key]}
+                              </h2>
+                            </div>
                           );
                         }
                         return null;
@@ -174,6 +180,13 @@ const InfoBox = ({ categories, title }) => {
                   )}
               </div>
             )}
+            <p
+              className={`text-white font-bold pt-1 text-lg text-center transition-all duration-300 ease-in-out ${
+                category.count === undefined ? "-mt-4" : ""
+              }`}
+            >
+              {category.name}
+            </p>
             <div
               className={`flex flex-row justify-center items-center space-x-4 ml-2 border-t-2 text-white mt-2 -mb-6 text-center rounded-b-lg hover:font-bold ${
                 selectedCategory.name === category.name

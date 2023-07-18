@@ -53,9 +53,13 @@ const RecentActivity = () => {
     },
     // Add more activity items as needed
   ];
-
+  const [showContent, setShowContent] = useState(true);
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
+
+  const handleToggleContent = () => {
+    setShowContent(!showContent);
+  };
 
   const handleViewAll = () => {
     navigate("/recent-activity");
@@ -64,38 +68,48 @@ const RecentActivity = () => {
   const visibleActivities = showAll ? activityData : activityData.slice(0);
 
   return (
-    <div className="bg-blue-50 p-4 shadow rounded-lg h-108 -mb-6">
-      <h2 className="text-2xl font-bold mb-4">Recent Activity</h2>
-      <div className="overflow-x-auto overflow-y-auto mt-2">
-        <div
-          className="max-h-72 overflow-y-auto"
-          style={{ scrollbarWidth: "thin" }}
+    <div className="bg-blue-50 p-2 shadow rounded-lg h-108 -mb-6 w-full">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold ml-2 ">Recent Activity</h2>
+        <button
+          className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-400 hover:bg-blue-600 text-white focus:outline-none mr-2"
+          onClick={handleToggleContent}
         >
-          <table className="table-auto w-full">
-            <thead className="sticky top-0">
-              <tr className="bg-gray-200 text-gray-600">
-                <th className="py-2 px-4">Date</th>
-                <th className="py-2 px-4">Admin</th>
-                <th className="py-2 px-4">Action</th>
-                <th className="py-2 px-4">Item</th>
-                <th className="py-2 px-4">Target</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visibleActivities.map((activity) => (
-                <tr key={activity.id}>
-                  <td className="py-2 px-4">{activity.date}</td>
-                  <td className="py-2 px-4">{activity.admin}</td>
-                  <td className="py-2 px-4">{activity.action}</td>
-                  <td className="py-2 px-4">{activity.item}</td>
-                  <td className="py-2 px-4">{activity.target}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+          <span className="text-3xl mb-2">{showContent ? "-" : "+"}</span>
+        </button>
       </div>
-      {!showAll && (
+      {showContent && (
+        <div className="overflow-x-auto  overflow-y-auto mt-2">
+          <div
+            className="max-h-72 overflow-y-auto"
+            style={{ scrollbarWidth: "thin" }}
+          >
+            <table className="table-auto w-full">
+              <thead className="sticky top-0">
+                <tr className="bg-gray-200 text-gray-600">
+                  <th className="py-2 px-4">Date</th>
+                  <th className="py-2 px-4">Admin</th>
+                  <th className="py-2 px-4">Action</th>
+                  <th className="py-2 px-4">Item</th>
+                  <th className="py-2 px-4">Target</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visibleActivities.map((activity) => (
+                  <tr key={activity.id}>
+                    <td className="py-2 px-4">{activity.date}</td>
+                    <td className="py-2 px-4">{activity.admin}</td>
+                    <td className="py-2 px-4">{activity.action}</td>
+                    <td className="py-2 px-4">{activity.item}</td>
+                    <td className="py-2 px-4">{activity.target}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+      {showContent && !showAll && (
         <button
           className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           onClick={handleViewAll}

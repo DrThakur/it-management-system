@@ -434,7 +434,7 @@ const AssetLocation = () => {
   const visibleLocations = showAll ? locationData : locationData.slice(0);
 
   return (
-    <div className="bg-blue-50 p-2 shadow rounded-lg -mb-6 w-11/12 h-108">
+    <div className="bg-blue-50 p-2 shadow rounded-lg -mb-6 w-[98%] h-108">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold ml-2">Asset By Location</h2>
         <button

@@ -36,6 +36,12 @@ import AssetLocationPage from "./pages/AssetLocationPage";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import UserAsset from "./components/UserAsset/UserAsset";
 import UserTable from "./components/UserTable/UserTable";
+import SelfSupportPage from "./pages/SelfSupportPage/SelfSupportPage";
+import ComponentsPage from "./pages/ComponentsPage/ComponentsPage";
+import ConsumablesPage from "./pages/ConsumablesPage/ConsumablesPage";
+import AssetFormPage from "./pages/AssetFormPage/AssetFormPage";
+import TicketFormPage from "./pages/TicketFormPage/TicketFormPage";
+import TicketPage from "./pages/TicketPage/TicketPage";
 // import PieChart from "./components/PieChart/PieChart";
 
 function App() {
@@ -96,19 +102,35 @@ function App() {
             </Layout>
           }
         />
-        <Route
+        {/* <Route
           path="/consumables"
           element={
             <Layout>
               <InfoBox categories={consumablesCategory} title="Consumables" />
             </Layout>
           }
-        />
+        /> */}
         <Route
+          path="/consumables"
+          element={
+            <Layout>
+              <ConsumablesPage />
+            </Layout>
+          }
+        />
+        {/* <Route
           path="/components"
           element={
             <Layout>
               <InfoBox categories={componentsCategory} title="Components" />
+            </Layout>
+          }
+        /> */}
+        <Route
+          path="/components"
+          element={
+            <Layout>
+              <ComponentsPage />
             </Layout>
           }
         />
@@ -117,6 +139,14 @@ function App() {
           element={
             <Layout>
               <InfoBox categories={softwareCategory} title="Licences" />
+            </Layout>
+          }
+        />
+        <Route
+          path="/tickets"
+          element={
+            <Layout>
+              <TicketPage />
             </Layout>
           }
         />
@@ -129,11 +159,19 @@ function App() {
             </Layout>
           }
         />
-        <Route
+        {/* <Route
           path="/self-support"
           element={
             <Layout>
               <InfoBox categories={selfSupportCategory} title="Self Support" />
+            </Layout>
+          }
+        /> */}
+        <Route
+          path="/self-support"
+          element={
+            <Layout>
+              <SelfSupportPage />
             </Layout>
           }
         />
@@ -201,6 +239,22 @@ function App() {
           element={
             <Layout>
               <Reports />
+            </Layout>
+          }
+        />
+        <Route
+          path="/create-asset"
+          element={
+            <Layout>
+              <AssetFormPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/new-ticket"
+          element={
+            <Layout>
+              <TicketFormPage />
             </Layout>
           }
         />

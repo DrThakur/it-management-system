@@ -238,7 +238,8 @@
 
 //Copy From Old:
 import React, { useState } from "react";
-import logo from "../../Images/LFT-Logo.svg";
+// import logo from "../../Images/LFT-Logo.svg";
+import logo2 from "../../Images/IT_HeLPDESK-blue-removebg-preview.png";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FiHome,
@@ -293,8 +294,13 @@ const Sidebar = ({ isSideOpen }) => {
         isSideOpen ? "64" : "8"
       } flex-none flex flex-col h-screen  bg-sky-700 text-white rounded-lg overflow-y-auto overflow-x-hidden `}
     >
-      <div className="top-0 flex items-center justify-center">
-        <img src={logo} alt="Logo" className="h-32 w-32 cursor-pointer" />
+      <div className="top-0 flex items-center justify-center -mb-10 -mt-6">
+        {/* <img
+          src={logo}
+          alt="Logo"
+          className="h-32 w-32 cursor-pointer invert"
+        /> */}
+        <img src={logo2} alt="Logo" className="h-48 w-48 cursor-pointer" />
       </div>
       <div className="relative flex flex-col flex-grow ">
         <NavItem
@@ -309,7 +315,7 @@ const Sidebar = ({ isSideOpen }) => {
           active={activeItem === "Assets"}
           onItemClick={handleItemClick}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col -ml-2">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <FaBorderAll className="mr-2" />
               <Link to="/assets" className="text-white">
@@ -334,7 +340,7 @@ const Sidebar = ({ isSideOpen }) => {
           active={activeItem === "Accessories"}
           onItemClick={handleItemClick}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col -ml-2">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/accessories" className="text-white">
@@ -373,7 +379,7 @@ const Sidebar = ({ isSideOpen }) => {
           active={activeItem === "Licences"}
           onItemClick={handleItemClick}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col -ml-2">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/all" className="text-white cursor-pointer">
@@ -400,7 +406,7 @@ const Sidebar = ({ isSideOpen }) => {
           active={activeItem === "IT Support"}
           onItemClick={handleItemClick}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col -ml-2">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/new-ticket" className="text-white">
@@ -413,7 +419,7 @@ const Sidebar = ({ isSideOpen }) => {
                 Pending Tickets
               </Link>
             </div>
-            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+            <div className="flex items-center px-4 mb-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/closed-ticket" className="text-white">
                 Closed Tickets

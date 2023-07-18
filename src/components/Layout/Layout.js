@@ -321,7 +321,7 @@ import NotificationMenu from "../Notification/Notification";
 
 const Layout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(true);
+  const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -345,9 +345,8 @@ const Layout = ({ children }) => {
             <div className="flex flex-col">
               <div className="flex flex-grow mr-2">
                 {children}
-                <div className="flex flex-grow">
-                  {isNotificationMenuOpen && <NotificationMenu />}
-                </div>
+
+                {isNotificationMenuOpen && <NotificationMenu />}
               </div>
             </div>
             <Footer />
