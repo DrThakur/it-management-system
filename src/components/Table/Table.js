@@ -64,7 +64,7 @@ const Table = ({ filteredCategory }) => {
     // Logic to navigate to the add new item page
     // You can implement the desired functionality here
     console.log("Added New Item");
-    navigate("/admin-rights");
+    navigate("/create-asset");
   };
 
   const handleExport = () => {
@@ -302,7 +302,7 @@ const Table = ({ filteredCategory }) => {
   }, [search, filteredCategory, assets]);
   //   console.log(assetData);
   return (
-    <div style={{ maxWidth: "62rem" }} className=" w-full h-screen">
+    <div style={{ maxWidth: "61rem" }} className="h-screen">
       <DataTable
         title="Asset List"
         columns={columns}

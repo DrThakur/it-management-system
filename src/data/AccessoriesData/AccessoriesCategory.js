@@ -13,21 +13,43 @@ const accessoryCategory = [
     icon: <MdKeyboard />,
   },
   { name: "Mouse", count: 20, assigned: 10, remaining: 10, icon: <MdMouse /> },
+
   {
-    name: "Printer",
+    name: "Data Cards",
+    count: 20,
+    assigned: 10,
+    remaining: 10,
+    icon: <MdNetworkCell />,
+  },
+
+  {
+    name: "Memories",
     count: 20,
     assigned: 10,
     remaining: 10,
     icon: <ImPrinter />,
   },
   {
-    name: "Data Card",
+    name: "Hard Drives",
     count: 20,
     assigned: 10,
     remaining: 10,
     icon: <MdNetworkCell />,
   },
-  { name: "PDU", count: 20, assigned: 10, remaining: 10, icon: <FaPowerOff /> },
+  {
+    name: "Power Adapters",
+    count: 20,
+    assigned: 10,
+    remaining: 10,
+    icon: <MdNetworkCell />,
+  },
+  // {
+  //   name: "Power Adapters",
+  //   count: 20,
+  //   assigned: 10,
+  //   remaining: 10,
+  //   icon: <FaPowerOff />,
+  // },
   // Add other categories here
 ];
 

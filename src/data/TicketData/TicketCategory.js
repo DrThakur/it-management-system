@@ -1,7 +1,7 @@
 const ticketCategory = [
-  { name: "Hardware Issues", count: 10 },
-  { name: "Software Issues", count: 20 },
-  { name: "New System Request", count: 20 },
+  { name: "Pending Tickets", count: 10 },
+  { name: "Closed Tickets", count: 10 },
+  { name: "All Tickets", count: 20 },
 
   // Add other categories here
 ];
