@@ -8,28 +8,28 @@
 //       location: "Gurgaon",
 //       total: 10,
 //       assigned: 5,
-//       user: 3,
+//       remaining: 3,
 //     },
 //     {
 //       id: 2,
 //       location: "Bangalore",
 //       total: 15,
 //       assigned: 10,
-//       user: 7,
+//       remaining: 7,
 //     },
 //     {
 //       id: 3,
 //       location: "Ahemdabad",
 //       total: 20,
 //       assigned: 15,
-//       user: 12,
+//       remaining: 12,
 //     },
 //     {
 //       id: 4,
 //       location: "Hyderabad",
 //       total: 20,
 //       assigned: 15,
-//       user: 12,
+//       remaining: 12,
 //     },
 //   ];
 
@@ -56,7 +56,7 @@
 //                 <th className="py-2 px-4">Location</th>
 //                 <th className="py-2 px-4">Total</th>
 //                 <th className="py-2 px-4">Assigned</th>
-//                 <th className="py-2 px-4">User</th>
+//                 <th className="py-2 px-4">remaining</th>
 //               </tr>
 //             </thead>
 //             <tbody>
@@ -65,7 +65,7 @@
 //                   <td className="py-2 px-4">{location.location}</td>
 //                   <td className="py-2 px-4">{location.total}</td>
 //                   <td className="py-2 px-4">{location.assigned}</td>
-//                   <td className="py-2 px-4">{location.user}</td>
+//                   <td className="py-2 px-4">{location.remaining}</td>
 //                 </tr>
 //               ))}
 //             </tbody>
@@ -97,28 +97,28 @@
 //       location: "Gurgaon",
 //       total: 10,
 //       assigned: 5,
-//       user: 3,
+//       remaining: 3,
 //     },
 //     {
 //       id: 2,
 //       location: "Bangalore",
 //       total: 15,
 //       assigned: 10,
-//       user: 7,
+//       remaining: 7,
 //     },
 //     {
 //       id: 3,
 //       location: "Hyedrabad",
 //       total: 20,
 //       assigned: 15,
-//       user: 12,
+//       remaining: 12,
 //     },
 //     {
 //       id: 4,
 //       location: "Ahemdabad",
 //       total: 20,
 //       assigned: 15,
-//       user: 12,
+//       remaining: 12,
 //     },
 //     // Add more location items as needed
 //   ];
@@ -150,7 +150,7 @@
 //                 <th className="py-2 px-4">Location</th>
 //                 <th className="py-2 px-4">Total</th>
 //                 <th className="py-2 px-4">Assigned</th>
-//                 <th className="py-2 px-4">User</th>
+//                 <th className="py-2 px-4">remaining</th>
 //               </tr>
 //             </thead>
 //             <tbody>
@@ -164,7 +164,7 @@
 //                   </td>
 //                   <td className="py-2 px-4">{location.total}</td>
 //                   <td className="py-2 px-4">{location.assigned}</td>
-//                   <td className="py-2 px-4">{location.user}</td>
+//                   <td className="py-2 px-4">{location.remaining}</td>
 //                 </tr>
 //               ))}
 //             </tbody>
@@ -197,28 +197,28 @@
 //       location: "Gurgaon",
 //       total: 10,
 //       assigned: 5,
-//       user: 3,
+//       remaining: 3,
 //     },
 //     {
 //       id: 2,
 //       location: "Bangalore",
 //       total: 15,
 //       assigned: 10,
-//       user: 7,
+//       remaining: 7,
 //     },
 //     {
 //       id: 3,
 //       location: "Heydrabad",
 //       total: 20,
 //       assigned: 15,
-//       user: 12,
+//       remaining: 12,
 //     },
 //     {
 //       id: 3,
 //       location: "Ahemdabad",
 //       total: 20,
 //       assigned: 15,
-//       user: 12,
+//       remaining: 12,
 //     },
 //     // Add more location items as needed
 //   ];
@@ -264,7 +264,7 @@
 //                   <th className="py-2 px-4">Location</th>
 //                   <th className="py-2 px-4">Total</th>
 //                   <th className="py-2 px-4">Assigned</th>
-//                   <th className="py-2 px-4">User</th>
+//                   <th className="py-2 px-4">remaining</th>
 //                 </tr>
 //               </thead>
 //               <tbody>
@@ -278,7 +278,7 @@
 //                     </td>
 //                     <td className="py-2 px-4">{location.total}</td>
 //                     <td className="py-2 px-4">{location.assigned}</td>
-//                     <td className="py-2 px-4">{location.user}</td>
+//                     <td className="py-2 px-4">{location.remaining}</td>
 //                   </tr>
 //                 ))}
 //               </tbody>
@@ -312,105 +312,105 @@ const AssetLocation = () => {
       location: "Gurgaon",
       total: 10,
       assigned: 5,
-      user: 3,
+      remaining: 3,
     },
     {
       id: 2,
       location: "Bangalore",
       total: 15,
       assigned: 10,
-      user: 7,
+      remaining: 7,
     },
     {
       id: 3,
       location: "Heydrabad",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 4,
       location: "Ahemdabad",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 5,
       location: "Mumbai",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 6,
       location: "Pune",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 7,
       location: "Mangalore",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 8,
       location: "Goa",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 9,
       location: "Bhubneshwar",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 10,
       location: "Odisa",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 11,
       location: "Bihar",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 12,
       location: "Uttar Pradesh",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 13,
       location: "USA",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 14,
       location: "California",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     {
       id: 15,
       location: "New York",
       total: 20,
       assigned: 15,
-      user: 12,
+      remaining: 12,
     },
     // Add more location items as needed
   ];
@@ -453,7 +453,7 @@ const AssetLocation = () => {
                   <th className="py-2 px-4">Location</th>
                   <th className="py-2 px-4">Total</th>
                   <th className="py-2 px-4">Assigned</th>
-                  <th className="py-2 px-4">User</th>
+                  <th className="py-2 px-4">Remaining</th>
                 </tr>
               </thead>
               <tbody>
@@ -467,7 +467,7 @@ const AssetLocation = () => {
                     </td>
                     <td className="py-2 px-4 pl-8">{location.total}</td>
                     <td className="py-2 px-4 pl-12">{location.assigned}</td>
-                    <td className="py-2 px-4 pl-10">{location.user}</td>
+                    <td className="py-2 px-4 pl-10">{location.remaining}</td>
                   </tr>
                 ))}
               </tbody>
