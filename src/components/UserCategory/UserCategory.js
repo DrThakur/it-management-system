@@ -531,33 +531,33 @@ const UserCategory = () => {
             <table className="table-auto w-full">
               <thead className="sticky top-0">
                 <tr className="bg-gray-200 text-gray-600">
-                  <th className="py-2 px-4 ">Category</th>
-                  <th className="py-2 px-4">Total</th>
-                  <th className="py-2 px-4" colSpan="4">
+                  <th className="bg-blue-100 py-2 px-4 ">Category</th>
+                  <th className="bg-blue-200 py-2 px-4">Total</th>
+                  <th className="bg-green-200 py-2 px-4" colSpan="4">
                     Gurgaon
                   </th>
-                  <th className="py-2 px-4" colSpan="4">
+                  <th className="bg-yellow-200 py-2 px-4" colSpan="4">
                     Bangalore
                   </th>
                 </tr>
-                <tr className="bg-gray-200 text-gray-600">
-                  <th className="py-2 px-4"></th>
-                  <th className="py-2 px-4"></th>
-                  <th className="py-2 px-4">Desktop</th>
-                  <th className="py-2 px-4">Laptop</th>
-                  <th className="py-2 px-4">Tablets</th>
-                  <th className="py-2 px-4">Total</th>
-                  <th className="py-2 px-4">Desktop</th>
-                  <th className="py-2 px-4">Laptop</th>
-                  <th className="py-2 px-4">Tablets</th>
-                  <th className="py-2 px-4">Total</th>
+                <tr className="bg-gray-200 text-gray-600 border-b-2 border-gray-500">
+                  <th className="bg-blue-100 py-2 px-4"></th>
+                  <th className="bg-blue-200 py-2 px-4"></th>
+                  <th className="bg-green-200 py-2 px-4">Desktop</th>
+                  <th className="bg-green-200 py-2 px-4">Laptop</th>
+                  <th className="bg-green-200 py-2 px-4">Tablets</th>
+                  <th className="bg-green-200 py-2 px-4">Total</th>
+                  <th className="bg-yellow-200 py-2 px-4">Desktop</th>
+                  <th className="bg-yellow-200 py-2 px-4">Laptop</th>
+                  <th className="bg-yellow-200 py-2 px-4">Tablets</th>
+                  <th className="bg-yellow-200 py-2 px-4">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {visibleCategories.map((category) => (
                   <React.Fragment key={category.id}>
                     <tr>
-                      <td className="py-2 px-4">
+                      <td className="bg-blue-100 py-2 px-4">
                         <a
                           href={`/category/${category.id}`} // Replace with the actual category page URL
                           onClick={(e) => {
@@ -569,19 +569,33 @@ const UserCategory = () => {
                           {category.name}
                         </a>
                       </td>
-                      <td className="py-2 px-4">{category.total}</td>
-                      <td className="py-2 px-4">{category.gurgaon.desktop}</td>
-                      <td className="py-2 px-4">{category.gurgaon.laptop}</td>
-                      <td className="py-2 px-4">{category.gurgaon.tablets}</td>
-                      <td className="py-2 px-4">{category.gurgaon.total}</td>
-                      <td className="py-2 px-4">
+                      <td className="bg-blue-200 py-2 px-4">
+                        {category.total}
+                      </td>
+                      <td className="bg-green-200 py-2 px-4">
+                        {category.gurgaon.desktop}
+                      </td>
+                      <td className="bg-green-200 py-2 px-4">
+                        {category.gurgaon.laptop}
+                      </td>
+                      <td className="bg-green-200 py-2 px-4">
+                        {category.gurgaon.tablets}
+                      </td>
+                      <td className="bg-green-200 py-2 px-4">
+                        {category.gurgaon.total}
+                      </td>
+                      <td className="bg-yellow-200 py-2 px-4">
                         {category.bangalore.desktop}
                       </td>
-                      <td className="py-2 px-4">{category.bangalore.laptop}</td>
-                      <td className="py-2 px-4">
+                      <td className="bg-yellow-200 py-2 px-4">
+                        {category.bangalore.laptop}
+                      </td>
+                      <td className="bg-yellow-200 py-2 px-4">
                         {category.bangalore.tablets}
                       </td>
-                      <td className="py-2 px-4">{category.bangalore.total}</td>
+                      <td className="bg-yellow-200 py-2 px-4">
+                        {category.bangalore.total}
+                      </td>
                     </tr>
                   </React.Fragment>
                 ))}

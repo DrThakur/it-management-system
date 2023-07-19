@@ -4,7 +4,7 @@ import consumablesCategory from "../../data/Consumables/ConsumablesCategory";
 
 const ConsumablesPage = () => {
   return (
-    <div className="flex flex-col h-screen w-full">
+    <div className="flex flex-col h-full w-full">
       <InfoBox categories={consumablesCategory} title="Consumables" />
     </div>
   );
