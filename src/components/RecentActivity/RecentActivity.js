@@ -86,22 +86,24 @@ const RecentActivity = () => {
           >
             <table className="table-auto w-full">
               <thead className="sticky top-0">
-                <tr className="bg-gray-200 text-gray-600">
-                  <th className="py-2 px-4">Date</th>
-                  <th className="py-2 px-4">Admin</th>
-                  <th className="py-2 px-4">Action</th>
-                  <th className="py-2 px-4">Item</th>
-                  <th className="py-2 px-4">Target</th>
+                <tr className="bg-gray-200 text-gray-600 border-b-2 border-gray-500">
+                  <th className="bg-blue-200 py-2 px-4">Date</th>
+                  <th className="bg-green-200 py-2 px-4">Admin</th>
+                  <th className="bg-yellow-200 py-2 px-4">Action</th>
+                  <th className="bg-pink-200 py-2 px-4">Item</th>
+                  <th className="bg-red-200 py-2 px-4">Target</th>
                 </tr>
               </thead>
               <tbody>
                 {visibleActivities.map((activity) => (
                   <tr key={activity.id}>
-                    <td className="py-2 px-4">{activity.date}</td>
-                    <td className="py-2 px-4">{activity.admin}</td>
-                    <td className="py-2 px-4">{activity.action}</td>
-                    <td className="py-2 px-4">{activity.item}</td>
-                    <td className="py-2 px-4">{activity.target}</td>
+                    <td className="bg-blue-200 py-2 px-4">{activity.date}</td>
+                    <td className="bg-green-200 py-2 px-4">{activity.admin}</td>
+                    <td className="bg-yellow-200 py-2 px-4">
+                      {activity.action}
+                    </td>
+                    <td className="bg-pink-200 py-2 px-4">{activity.item}</td>
+                    <td className="bg-red-200 py-2 px-4">{activity.target}</td>
                   </tr>
                 ))}
               </tbody>

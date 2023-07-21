@@ -531,8 +531,20 @@ const UserCategory = () => {
             <table className="table-auto w-full">
               <thead className="sticky top-0">
                 <tr className="bg-gray-200 text-gray-600">
-                  <th className="bg-blue-100 py-2 px-4 ">Category</th>
-                  <th className="bg-blue-200 py-2 px-4">Total</th>
+                  <th
+                    className="bg-blue-100 py-2 px-4"
+                    rowSpan="2"
+                    align="center"
+                  >
+                    Category
+                  </th>
+                  <th
+                    className="bg-blue-200 py-2 px-4"
+                    rowSpan="2"
+                    align="center"
+                  >
+                    Total
+                  </th>
                   <th className="bg-green-200 py-2 px-4" colSpan="4">
                     Gurgaon
                   </th>
@@ -541,8 +553,8 @@ const UserCategory = () => {
                   </th>
                 </tr>
                 <tr className="bg-gray-200 text-gray-600 border-b-2 border-gray-500">
-                  <th className="bg-blue-100 py-2 px-4"></th>
-                  <th className="bg-blue-200 py-2 px-4"></th>
+                  {/* <th className="bg-blue-100 py-2 px-4"></th>
+                  <th className="bg-blue-200 py-2 px-4"></th> */}
                   <th className="bg-green-200 py-2 px-4">Desktop</th>
                   <th className="bg-green-200 py-2 px-4">Laptop</th>
                   <th className="bg-green-200 py-2 px-4">Tablets</th>

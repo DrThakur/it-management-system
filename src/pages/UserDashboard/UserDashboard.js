@@ -17,7 +17,7 @@ const UserDashboard = () => {
   const userRights = "User Rights";
 
   return (
-    <div className="flex flex-col w-3/4">
+    <div className="flex flex-col w-full">
       <div className="flex-item-1">
         <InfoBox categories={userData} title="Dashboard" />
       </div>
