@@ -42,7 +42,13 @@ import ConsumablesPage from "./pages/ConsumablesPage/ConsumablesPage";
 import AssetFormPage from "./pages/AssetFormPage/AssetFormPage";
 import TicketFormPage from "./pages/TicketFormPage/TicketFormPage";
 import TicketPage from "./pages/TicketPage/TicketPage";
+import Users from "./pages/Users/Users";
 // import PieChart from "./components/PieChart/PieChart";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+import UserCreationPage from "./pages/UserCreationPage/UserCreationPage";
+import UserViewPage from "./pages/UserViewPage/UserViewPage";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -196,7 +202,23 @@ function App() {
           path="/users"
           element={
             <Layout>
-              <Table />
+              <Users />
+            </Layout>
+          }
+        />
+        <Route
+          path="/new-user"
+          element={
+            <Layout>
+              <UserCreationPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/userview"
+          element={
+            <Layout>
+              <UserViewPage />
             </Layout>
           }
         />
