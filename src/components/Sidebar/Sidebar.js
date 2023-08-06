@@ -238,8 +238,7 @@
 
 //Copy From Old:
 import React, { useState } from "react";
-// import logo from "../../Images/LFT-Logo.svg";
-import logo2 from "../../Images/IT_HeLPDESK-blue-removebg-preview.png";
+import logo from "../../Images/LFT-Logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FiHome,
@@ -285,6 +284,8 @@ const Sidebar = ({ isSideOpen }) => {
       navigate("/users");
     } else if (label === "Reports") {
       navigate("/reports");
+    } else if (label === "Settings") {
+      navigate("/settings");
     }
   };
 
@@ -295,12 +296,7 @@ const Sidebar = ({ isSideOpen }) => {
       } flex-none flex flex-col h-screen  bg-sky-700 text-white rounded-lg overflow-y-auto overflow-x-hidden `}
     >
       <div className="top-0 flex items-center justify-center -mb-10 -mt-6">
-        {/* <img
-          src={logo}
-          alt="Logo"
-          className="h-32 w-32 cursor-pointer invert"
-        /> */}
-        <img src={logo2} alt="Logo" className="h-48 w-48 cursor-pointer" />
+        <img src={logo} alt="Logo" className="h-40 w-40 cursor-pointer " />
       </div>
       <div className="relative flex flex-col flex-grow ">
         <NavItem
@@ -458,7 +454,7 @@ const Sidebar = ({ isSideOpen }) => {
           onItemClick={handleItemClick}
         />
         <NavItem
-          icon={<FiSettings />}
+          icon={<FiSettings className="animate-[spin_3s_linear_infinite]" />}
           label="Settings"
           active={activeItem === "Settings"}
           onItemClick={handleItemClick}

@@ -93,6 +93,7 @@ const InfoBox = ({ categories, title }) => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     navigate(`/${category.name.replace(/\s+/g, "-").toLowerCase()}`);
+    console.log(`/${category.name.replace(/\s+/g, "-").toLowerCase()}`);
   };
 
   const getRandomColor = (index) => {

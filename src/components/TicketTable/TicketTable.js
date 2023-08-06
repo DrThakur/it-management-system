@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
-// import { UserService } from "../service/UserService";
+// import { TicketService } from "../service/TicketService";
 import { FilterMatchMode } from "primereact/api";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { MultiSelect } from "primereact/multiselect";
 import { Link, useNavigate } from "react-router-dom";
-import "./Table.css";
 import axios from "axios";
 
-const Table = () => {
-  const [users, setUsers] = useState([]);
+const TicketTable = () => {
+  const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
   const [sizeOptions] = useState([
     { label: "Small", value: "small" },
@@ -21,53 +20,67 @@ const Table = () => {
     { label: "Large", value: "large" },
   ]);
   const [size, setSize] = useState(sizeOptions[0].value);
-  const [departments] = useState([
-    "Software Engineering",
-    "Verification",
-    "FPGA",
-    "IT Department",
+  const [priorities] = useState([
+    "High Priority",
+    "Medium Priority",
+    "Low Priority",
   ]);
-  const [locations] = useState([
-    "Guragaon",
-    "Bangalore",
-    "Hyedrabad",
-    "Kolkata",
-  ]);
-  const [selectedProducts, setSelectedProducts] = useState(null);
+  const [statuses] = useState(["Resolved", "Pending", "New"]);
+  const [selectedTickets, setSelectedTickets] = useState(null);
   const [filters, setFilters] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
 
   // useEffect(() => {
-  //   UserService.getUsersMini().then((data) => setUsers(data));
+  //   TicketService.getTicketsMini().then((data) => setTickets(data));
   //   initFilters();
   // }, []);
-
-  const statusBodyTemplate = (user) => {
-    return <Tag value={user.active} severity={getSeverity(user)}></Tag>;
-  };
-
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchTickets = async () => {
       try {
-        const res = await axios.get("http://localhost:8002/users");
-        setUsers(res.data);
+        const res = await axios.get("http://localhost:8002/tickets");
+        console.log(res);
+        setTickets(res.data);
       } catch (error) {
         console.error("Error", error);
       }
     };
-    fetchUsers();
+    fetchTickets();
     initFilters();
   }, []);
 
-  const getSeverity = (user) => {
-    switch (user.status) {
-      case "ACTIVE":
+  const statusBodyTemplate = (ticket) => {
+    return <Tag value={ticket.status} severity={getSeverity(ticket)}></Tag>;
+  };
+  const priorityBodyTemplate = (ticket) => {
+    return (
+      <Tag value={ticket.priority} severity={getPrioritySeverity(ticket)}></Tag>
+    );
+  };
+
+  const getSeverity = (ticket) => {
+    switch (ticket.status) {
+      case "Resolved":
         return "success";
 
-      case "HOLD":
+      case "New":
         return "warning";
 
-      case "INACTIVE":
+      case "Pending":
+        return "danger";
+
+      default:
+        return null;
+    }
+  };
+  const getPrioritySeverity = (ticket) => {
+    switch (ticket.priority) {
+      case "Low Priority":
+        return "success";
+
+      case "Medium Priority":
+        return "warning";
+
+      case "High Priority":
         return "danger";
 
       default:
@@ -88,12 +101,11 @@ const Table = () => {
     setFilters({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
       name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      designation: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      emailID: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      username: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      department: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      location: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      reportingManager: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      ticketID: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      requestType: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      createdAt: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      priority: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      assignedTo: { value: null, matchMode: FilterMatchMode.CONTAINS },
       status: { value: null, matchMode: FilterMatchMode.CONTAINS },
     });
     setGlobalFilterValue("");
@@ -102,12 +114,12 @@ const Table = () => {
     initFilters();
   };
   const onRowEditComplete = (e) => {
-    let _users = [...users];
+    let _tickets = [...tickets];
     let { newData, index } = e;
 
-    _users[index] = newData;
+    _tickets[index] = newData;
 
-    setUsers(_users);
+    setTickets(_tickets);
   };
 
   const textEditor = (options) => {
@@ -119,15 +131,15 @@ const Table = () => {
       />
     );
   };
-  const employeeBodyTemplate = (rowData) => {
-    const employee = rowData;
+  const userBodyTemplate = (rowData) => {
+    const createdBy = rowData.createdBy;
 
     return (
       <div className="flex flex-col align-items-center gap-2 mr-2">
         <div className="flex flex-row align-items-center">
           <img
-            alt={employee.firstName}
-            src={`http://localhost:8002${employee.profileImageURL}`}
+            alt={createdBy.name}
+            src={`http://localhost:8002${createdBy.profilePicture}`}
             width="32"
             height="32"
           />
@@ -135,33 +147,55 @@ const Table = () => {
             to="/userview"
             className="ml-2 text-green-500 hover:text-green-900"
           >
-            {employee.firstName}
+            {createdBy.name}
+          </Link>
+        </div>
+      </div>
+    );
+  };
+  const assignedBodyTemplate = (rowData) => {
+    const assignedTo = rowData.assignedTo;
+
+    return (
+      <div className="flex flex-col align-items-center gap-2 mr-2">
+        <div className="flex flex-row align-items-center">
+          <img
+            alt={assignedTo.name}
+            src={`http://localhost:8002${assignedTo.profilePicture}`}
+            width="32"
+            height="32"
+          />
+          <Link
+            to="/userview"
+            className="ml-2 text-green-500 hover:text-green-900"
+          >
+            {assignedTo.name}
           </Link>
         </div>
       </div>
     );
   };
 
-  const departmentEditor = (options) => {
+  const priorityEditor = (options) => {
     return (
       <Dropdown
         value={options.value}
-        options={departments}
+        options={priorities}
         onChange={(e) => options.editorCallback(e.value)}
-        placeholder="Change Department"
+        placeholder="Select Priority"
         itemTemplate={(option) => {
           return <Tag value={option} severity={getSeverity(option)}></Tag>;
         }}
       />
     );
   };
-  const locationEditor = (options) => {
+  const statusEditor = (options) => {
     return (
       <Dropdown
         value={options.value}
-        options={locations}
+        options={statuses}
         onChange={(e) => options.editorCallback(e.value)}
-        placeholder="Change Location"
+        placeholder="Change Status"
         itemTemplate={(option) => {
           return <Tag value={option} severity={getSeverity(option)}></Tag>;
         }}
@@ -172,13 +206,36 @@ const Table = () => {
   const columns = [
     {
       field: "id",
-      header: "ID",
+      header: "S.No",
+      body: (rowData) => (
+        <a href="/ticketView" className="text-blue-500 hover:text-blue-900">
+          {rowData.serialNumber}
+        </a>
+      ),
+      sortable: true,
+      bodyStyle: {
+        textAlign: "center",
+      },
+    },
+    {
+      field: "ticketID",
+      header: "Ticket ID",
+      body: (rowData) => (
+        <a href="/ticketView" className="text-blue-500 hover:text-blue-900">
+          {rowData.ticketId}
+        </a>
+      ),
+      bodyStyle: {
+        textAlign: "center",
+        minWidth: "7rem",
+      },
+      editor: (options) => textEditor(options),
       sortable: true,
     },
     {
       field: "name",
-      header: "Name",
-      body: employeeBodyTemplate,
+      header: "Created By",
+      body: userBodyTemplate,
       bodyStyle: {
         textAlign: "center",
         minWidth: "15rem", // Customize the style as needed
@@ -187,145 +244,54 @@ const Table = () => {
       sortable: true,
     },
     {
-      field: "designation",
-      header: "Designation",
+      field: "requestType",
+      header: "Request Type",
       bodyStyle: {
         textAlign: "center",
-        minWidth: "12rem", // Customize the style as needed
+        minWidth: "10rem", // Customize the style as needed
       },
       body: (rowData) => (
         <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.designation}
+          {rowData.requestType}
         </a>
       ),
       editor: (options) => textEditor(options),
       sortable: true,
     },
     {
-      field: "emailID",
-      header: "Email ID",
+      field: "createdAt",
+      header: "Created On",
       bodyStyle: {
         textAlign: "center",
+        minWidth: "8rem",
       },
       body: (rowData) => (
         <a href="/userview" className="text-yellow-500 hover:text-blue-900">
-          {rowData.email}
+          {new Date(rowData.createdAt).toLocaleString()}
         </a>
       ),
       editor: (options) => textEditor(options),
       sortable: true,
     },
     {
-      field: "phoneNumber",
-      header: "Phone Number",
+      field: "priority",
+      header: "Priority",
+      body: priorityBodyTemplate,
       bodyStyle: {
         textAlign: "center",
+        pointer: "cursor",
       },
-      body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.phoneNumber}
-        </a>
-      ),
-      editor: (options) => textEditor(options),
+      editor: (options) => priorityEditor(options),
       sortable: true,
     },
     {
-      field: "username",
-      header: "Username",
+      field: "assignedTo",
+      header: "Assigned To",
+      body: assignedBodyTemplate,
       bodyStyle: {
         textAlign: "center",
+        minWidth: "15rem", // Customize the style as needed
       },
-      body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.username}
-        </a>
-      ),
-      editor: (options) => textEditor(options),
-      sortable: true,
-    },
-    {
-      field: "department",
-      header: "Department",
-      bodyStyle: {
-        textAlign: "center",
-        width: "20%",
-      },
-      body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.department}
-        </a>
-      ),
-      editor: (options) => departmentEditor(options),
-      sortable: true,
-    },
-    {
-      field: "location",
-      header: "Location",
-      bodyStyle: {
-        textAlign: "center",
-      },
-      body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.location}
-        </a>
-      ),
-      editor: (options) => locationEditor(options),
-      sortable: true,
-    },
-    {
-      field: "reportingManager",
-      header: "Reporting Manager",
-      bodyStyle: {
-        textAlign: "center",
-      },
-      body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.reportingManager}
-        </a>
-      ),
-      editor: (options) => textEditor(options),
-      sortable: true,
-    },
-    {
-      field: "issuedAssets",
-      header: "Issued Assets",
-      bodyStyle: {
-        textAlign: "center",
-      },
-      body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.issuedAssets || 5}
-        </a>
-      ),
-      editor: (options) => textEditor(options),
-      sortable: true,
-    },
-    {
-      field: "issuedLicence",
-      header: "Issued Licence",
-      bodyStyle: {
-        textAlign: "center",
-      },
-      body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.issuedLicence || 5}
-        </a>
-      ),
-      editor: (options) => textEditor(options),
-      sortable: true,
-    },
-    {
-      field: "totalRaisedTickets",
-      header: "Total Raised Tickets",
-      bodyStyle: {
-        textAlign: "center",
-        // Customize the style as needed
-      },
-      body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
-          {rowData.totalRaisedTickets || 10}
-        </a>
-      ),
       editor: (options) => textEditor(options),
       sortable: true,
     },
@@ -336,7 +302,7 @@ const Table = () => {
         textAlign: "center",
       },
       body: statusBodyTemplate,
-      editor: (options) => textEditor(options),
+      editor: (options) => statusEditor(options),
       sortable: true,
     },
     {
@@ -356,8 +322,8 @@ const Table = () => {
     setVisibleColumns(orderedSelectedColumns);
   };
 
-  const handleNewUserCreation = () => {
-    navigate("/new-user");
+  const handleNewTicketCreation = () => {
+    navigate("/new-ticket");
   };
 
   const header = (
@@ -386,9 +352,9 @@ const Table = () => {
       <div className="w-1/2 ml-2">
         <button
           className="bg-green-500 border-none p-3 rounded-lg text-white"
-          onClick={handleNewUserCreation}
+          onClick={handleNewTicketCreation}
         >
-          Create User
+          Create New Ticket
         </button>
       </div>
       <div className="flex items-center">
@@ -414,13 +380,13 @@ const Table = () => {
   );
 
   return (
-    <div className="w-full overflow-hidden card p-fluid">
-      <h1 className="text-lg font-bold">All Users</h1>
+    <div className="w-full overflow-hidden ">
+      <h1>All Tickets</h1>
       <DataTable
-        value={users}
+        value={tickets}
         header={header}
-        size={size}
         showGridlines
+        size={size}
         tableStyle={{ overflow: "auto" }}
         className="shadow-md rounded-lg"
         stripedRows
@@ -433,23 +399,23 @@ const Table = () => {
         filters={filters}
         globalFilterFields={[
           "name",
-          "designation",
-          "emailID",
-          "username",
-          "department",
-          "reportingManager",
+          "ticketID",
+          "requestType",
+          "createdAt",
+          "priority",
+          "assignedTo",
           "location",
           "status",
         ]}
-        emptyMessage="No product found."
+        emptyMessage="No Tickets found."
         editMode="row"
         dataKey="id"
         onRowEditComplete={onRowEditComplete}
         scrollable
         scrollHeight="400px"
         selectionMode={"checkbox"}
-        selection={selectedProducts}
-        onSelectionChange={(e) => setSelectedProducts(e.value)}
+        selection={selectedTickets}
+        onSelectionChange={(e) => setSelectedTickets(e.value)}
       >
         <Column
           selectionMode="multiple"
@@ -459,7 +425,11 @@ const Table = () => {
           <Column
             key={index}
             {...column}
-            headerStyle={{ textAlign: "center" }}
+            headerStyle={{
+              textAlign: "center",
+              marginLeft: "10px",
+              marginRight: "10px",
+            }}
           />
         ))}
       </DataTable>
@@ -467,4 +437,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default TicketTable;

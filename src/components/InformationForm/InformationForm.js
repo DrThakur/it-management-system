@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { BsCheckLg } from "react-icons/bs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const InformationForm = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +11,7 @@ const InformationForm = () => {
     username: "",
     password: "",
     confirmPassword: "",
-    isActive: false,
+    status: false,
     email: "",
     profileImage: null,
     employeeCode: "",
@@ -16,14 +19,21 @@ const InformationForm = () => {
     reportingManager: "",
     department: "",
     location: "",
-    phone: "",
+    phoneNumber: "",
     notes: "",
   });
 
   const handleInputChange = (event) => {
-    const { name, value, type, checked, files } = event.target;
-    const newValue =
-      type === "checkbox" ? checked : type === "file" ? files[0] : value;
+    const { name, type, checked, files } = event.target;
+    let newValue;
+
+    if (type === "checkbox") {
+      newValue = checked ? "Active" : "Inactive";
+    } else if (type === "file") {
+      newValue = files[0]; // Store the selected file object
+    } else {
+      newValue = event.target.value;
+    }
 
     setFormData((prevData) => ({
       ...prevData,
@@ -31,10 +41,39 @@ const InformationForm = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Handle form submission logic here
-    console.log(formData);
+    try {
+      const res = await axios.post("http://localhost:8002/users", formData);
+      console.log(res);
+      // Reset the form after successful submission
+      setFormData({
+        firstName: "",
+        lastName: "",
+        username: "",
+        password: "",
+        confirmPassword: "",
+        status: false,
+        email: "",
+        profileImage: null,
+        employeeCode: "",
+        designation: "",
+        reportingManager: "",
+        department: "",
+        location: "",
+        phoneNumber: "",
+        notes: "",
+      });
+
+      // Show a toast notification
+      toast.success("New user created!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      res.data && window.location.replace("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -124,22 +163,23 @@ const InformationForm = () => {
             required
           />
         </div>
-        <div className="mb-4 flex items-center">
+        <div className="mb-4 flex  flex-row items-center">
           <label
             className="w-1/3 text-gray-700 font-bold -mr-8 ml-6"
             htmlFor="active"
           >
-            Active:
+            Status:
           </label>
           <input
             className="w-5 h-5 px-4 py-4 border rounded focus:outline-none focus:shadow-outline -ml-6"
             type="checkbox"
-            name="active"
-            value={formData.isActive}
+            name="status"
+            value={formData.status}
             onChange={handleInputChange}
             required
           />
         </div>
+
         <div className="mb-4 flex items-center">
           <label
             className="w-1/3 text-gray-700 font-bold -mr-8 ml-6"
@@ -282,7 +322,6 @@ const InformationForm = () => {
             name="profileImage"
             value={formData.profileImage}
             onChange={handleInputChange}
-            required
           />
         </div>
 
@@ -296,6 +335,7 @@ const InformationForm = () => {
           </button>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };

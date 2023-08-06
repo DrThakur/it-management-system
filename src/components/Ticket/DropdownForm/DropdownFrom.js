@@ -1,468 +1,7 @@
-// import React, { useState } from "react";
-// import employees from "../../../data/EmployeesData/EmployeesData";
-// import Select from "react-select";
-
-// const EmployeeOption = ({ employee }) => (
-//   <div className="flex items-center">
-//     <img
-//       src={employee.imageUrl}
-//       alt={`${employee.name}'s profile`}
-//       className="w-8 h-8 rounded-full mr-2"
-//     />
-//     <div>
-//       <p className="font-medium">{employee.name}</p>
-//       <p className="text-sm text-gray-700">
-//         {employee.position} ({employee.code})
-//       </p>
-//     </div>
-//   </div>
-// );
-
-// const DropdownForm = () => {
-//   const [requestType, setRequestType] = useState("");
-//   const [selectedAsset, setSelectedAsset] = useState("");
-//   const [description, setDescription] = useState("");
-//   const [hasManagerApproval, setHasManagerApproval] = useState(false);
-//   const [managerName, setManagerName] = useState("");
-//   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-
-//   const handleRequestTypeChange = (e) => {
-//     setRequestType(e.target.value);
-//     setSelectedAsset("");
-//     setDescription("");
-//     setHasManagerApproval(false);
-//     setManagerName("");
-//     setIsFormSubmitted(false);
-//   };
-
-//   const handleAssetSelect = (asset) => {
-//     setSelectedAsset(asset);
-//     setDescription("");
-//     setIsFormSubmitted(false);
-//   };
-
-//   const handleDescriptionChange = (e) => {
-//     setDescription(e.target.value);
-//     setIsFormSubmitted(false);
-//   };
-
-//   const handleManagerApprovalChange = (e) => {
-//     setHasManagerApproval(e.target.value === "Yes");
-//   };
-
-//   const handleManagerNameChange = (selectedOption) => {
-//     //  setManagerName(e.target.value);
-//     setManagerName(selectedOption.value);
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     // Perform form submission logic here
-//     // You can access the selected values: requestType, selectedAsset, description, hasManagerApproval, managerName
-//     // For simplicity, let's just log the values to the console
-//     console.log("Form submitted:");
-//     console.log("Request type:", requestType);
-//     console.log("Selected asset:", selectedAsset);
-//     console.log("Description:", description);
-//     console.log("Has manager approval:", hasManagerApproval);
-//     console.log("Manager name:", managerName);
-
-//     setIsFormSubmitted(true);
-//   };
-
-//   //   const employeeOptions = employees.map((employee) => ({
-//   //     value: employee.name,
-//   //     label: (
-//   //       <div className="flex flex-row">
-//   //         <img
-//   //           src={employee.imageUrl}
-//   //           alt={`${employee.name}'s profile`}
-//   //           className="w-8 h-8 rounded-full mr-2"
-//   //         />
-//   //         {employee.name} - {employee.position} ({employee.code})
-//   //       </div>
-//   //     ),
-//   //   }));
-
-//   const employeeOptions = employees.map((employee) => ({
-//     value: employee.name,
-//     label: <EmployeeOption employee={employee} />,
-//   }));
-
-//   return (
-//     <div className="w-full bg-white shadow-lg rounded-lg p-4 px-20">
-//       <form onSubmit={handleSubmit}>
-//         <div className="mb-4">
-//           <label htmlFor="requestType" className="block mb-2 font-medium">
-//             Request Type:
-//           </label>
-//           <select
-//             id="requestType"
-//             value={requestType}
-//             onChange={handleRequestTypeChange}
-//             className="w-full border rounded-md p-2"
-//           >
-//             <option value="">-- Select Request Type --</option>
-//             <option value="Request Something">Request Something</option>
-//             <option value="Report Something">Report Something</option>
-//           </select>
-//         </div>
-
-//         {requestType === "Request Something" && (
-//           <>
-//             <div className="mb-4">
-//               <label htmlFor="selectedAsset" className="block mb-2 font-medium">
-//                 Select Asset:
-//               </label>
-//               <select
-//                 id="selectedAsset"
-//                 value={selectedAsset}
-//                 onChange={(e) => handleAssetSelect(e.target.value)}
-//                 className="w-full border rounded-md p-2"
-//               >
-//                 <option value="">-- Select Asset --</option>
-//                 <option value="Laptop">Laptop</option>
-//                 <option value="Desktop">Desktop</option>
-//                 <option value="Accessories">Accessories</option>
-//                 <option value="Consumables">Consumables</option>
-//                 <option value="Others">Others</option>
-//               </select>
-//             </div>
-
-//             {selectedAsset && (
-//               <div className="mb-4">
-//                 <label htmlFor="description" className="block mb-2 font-medium">
-//                   Brief your requirement in details:
-//                 </label>
-//                 <textarea
-//                   id="description"
-//                   value={description}
-//                   onChange={handleDescriptionChange}
-//                   rows={4}
-//                   className="w-full border rounded-md p-2"
-//                 />
-//               </div>
-//             )}
-
-//             <div className="mb-4">
-//               <label className="block mb-2 font-medium">
-//                 Do you have your manager's approval?
-//               </label>
-//               <div className="flex space-x-4">
-//                 <label htmlFor="managerApprovalYes">
-//                   <input
-//                     type="radio"
-//                     id="managerApprovalYes"
-//                     name="managerApproval"
-//                     value="Yes"
-//                     checked={hasManagerApproval}
-//                     onChange={handleManagerApprovalChange}
-//                     className="mr-2"
-//                   />
-//                   Yes
-//                 </label>
-//                 <label htmlFor="managerApprovalNo">
-//                   <input
-//                     type="radio"
-//                     id="managerApprovalNo"
-//                     name="managerApproval"
-//                     value="No"
-//                     checked={!hasManagerApproval}
-//                     onChange={handleManagerApprovalChange}
-//                     className="mr-2"
-//                   />
-//                   No
-//                 </label>
-//               </div>
-//             </div>
-
-//             {hasManagerApproval && (
-//               <div className="mb-4">
-//                 <label htmlFor="managerName" className="block mb-2 font-medium">
-//                   Your Manager's Name:
-//                 </label>
-//                 {/* <select
-//                   id="managerName"
-//                   value={managerName}
-//                   onChange={handleManagerNameChange}
-//                   className="w-full border rounded-md p-2"
-//                 >
-//                   <option value="">-- Select Manager --</option>
-//                   {employees.map((employee) => (
-//                     <option key={employee.id} value={employee.name}>
-//                       <img
-//                         src={employee.imageUrl}
-//                         alt={`${employee.name}'s profile`}
-//                         className="w-8 h-8 rounded-full mr-2"
-//                       />
-//                       {employee.name} - {employee.position} ({employee.code})
-//                     </option>
-//                   ))}
-//                 </select> */}
-//                 {/* <Select
-//                   id="managerName"
-//                   value={{ value: managerName, label: managerName }}
-//                   onChange={handleManagerNameChange}
-//                   options={employeeOptions}
-//                 /> */}
-
-//                 <Select
-//                   id="managerName"
-//                   value={{ value: managerName, label: managerName }}
-//                   onChange={handleManagerNameChange}
-//                   options={employeeOptions}
-//                 />
-//               </div>
-//             )}
-//           </>
-//         )}
-
-//         <button
-//           type="submit"
-//           disabled={
-//             !requestType ||
-//             !selectedAsset ||
-//             !description ||
-//             (hasManagerApproval && !managerName)
-//           }
-//           className="mt-4 p-2 bg-green-500 text-white rounded-md cursor-pointer mx-28"
-//         >
-//           Submit
-//         </button>
-
-//         {isFormSubmitted && (
-//           <p className="text-green-500 mt-2">Form submitted successfully!</p>
-//         )}
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default DropdownForm;
-
-// import React, { useState } from "react";
-// import employees from "../../../data/EmployeesData/EmployeesData";
-// import Select from "react-select";
-
-// const EmployeeOption = ({ employee }) => (
-//   <div className="flex items-center">
-//     <img
-//       src={employee.imageUrl}
-//       alt={`${employee.name}'s profile`}
-//       className="w-8 h-8 rounded-full mr-2"
-//     />
-//     <div>
-//       <p className="font-medium">{employee.name}</p>
-//       <p className="text-sm text-gray-700">
-//         {employee.position} ({employee.code})
-//       </p>
-//     </div>
-//   </div>
-// );
-
-// const DropdownForm = () => {
-//   const [requestType, setRequestType] = useState("");
-//   const [selectedAsset, setSelectedAsset] = useState("");
-//   const [description, setDescription] = useState("");
-//   const [hasManagerApproval, setHasManagerApproval] = useState(false);
-//   const [managerName, setManagerName] = useState("");
-//   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-
-//   const handleRequestTypeChange = (e) => {
-//     const selectedRequestType = e.target.value;
-//     setRequestType(selectedRequestType);
-
-//     if (selectedRequestType !== "Request Something") {
-//       setSelectedAsset("");
-//       setDescription("");
-//       setHasManagerApproval(false);
-//       setManagerName("");
-//     }
-
-//     setIsFormSubmitted(false);
-//   };
-
-//   const handleAssetSelect = (asset) => {
-//     setSelectedAsset(asset);
-//     setDescription("");
-//     setHasManagerApproval(false);
-//     setManagerName("");
-//     setIsFormSubmitted(false);
-//   };
-
-//   const handleDescriptionChange = (e) => {
-//     setDescription(e.target.value);
-//     setHasManagerApproval(false);
-//     setManagerName("");
-//     setIsFormSubmitted(false);
-//   };
-
-//   const handleManagerApprovalChange = (e) => {
-//     setHasManagerApproval(e.target.value === "Yes");
-//     setManagerName("");
-//     setIsFormSubmitted(false);
-//   };
-
-//   const handleManagerNameChange = (selectedOption) => {
-//     setManagerName(selectedOption.value);
-//     setIsFormSubmitted(false);
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     // Perform form submission logic here
-//     // You can access the selected values: requestType, selectedAsset, description, hasManagerApproval, managerName
-//     // For simplicity, let's just log the values to the console
-//     console.log("Form submitted:");
-//     console.log("Request type:", requestType);
-//     console.log("Selected asset:", selectedAsset);
-//     console.log("Description:", description);
-//     console.log("Has manager approval:", hasManagerApproval);
-//     console.log("Manager name:", managerName);
-
-//     setIsFormSubmitted(true);
-//   };
-
-//   const employeeOptions = employees.map((employee) => ({
-//     value: employee.name,
-//     label: <EmployeeOption employee={employee} />,
-//   }));
-
-//   return (
-//     <div className="w-full bg-white shadow-lg rounded-lg p-4 px-20">
-//       <form onSubmit={handleSubmit}>
-//         <div className="mb-4">
-//           <label htmlFor="requestType" className="block mb-2 font-medium">
-//             Request Type:
-//           </label>
-//           <select
-//             id="requestType"
-//             value={requestType}
-//             onChange={handleRequestTypeChange}
-//             className="w-full border rounded-md p-2"
-//           >
-//             <option value="">-- Select Request Type --</option>
-//             <option value="Request Something">Request Something</option>
-//             <option value="Report Something">Report Something</option>
-//           </select>
-//         </div>
-
-//         {requestType === "Request Something" && (
-//           <>
-//             <div className="mb-4">
-//               <label htmlFor="selectedAsset" className="block mb-2 font-medium">
-//                 Select Asset:
-//               </label>
-//               <select
-//                 id="selectedAsset"
-//                 value={selectedAsset}
-//                 onChange={(e) => handleAssetSelect(e.target.value)}
-//                 className="w-full border rounded-md p-2"
-//               >
-//                 <option value="">-- Select Asset --</option>
-//                 <option value="Laptop">Laptop</option>
-//                 <option value="Desktop">Desktop</option>
-//                 <option value="Accessories">Accessories</option>
-//                 <option value="Consumables">Consumables</option>
-//                 <option value="Others">Others</option>
-//               </select>
-//             </div>
-
-//             {selectedAsset && (
-//               <div className="mb-4">
-//                 <label htmlFor="description" className="block mb-2 font-medium">
-//                   Brief your requirement in details:
-//                 </label>
-//                 <textarea
-//                   id="description"
-//                   value={description}
-//                   onChange={handleDescriptionChange}
-//                   rows={4}
-//                   className="w-full border rounded-md p-2"
-//                 />
-//               </div>
-//             )}
-
-//             {description && (
-//               <div className="mb-4">
-//                 <label className="block mb-2 font-medium">
-//                   Do you have your manager's approval?
-//                 </label>
-//                 <div className="flex space-x-4">
-//                   <label htmlFor="managerApprovalYes">
-//                     <input
-//                       type="radio"
-//                       id="managerApprovalYes"
-//                       name="managerApproval"
-//                       value="Yes"
-//                       checked={hasManagerApproval}
-//                       onChange={handleManagerApprovalChange}
-//                       className="mr-2"
-//                     />
-//                     Yes
-//                   </label>
-//                   <label htmlFor="managerApprovalNo">
-//                     <input
-//                       type="radio"
-//                       id="managerApprovalNo"
-//                       name="managerApproval"
-//                       value="No"
-//                       checked={!hasManagerApproval}
-//                       onChange={handleManagerApprovalChange}
-//                       className="mr-2"
-//                     />
-//                     No
-//                   </label>
-//                 </div>
-//               </div>
-//             )}
-
-//             {hasManagerApproval && (
-//               <div className="mb-4">
-//                 <label htmlFor="managerName" className="block mb-2 font-medium">
-//                   Your Manager's Name:
-//                 </label>
-//                 <Select
-//                   id="managerName"
-//                   value={{ value: managerName, label: managerName }}
-//                   onChange={handleManagerNameChange}
-//                   options={employeeOptions}
-//                 />
-//               </div>
-//             )}
-//           </>
-//         )}
-
-//         <div className="flex justify-center">
-//           <button
-//             type="submit"
-//             disabled={
-//               !requestType ||
-//               (!selectedAsset && requestType === "Request Something") ||
-//               (!description && selectedAsset) ||
-//               (hasManagerApproval && !managerName)
-//             }
-//             className="mt-4 p-2 bg-green-500 text-white rounded-md cursor-pointer"
-//           >
-//             Submit
-//           </button>
-//         </div>
-
-//         {isFormSubmitted && (
-//           <p className="text-green-500 mt-2">Form submitted successfully!</p>
-//         )}
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default DropdownForm;
-
 import React, { useState } from "react";
 import employees from "../../../data/EmployeesData/EmployeesData";
 import Select from "react-select";
+import DialogBox from "./DialogBox";
 
 const EmployeeOption = ({ employee }) => (
   <div className="flex items-center">
@@ -486,9 +25,18 @@ const DropdownForm = () => {
   const [selectedAsset, setSelectedAsset] = useState("");
   const [description, setDescription] = useState("");
   const [hasManagerApproval, setHasManagerApproval] = useState(false);
+  const [selectedPriority, setSelectedPriority] = useState("");
   const [managerName, setManagerName] = useState("");
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [isFormComplete, setIsFormComplete] = useState(false);
+  const [selectedIssue, setSelectedIssue] = useState("");
+  const [showDialog, setShowDialog] = useState(false);
+  const [dialogVisibleDuration, setDialogVisibleDuration] = useState(5000); // 5000 milliseconds (5 seconds)
+  const [ticketDetails, setTicketDetails] = useState({
+    ticketId: "",
+    issue: "",
+    submissionTime: null,
+  });
 
   const handleRequestTypeChange = (e) => {
     const selectedRequestType = e.target.value;
@@ -500,6 +48,9 @@ const DropdownForm = () => {
       setDescription("");
       setHasManagerApproval(false);
       setManagerName("");
+    } else {
+      setSelectedIssue("");
+      setDescription("");
     }
 
     setIsFormSubmitted(false);
@@ -545,33 +96,70 @@ const DropdownForm = () => {
     setIsFormSubmitted(false);
     setIsFormComplete(false);
   };
+  const handleIssueChange = (issue) => {
+    setSelectedIssue(issue);
+    setDescription("");
+    setIsFormSubmitted(false);
+    setIsFormComplete(false);
+  };
+  const handlePriorityChange = (priority) => {
+    setSelectedPriority(priority);
+    setIsFormSubmitted(false);
+    setIsFormComplete(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if all input fields are filled
-    if (
-      requestType &&
-      needAssetFor &&
-      (requestType !== "Request Something" || selectedAsset) &&
-      description &&
-      (!hasManagerApproval || managerName)
-    ) {
-      // Perform form submission logic here
-      // You can access the selected values: requestType, selectedAsset, description, hasManagerApproval, managerName
-      // For simplicity, let's just log the values to the console
-      console.log("Form submitted:");
-      console.log("Request type:", requestType);
-      console.log("Need the asset for:", needAssetFor);
-      console.log("Selected asset:", selectedAsset);
-      console.log("Description:", description);
-      console.log("Has manager approval:", hasManagerApproval);
-      console.log("Manager name:", managerName);
+    let isComplete = true;
 
+    if (requestType === "Request Something") {
+      if (!needAssetFor || !selectedAsset || !description) {
+        isComplete = false;
+      }
+      if (hasManagerApproval && !managerName) {
+        isComplete = false;
+      }
+      if (!selectedPriority) {
+        isComplete = false;
+      }
+    } else if (requestType === "Report Something") {
+      if (!selectedIssue || !description || !selectedPriority) {
+        isComplete = false;
+      }
+    } else {
+      isComplete = false;
+    }
+
+    if (isComplete) {
       setIsFormSubmitted(true);
+
+      // Simulate a backend response
+      const mockTicketId = Math.floor(Math.random() * 1000) + 1;
+      const submissionDetails = {
+        ticketId: `TICKET-${mockTicketId}`,
+        issue:
+          requestType === "Report Something" ? selectedIssue : selectedAsset,
+        submissionTime: new Date(),
+      };
+      setTicketDetails(submissionDetails);
+      setShowDialog(true);
+      setDialogVisibleDuration(5000);
     } else {
       setIsFormComplete(true);
     }
+
+    // Resetting the form fields
+    setRequestType("");
+    setNeedAssetFor("");
+    setSelectedAsset("");
+    setDescription("");
+    setHasManagerApproval(false);
+    setManagerName("");
+    setIsFormSubmitted(false);
+    setIsFormComplete(false);
+    setSelectedIssue("");
+    setSelectedPriority("");
   };
 
   const employeeOptions = employees.map((employee) => ({
@@ -597,8 +185,21 @@ const DropdownForm = () => {
             <option value="Report Something">Report Something</option>
           </select>
         </div>
+        {requestType && (
+          <div
+            className={`p-2 rounded-lg shadow-md text-center mx-auto mb-2 ${
+              requestType === "Request Something"
+                ? "bg-pink-500"
+                : "bg-yellow-500"
+            }`}
+          >
+            <p className="text-lg text-center font-semibold text-white">
+              {requestType.toUpperCase()}
+            </p>
+          </div>
+        )}
 
-        {requestType === "Request Something" && (
+        {requestType === "Request Something" ? (
           <>
             <div className=" flex flex-row justify-between items-center mb-4">
               <label className="w-auto mb-2 font-medium">
@@ -741,6 +342,99 @@ const DropdownForm = () => {
                 />
               </div>
             )}
+            {managerName && (
+              <div className="flex flex-row justify-evenly items-center mb-4">
+                <label
+                  htmlFor="selectedPriority"
+                  className="w-full mb-2 font-medium"
+                >
+                  Set Priority:
+                </label>
+                <select
+                  id="selectedPriority"
+                  value={selectedPriority}
+                  onChange={(e) => handlePriorityChange(e.target.value)}
+                  className="w-full border rounded-md p-2"
+                >
+                  <option value="">-- Select Issue --</option>
+                  <option value="High Priority">High Priority</option>
+                  <option value="Medium Priority">Medium Priority</option>
+                  <option value=" Low Priority">Low Priority</option>
+                </select>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {requestType === "Report Something" && (
+              <div className="flex flex-row justify-evenly items-center mb-4">
+                <label
+                  htmlFor="selectedAsset"
+                  className="w-full mb-2 font-medium"
+                >
+                  Issue Related To:
+                </label>
+                <select
+                  id="selectedIssue"
+                  value={selectedIssue}
+                  onChange={(e) => handleIssueChange(e.target.value)}
+                  className="w-full border rounded-md p-2"
+                >
+                  <option value="">-- Select Issue --</option>
+                  <option value="Software Related">Software Related</option>
+                  <option value="Network Related">Network Related</option>
+                  <option value="LFT Resource Related">
+                    LFT Resource Realted
+                  </option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+            )}
+            {selectedIssue === "LFT Resource Related" && (
+              <div>
+                <p className="text-sm text-right mb-2 -mt-2">
+                  (For Mantis, SVN, Crush FTP, FTP Access Related etc...)
+                </p>
+              </div>
+            )}
+            {selectedIssue && (
+              <div className="flex flex-row justify-center items-center mb-4">
+                <label
+                  htmlFor="description"
+                  className="w-full mb-2 font-medium"
+                >
+                  Brief your requirement:
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  rows={4}
+                  className="w-full border rounded-md p-2"
+                />
+              </div>
+            )}
+            {description && (
+              <div className="flex flex-row justify-evenly items-center mb-4">
+                <label
+                  htmlFor="selectedPriority"
+                  className="w-full mb-2 font-medium"
+                >
+                  Set Priority:
+                </label>
+                <select
+                  id="selectedPriority"
+                  value={selectedPriority}
+                  onChange={(e) => handlePriorityChange(e.target.value)}
+                  className="w-full border rounded-md p-2"
+                >
+                  <option value="">-- Select Issue --</option>
+                  <option value="High Priority">High Priority</option>
+                  <option value="Medium Priority">Medium Priority</option>
+                  <option value=" Low Priority">Low Priority</option>
+                </select>
+              </div>
+            )}
           </>
         )}
 
@@ -751,7 +445,11 @@ const DropdownForm = () => {
               !requestType ||
               (!selectedAsset && requestType === "Request Something") ||
               (!description && selectedAsset) ||
-              (hasManagerApproval && !managerName)
+              (requestType === "Report Something" && !selectedIssue) ||
+              !description ||
+              !selectedPriority ||
+              (hasManagerApproval && !managerName) ||
+              !selectedPriority
             }
             className="mt-4 p-2 bg-green-500 text-white rounded-md cursor-pointer"
           >
@@ -768,6 +466,18 @@ const DropdownForm = () => {
         {isFormSubmitted && (
           <p className="text-green-500 mt-2">Form submitted successfully!</p>
         )}
+        {showDialog && (
+          <DialogBox
+            ticketDetails={ticketDetails}
+            onClose={() => setShowDialog(false)}
+          />
+        )}
+        {showDialog &&
+          dialogVisibleDuration > 0 &&
+          setTimeout(() => {
+            setShowDialog(false);
+            setDialogVisibleDuration(0); // Reset the duration
+          }, dialogVisibleDuration)}
       </form>
     </div>
   );

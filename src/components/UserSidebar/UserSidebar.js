@@ -31,7 +31,9 @@ const UserSidebar = () => {
     } else if (label === "Self-Support") {
       navigate("/self-support");
     } else if (label === "System Rights") {
-      navigate("/admin-rights");
+      navigate("/system-right");
+    } else if (label === "Settings") {
+      navigate("/settings");
     }
   };
 
@@ -56,19 +58,19 @@ const UserSidebar = () => {
           <div className="flex flex-col">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/all" className="text-white">
+              <Link to="/my-assets" className="text-white">
                 All
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/user-monitor" className="text-white">
+              <Link to="/my-assets" className="text-white">
                 Monitor
               </Link>
             </div>
             <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/user-desktop" className="text-white">
+              <Link to="/my-assets" className="text-white">
                 Desktop
               </Link>
             </div>
@@ -83,19 +85,19 @@ const UserSidebar = () => {
           <div className="flex flex-col ">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/all" className="text-white">
+              <Link to="/my-accessories" className="text-white">
                 All
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/user-keyboard" className="text-white">
+              <Link to="/my-accessories" className="text-white">
                 Keyboard
               </Link>
             </div>
             <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/user-mouse" className="text-white">
+              <Link to="/my-accessories" className="text-white">
                 Mouse
               </Link>
             </div>
@@ -110,25 +112,25 @@ const UserSidebar = () => {
           <div className="flex flex-col">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/new-ticket" className="text-white">
+              <Link to="/user/new-ticket" className="text-white">
                 Create New Ticket
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/pending-ticket" className="text-white">
+              <Link to="/my-tickets" className="text-white">
                 Pending Tickets
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/closed-ticket" className="text-white">
+              <Link to="/my-tickets" className="text-white">
                 Closed Tickets
               </Link>
             </div>
             <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/all-tickets" className="text-white">
+              <Link to="/my-tickets" className="text-white">
                 All Tickets
               </Link>
             </div>
@@ -147,7 +149,7 @@ const UserSidebar = () => {
           onItemClick={handleItemClick}
         />
         <NavItem
-          icon={<FiSettings />}
+          icon={<FiSettings className="animate-[spin_3s_linear_infinite]" />}
           label="Settings"
           active={activeItem === "Settings"}
           onItemClick={handleItemClick}

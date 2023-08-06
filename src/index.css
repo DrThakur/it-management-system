@@ -12,6 +12,8 @@ code {
     monospace;
 } */
 
+/* cross-env NODE_OPTIONS=--max_old_space_size=4096 react-scripts start */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
