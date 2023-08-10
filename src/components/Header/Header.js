@@ -3,9 +3,8 @@ import { FiSun, FiMoon, FiBell, FiBellOff } from "react-icons/fi";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { FaUser, FaCog, FaLock, FaSignOutAlt } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
-import dummyProfilePic from "../../Images/dummy-profile-pic.jpg";
 // import logo2 from "../../Images/IT_HeLPDESK-blue-removebg-preview.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 
 const Header = ({
@@ -21,6 +20,7 @@ const Header = ({
   const [notificationCount, setNotificationCount] = useState(3);
   const dropdownRef = useRef(null);
   const { user, dispatch } = useContext(Context);
+  const navigate = useNavigate();
 
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
@@ -40,6 +40,7 @@ const Header = ({
 
   const handleLogOut = () => {
     dispatch({ type: "LOGOUT" });
+    navigate("/");
   };
 
   useEffect(() => {
@@ -51,10 +52,10 @@ const Header = ({
   }, []);
 
   return (
-    <div className="px-8 py-6 bg-yellow-500 flex items-center justify-between">
+    <div className="px-8 py-6 bg-sky-500 flex items-center justify-between">
       <div className="flex items-center space-x-4">
         <button
-          className="p-2 rounded-full bg-blue-400 text-white"
+          className="p-2 rounded-full bg-black text-white"
           onClick={toggleSidebar}
         >
           <span>
@@ -66,8 +67,8 @@ const Header = ({
           </span>
         </button>
         <h3 className="text-lg">
-          <span className="font-semibold">Welcome, </span>
-          <span className="text-blue-500 font-semibold">{user.firstName}</span>
+          <span className="font-semibold text-white">Welcome </span>
+          <span className="text-white font-semibold">{user.firstName}</span>
         </h3>
       </div>
       <div className="text-center ml-24">

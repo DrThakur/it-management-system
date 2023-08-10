@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-// import Sidebar from "../Sidebar/Sidebar";
 import NotificationMenu from "../Notification/Notification";
 import UserSidebar from "../UserSidebar/UserSidebar";
 
@@ -17,7 +16,7 @@ const UserLayout = ({ children }) => {
     setIsNotificationMenuOpen(!isNotificationMenuOpen);
   };
   return (
-    <div className="flex flex-col h-screen bg-blue-200">
+    <div className="flex flex-col h-screen bg-white">
       <div className="flex flex-grow h-screen">
         {isSidebarOpen && <UserSidebar />}
         <div className="flex flex-col flex-grow">

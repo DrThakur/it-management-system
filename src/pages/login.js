@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
-
+import logo from "../Images/LFT-Logo.svg";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../context/Context";
 import axios from "axios";
@@ -15,22 +15,11 @@ const images = [
 
 const Login = () => {
   const navigate = useNavigate();
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  // const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const userRef = useRef(); // email fetching refrence
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(Context);
-
-  // const handleEmailChange = (e) => {
-  //   setEmail(e.target.value);
-  // };
-
-  // const handlePasswordChange = (e) => {
-  //   setPassword(e.target.value);
-  // };
 
   const handleSignin = async (e) => {
     e.preventDefault();
@@ -54,6 +43,7 @@ const Login = () => {
       return navigate("/");
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE" });
+      setErrorMsg("*Incorrect email or password.");
     }
   };
 
@@ -104,9 +94,13 @@ const Login = () => {
         </div>
       </div>
       <div className="w-1/2 flex items-center justify-center">
-        <div className="w-80 bg-white p-8 rounded-md shadow-lg">
-          <h1 className="text-2xl font-bold mb-6 text-center">
-            Welcome to Logic Fruit Technologies!
+        <div className="w-96 bg-white p-10 rounded-md shadow-lg">
+          <div className="w-full ml-8 mr-8 -mt-12">
+            <img src={logo} alt="Logo" className="h-56 w-56 cursor-pointer" />
+          </div>
+          <h1 className="text-2xl font-bold mb-6 text-center -mt-8">
+            Welcome to <br />
+            Logic Fruit Technologies!
           </h1>
           <h2 className="text-3xl font-semibold mb-4">Login</h2>
           <form>
@@ -145,7 +139,7 @@ const Login = () => {
                 Remember me
               </label>
             </div>
-            <p>{errorMsg}</p>
+            <p className="text-red-500 text-base font-bold mb-2">{errorMsg}</p>
             <button
               type="submit"
               disabled={isFetching}

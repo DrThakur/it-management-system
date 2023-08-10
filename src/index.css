@@ -38,3 +38,7 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+html {
+  font-size: 10px;
+}

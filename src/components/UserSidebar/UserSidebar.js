@@ -12,7 +12,6 @@ import { MdSupportAgent } from "react-icons/md";
 import { FaMouse } from "react-icons/fa";
 import { ImRadioChecked } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const UserSidebar = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -23,12 +22,12 @@ const UserSidebar = () => {
     if (label === "Dashboard") {
       navigate("/");
     } else if (label === "My Assets") {
-      navigate("/assets");
+      navigate("/my-assets");
     } else if (label === "My Accessories") {
-      navigate("/licences");
+      navigate("/my-accessories");
     } else if (label === "IT Support") {
-      navigate("/it-support");
-    } else if (label === "Self-Support") {
+      navigate("/my-tickets");
+    } else if (label === "Self Support") {
       navigate("/self-support");
     } else if (label === "System Rights") {
       navigate("/system-right");
@@ -38,7 +37,7 @@ const UserSidebar = () => {
   };
 
   return (
-    <div className=" w-64 flex-none flex flex-col h-screen  bg-sky-700 text-white rounded-lg overflow-scroll overflow-y-hidden overflow-x-hidden">
+    <div className=" w-72 flex-none flex flex-col h-screen  bg-yellow-300 text-white rounded-lg overflow-scroll overflow-y-hidden overflow-x-hidden">
       <div className="top-0  flex items-center justify-center h-28">
         <img src={logo} alt="Logo" className="h-32 w-32 cursor-pointer" />
       </div>
@@ -54,8 +53,8 @@ const UserSidebar = () => {
           label="My Assets"
           active={activeItem === "My Assets"}
           onItemClick={handleItemClick}
-        >
-          <div className="flex flex-col">
+        />
+        {/* <div className="flex flex-col">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/my-assets" className="text-white">
@@ -75,14 +74,14 @@ const UserSidebar = () => {
               </Link>
             </div>
           </div>
-        </NavItem>
+        </NavItem> */}
         <NavItem
           icon={<FaMouse />}
           label="My Accessories"
           active={activeItem === "My Accessories"}
           onItemClick={handleItemClick}
-        >
-          <div className="flex flex-col ">
+        />
+        {/* <div className="flex flex-col ">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/my-accessories" className="text-white">
@@ -102,7 +101,7 @@ const UserSidebar = () => {
               </Link>
             </div>
           </div>
-        </NavItem>
+        </NavItem> */}
         <NavItem
           icon={<FiBriefcase />}
           label="IT Support"
@@ -110,27 +109,27 @@ const UserSidebar = () => {
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col">
-            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/user/new-ticket" className="text-white">
+              <Link to="/user/new-ticket" className="text-black">
                 Create New Ticket
               </Link>
             </div>
-            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/my-tickets" className="text-white">
+              <Link to="/my-tickets" className="text-black">
                 Pending Tickets
               </Link>
             </div>
-            <div className="flex items-center mb-4 px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/my-tickets" className="text-white">
+              <Link to="/my-tickets" className="text-black">
                 Closed Tickets
               </Link>
             </div>
-            <div className="flex items-center px-4 py-1 hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/my-tickets" className="text-white">
+              <Link to="/my-tickets" className="text-black">
                 All Tickets
               </Link>
             </div>
@@ -155,7 +154,7 @@ const UserSidebar = () => {
           onItemClick={handleItemClick}
         />
 
-        <div className="mt-auto mb-4 text-sm text-gray-400 text-center">
+        <div className="mt-auto mb-4 text-sm text-black text-center">
           Version: 1.0.0
         </div>
       </div>
@@ -179,23 +178,35 @@ const NavItem = ({ icon, label, active, onItemClick, children }) => {
   return (
     <div className="relative">
       <div
-        className={`flex items-center py-2 pl-6 cursor-pointer ${
+        className={`flex items-center justify-start py-2 pl-6 cursor-pointer ${
           active
-            ? "bg-cyan-400 text-white rounded-lg"
-            : "hover:bg-white hover:bg-opacity-20 hover:text-white hover:rounded-lg"
+            ? "bg-cyan-400 rounded-lg"
+            : "hover:bg-black hover:bg-opacity-20 hover:text-white hover:rounded-lg"
         } backdrop-filter backdrop-blur-lg ml-2 mr-6 mb-2`}
         onClick={handleItemClick}
       >
-        <span className="text-xl mr-4">{icon}</span>
-        <span className="text-sm text-white font-montserrat ml-4">{label}</span>
+        <span
+          className={`text-2xl mr-4 ${active ? "text-white" : "text-black"}`}
+        >
+          {icon}
+        </span>
+        <span
+          className={`text-xl font-semibold font-montserrat ml-4 ${
+            active ? "text-white" : "text-black"
+          }`}
+        >
+          {label}
+        </span>
         {hasSubMenu && (
-          <span className="ml-auto">
+          <span className="ml-auto text-black font-bold text-xl">
             {expandSubMenu ? <IoIosArrowDown /> : <IoIosArrowForward />}
           </span>
         )}
       </div>
       {expandSubMenu && hasSubMenu && (
-        <div className="relative left-10 top-0 bg-sky-700 text-white py-2 px-4 rounded-lg mt-1 text-sm ml-4">
+        <div
+          className={`relative left-10 top-0 bg-yellow-300 text-black py-2 px-4 rounded-lg mt-1 text-base font-semibold ml-4`}
+        >
           {children}
         </div>
       )}

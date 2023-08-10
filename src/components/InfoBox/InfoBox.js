@@ -130,7 +130,7 @@ const InfoBox = ({ categories, title }) => {
   return (
     <div className="w-full h-full ml-1 mr-0">
       <h1 className="mb-2 ml-2 font-semibold text-2xl">{title}</h1>
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-8 gap-2">
         {categories.map((category, index) => (
           <div
             key={index}

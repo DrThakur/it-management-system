@@ -37,11 +37,6 @@ const Table = () => {
   const [filters, setFilters] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
 
-  // useEffect(() => {
-  //   UserService.getUsersMini().then((data) => setUsers(data));
-  //   initFilters();
-  // }, []);
-
   const statusBodyTemplate = (user) => {
     return <Tag value={user.active} severity={getSeverity(user)}></Tag>;
   };
@@ -441,7 +436,7 @@ const Table = () => {
           "location",
           "status",
         ]}
-        emptyMessage="No product found."
+        emptyMessage="No User found."
         editMode="row"
         dataKey="id"
         onRowEditComplete={onRowEditComplete}

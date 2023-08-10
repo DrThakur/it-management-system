@@ -1,5 +1,5 @@
 // import logo from "./logo.svg";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout/Layout";
@@ -7,21 +7,12 @@ import InfoBox from "./components/InfoBox/InfoBox";
 import assetCategory from "./data/AssetData/AssetCategory";
 import softwareCategory from "./data/SoftwareData/SoftwareCategory";
 import ticketCategory from "./data/TicketData/TicketCategory";
-import selfSupportCategory from "./data/SelfSupportCategory/SelfSupportCategory";
 import Table from "./components/Table/Table";
-// import Form from "./components/Form/Form";
-import AssetForm from "./components/Asset/AssetForm/AssetForm";
 import UserLayout from "./components/UserLayout/UserLayout";
-// import Login from "./pages/login";
 import Dashboard from "./pages/FinalDashboard/Dashboard";
 import RecentActivityPage from "./pages/RecentActivityPage";
 import accessoryCategory from "./data/AccessoriesData/AccessoriesCategory";
-import consumablesCategory from "./data/Consumables/ConsumablesCategory";
-import componentsCategory from "./data/Components/ComponentsCategory";
 import Reports from "./pages/Reports";
-import AdminRights from "./pages/AdminRights";
-import NotificationMenu from "./components/Notification/Notification";
-import AssetLocation from "./components/AssetLocation/AssetLocation";
 import AssetLocationPage from "./pages/AssetLocationPage";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import UserAsset from "./components/UserAsset/UserAsset";
@@ -33,7 +24,6 @@ import AssetFormPage from "./pages/AssetFormPage/AssetFormPage";
 import TicketFormPage from "./pages/TicketFormPage/TicketFormPage";
 import TicketPage from "./pages/TicketPage/TicketPage";
 import Users from "./pages/Users/Users";
-// import PieChart from "./components/PieChart/PieChart";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -42,14 +32,13 @@ import UserViewPage from "./pages/UserViewPage/UserViewPage";
 import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 import Tickets from "./pages/Tickets/Tickets";
 import Login from "./pages/login";
-import { useContext } from "react";
-import { Context } from "./context/Context";
 import MyTicketsPage from "./pages/MyTicketsPage/MyTicketsPage";
 import MyAssetPage from "./pages/MyAssetPage/MyAssetPage";
 import MyAccessoryPage from "./pages/MyAccessoryPage/MyAccessoryPage";
 import SystemRightPage from "./pages/SystemRightPage/SystemRightPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import IndividualAssetPage from "./pages/IndividualAssetPage/IndividualAssetPage";
+import { Context } from "./context/Context";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -109,14 +98,7 @@ function App() {
             )
           }
         />
-        {/* <Route
-          path="/consumables"
-          element={
-            <Layout>
-              <InfoBox categories={consumablesCategory} title="Consumables" />
-            </Layout>
-          }
-        /> */}
+
         <Route
           path="/consumables"
           element={
@@ -129,14 +111,7 @@ function App() {
             )
           }
         />
-        {/* <Route
-          path="/components"
-          element={
-            <Layout>
-              <InfoBox categories={componentsCategory} title="Components" />
-            </Layout>
-          }
-        /> */}
+
         <Route
           path="/components"
           element={
@@ -186,21 +161,20 @@ function App() {
             )
           }
         />
-        {/* <Route
-          path="/self-support"
-          element={
-            <Layout>
-              <InfoBox categories={selfSupportCategory} title="Self Support" />
-            </Layout>
-          }
-        /> */}
+
         <Route
           path="/self-support"
           element={
             user ? (
-              <Layout>
-                <SelfSupportPage />
-              </Layout>
+              hasAdminRole(user) ? (
+                <Layout>
+                  <SelfSupportPage />
+                </Layout>
+              ) : (
+                <UserLayout>
+                  <SelfSupportPage />
+                </UserLayout>
+              )
             ) : (
               <Login />
             )
@@ -218,27 +192,6 @@ function App() {
             )
           }
         />
-
-        {/* <Route
-          path="/admin-rights"
-          element={
-            user ? (
-              <UserLayout>
-                <UserDashboard />
-              </UserLayout>
-            ) : (
-              <Login />
-            )
-          }
-        /> */}
-        {/* <Route
-          path="/admin-rights"
-          element={
-            <Layout>
-              <AdminRights />
-            </Layout>
-          }
-        /> */}
         <Route
           path="/users"
           element={
@@ -355,7 +308,6 @@ function App() {
                 <Layout>
                   <SettingsPage />
                 </Layout>
-                
               ) : (
                 <UserLayout>
                   <SettingsPage />
@@ -366,14 +318,6 @@ function App() {
             )
           }
         />
-        {/* <Route
-          path="/admin-rights"
-          element={
-            <Layout>
-              <AssetForm />
-            </Layout>
-          }
-        /> */}
 
         <Route
           path="/:category"
@@ -460,14 +404,7 @@ function App() {
             )
           }
         />
-        {/* <Route
-          path="/users"
-          element={
-            <UserLayout>
-              <Table />
-            </UserLayout>
-          }
-        /> */}
+
         <Route
           path="/assets-issued"
           element={

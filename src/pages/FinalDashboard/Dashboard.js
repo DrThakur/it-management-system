@@ -57,7 +57,7 @@ const Dashboard = () => {
       </div>
       <div className="flex-item-2 mt-4">
         <div class="flex-container-2 flex flex-row flex-wrap">
-          <div className="flex-item-2-2 flex-grow mb-4">
+          <div className="flex-item-2-2 flex-grow mb-4 h-full">
             <RecentActivity />
           </div>
           <div className="flex-item-2-1 ml-4">

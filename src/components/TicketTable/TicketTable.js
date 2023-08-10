@@ -9,6 +9,8 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { MultiSelect } from "primereact/multiselect";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const TicketTable = () => {
@@ -48,12 +50,45 @@ const TicketTable = () => {
     initFilters();
   }, []);
 
+  const formatDate = (date) => {
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    const formattedDate = new Date(date).toLocaleDateString("en-US", options);
+
+    // Split the formatted date into day, month, and year parts
+    const [month, day, year] = formattedDate.split(" ");
+
+    // Convert the month abbreviation to uppercase
+    const capitalizedMonth = month.toUpperCase();
+
+    // Return the formatted date with uppercase month abbreviation and desired format
+    return `${day} ${capitalizedMonth} ${year}`;
+  };
+
   const statusBodyTemplate = (ticket) => {
-    return <Tag value={ticket.status} severity={getSeverity(ticket)}></Tag>;
+    return (
+      <Tag
+        value={ticket.status}
+        severity={getSeverity(ticket)}
+        style={{ fontSize: "10px" }}
+      ></Tag>
+    );
   };
   const priorityBodyTemplate = (ticket) => {
     return (
-      <Tag value={ticket.priority} severity={getPrioritySeverity(ticket)}></Tag>
+      <Tag
+        value={ticket.priority}
+        severity={getPrioritySeverity(ticket)}
+        style={{ fontSize: "10px" }}
+      ></Tag>
+    );
+  };
+  const priorityApprovalTemplate = (ticket) => {
+    return (
+      <Tag
+        value={ticket.approvedByManager || "Not Required"}
+        severity={getApprovalSeverity(ticket)}
+        style={{ fontSize: "10px" }}
+      ></Tag>
     );
   };
 
@@ -87,6 +122,21 @@ const TicketTable = () => {
         return null;
     }
   };
+  const getApprovalSeverity = (ticket) => {
+    switch (ticket.approvedByManager) {
+      case "Yes":
+        return "success";
+
+      case "Not Required":
+        return "warning";
+
+      case "No":
+        return "danger";
+
+      default:
+        return null;
+    }
+  };
 
   const onGlobalFilterChange = (e) => {
     const value = e.target.value;
@@ -101,7 +151,7 @@ const TicketTable = () => {
     setFilters({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
       name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      ticketID: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      ticketId: { value: null, matchMode: FilterMatchMode.CONTAINS },
       requestType: { value: null, matchMode: FilterMatchMode.CONTAINS },
       createdAt: { value: null, matchMode: FilterMatchMode.CONTAINS },
       priority: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -136,12 +186,12 @@ const TicketTable = () => {
 
     return (
       <div className="flex flex-col align-items-center gap-2 mr-2">
-        <div className="flex flex-row align-items-center">
+        <div className="flex flex-row items-center justify-start">
           <img
             alt={createdBy.name}
             src={`http://localhost:8002${createdBy.profilePicture}`}
-            width="32"
-            height="32"
+            width="40"
+            height="40"
           />
           <Link
             to="/userview"
@@ -158,12 +208,12 @@ const TicketTable = () => {
 
     return (
       <div className="flex flex-col align-items-center gap-2 mr-2">
-        <div className="flex flex-row align-items-center">
+        <div className="flex flex-row  items-center justify-start">
           <img
             alt={assignedTo.name}
             src={`http://localhost:8002${assignedTo.profilePicture}`}
-            width="32"
-            height="32"
+            width="40"
+            height="40"
           />
           <Link
             to="/userview"
@@ -171,6 +221,13 @@ const TicketTable = () => {
           >
             {assignedTo.name}
           </Link>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 border-none p-3 rounded-lg text-white ml-4 -mr-6"
+            onClick={handleTicketAssignment}
+            disabled={rowData.isAssigned}
+          >
+            {rowData.isAssigned ? "Assigned to You" : "Take Ownership"}
+          </button>
         </div>
       </div>
     );
@@ -218,7 +275,7 @@ const TicketTable = () => {
       },
     },
     {
-      field: "ticketID",
+      field: "ticketId",
       header: "Ticket ID",
       body: (rowData) => (
         <a href="/ticketView" className="text-blue-500 hover:text-blue-900">
@@ -238,8 +295,10 @@ const TicketTable = () => {
       body: userBodyTemplate,
       bodyStyle: {
         textAlign: "center",
-        minWidth: "15rem", // Customize the style as needed
+        minWidth: "8rem",
+        // Customize the style as needed
       },
+      style: { minWidth: "150px" },
       editor: (options) => textEditor(options),
       sortable: true,
     },
@@ -267,7 +326,8 @@ const TicketTable = () => {
       },
       body: (rowData) => (
         <a href="/userview" className="text-yellow-500 hover:text-blue-900">
-          {new Date(rowData.createdAt).toLocaleString()}
+          {/* {new Date(rowData.createdAt).toDateString()} */}
+          {formatDate(rowData.createdAt)}
         </a>
       ),
       editor: (options) => textEditor(options),
@@ -285,6 +345,18 @@ const TicketTable = () => {
       sortable: true,
     },
     {
+      field: "approvesByManager",
+      header: "Manager Approval",
+      body: priorityApprovalTemplate,
+      bodyStyle: {
+        textAlign: "center",
+        pointer: "cursor",
+        minWidth: "6rem",
+      },
+      editor: (options) => priorityEditor(options),
+      sortable: true,
+    },
+    {
       field: "assignedTo",
       header: "Assigned To",
       body: assignedBodyTemplate,
@@ -292,6 +364,7 @@ const TicketTable = () => {
         textAlign: "center",
         minWidth: "15rem", // Customize the style as needed
       },
+      style: { minWidth: "200px" },
       editor: (options) => textEditor(options),
       sortable: true,
     },
@@ -324,6 +397,11 @@ const TicketTable = () => {
 
   const handleNewTicketCreation = () => {
     navigate("/new-ticket");
+  };
+  const handleTicketAssignment = () => {
+    toast.success("New user created!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   const header = (
@@ -380,59 +458,60 @@ const TicketTable = () => {
   );
 
   return (
-    <div className="w-full overflow-hidden ">
+    <div className="w-full overflow-hidden card p-fluid">
       <h1>All Tickets</h1>
-      <DataTable
-        value={tickets}
-        header={header}
-        showGridlines
-        size={size}
-        tableStyle={{ overflow: "auto" }}
-        className="shadow-md rounded-lg"
-        stripedRows
-        paginator
-        rows={10}
-        rowsPerPageOptions={[5, 10, 25, 50]}
-        removableSort
-        sortField="id"
-        sortOrder={1}
-        filters={filters}
-        globalFilterFields={[
-          "name",
-          "ticketID",
-          "requestType",
-          "createdAt",
-          "priority",
-          "assignedTo",
-          "location",
-          "status",
-        ]}
-        emptyMessage="No Tickets found."
-        editMode="row"
-        dataKey="id"
-        onRowEditComplete={onRowEditComplete}
-        scrollable
-        scrollHeight="400px"
-        selectionMode={"checkbox"}
-        selection={selectedTickets}
-        onSelectionChange={(e) => setSelectedTickets(e.value)}
-      >
-        <Column
-          selectionMode="multiple"
-          headerStyle={{ width: "3rem" }}
-        ></Column>
-        {visibleColumns.map((column, index) => (
+      <div style={{ overflowX: "auto", width: "100%" }}>
+        <DataTable
+          value={tickets}
+          header={header}
+          showGridlines
+          size={size}
+          tableStyle={{ overflow: "auto" }}
+          className="shadow-md rounded-lg"
+          stripedRows
+          paginator
+          rows={10}
+          rowsPerPageOptions={[5, 10, 25, 50]}
+          removableSort
+          sortField="id"
+          sortOrder={-1}
+          filters={filters}
+          globalFilterFields={[
+            "name",
+            "ticketId",
+            "requestType",
+            "createdAt",
+            "priority",
+            "assignedTo",
+            "location",
+            "status",
+          ]}
+          emptyMessage="No Tickets found."
+          editMode="row"
+          dataKey="id"
+          onRowEditComplete={onRowEditComplete}
+          scrollable
+          scrollHeight="400px"
+          selectionMode={"checkbox"}
+          selection={selectedTickets}
+          onSelectionChange={(e) => setSelectedTickets(e.value)}
+        >
           <Column
-            key={index}
-            {...column}
-            headerStyle={{
-              textAlign: "center",
-              marginLeft: "10px",
-              marginRight: "10px",
-            }}
-          />
-        ))}
-      </DataTable>
+            selectionMode="multiple"
+            headerStyle={{ width: "3rem" }}
+          ></Column>
+          {visibleColumns.map((column, index) => (
+            <Column
+              key={index}
+              {...column}
+              headerStyle={{
+                textAlign: "center",
+              }}
+            />
+          ))}
+        </DataTable>
+      </div>
+      <ToastContainer />
     </div>
   );
 };

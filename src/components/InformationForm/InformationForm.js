@@ -70,7 +70,6 @@ const InformationForm = () => {
       toast.success("New user created!", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      res.data && window.location.replace("/login");
     } catch (error) {
       console.log(error);
     }
