@@ -1,56 +1,50 @@
+import { useRef } from "react";
+import { useContext } from "react";
 import { useState, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import jwtDecode from "jwt-decode";
+import logo from "../Images/LFT-Logo.svg";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../context/Context";
+import axios from "axios";
 
-const images = ["manwithlaptop.png", "manwithlaptop.png", "manwithlaptop.png"];
+const images = [
+  "man_with_laptop.png",
+  "man_with_laptop.png",
+  "man_with_laptop.png",
+];
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  // const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
+  const userRef = useRef(); // email fetching refrence
+  const passwordRef = useRef();
+  const { dispatch, isFetching } = useContext(Context);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSignin = (e) => {
+  const handleSignin = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setErrorMsg("**Fill all the fields");
-      return;
-    }
-    setErrorMsg("");
-    // setSubmitButtonDisabled(true);
-    signInWithEmailAndPassword(auth, email, password)
-      .then(async (res) => {
-        // setSubmitButtonDisabled(false);
-        console.log(res);
-        // const user = res.user;
-        // if (user.email === "sachinsharma@gmail.com") {
-        //   navigate("/assets");
-        // } else {
-        //   navigate("/admin-rights");
-        // }
-
-        // Reset the form fields
-        setEmail("");
-        setPassword("");
-        navigate("/");
-        console.log(res);
-      })
-      .catch((err) => {
-        // setSubmitButtonDisabled(false);
-        setErrorMsg(err.message);
-        console.log("Error-", err.message);
+    dispatch({ type: "LOGIN_START" });
+    try {
+      const res = await axios.post("http://localhost:8002/users/login", {
+        email: userRef.current.value,
+        password: passwordRef.current.value,
       });
+      console.log(res);
+      console.log(res.data);
+      const token = res.data;
+      const decodedToken = jwtDecode(token);
+      console.log(decodedToken);
+      //Accessimg user data from decoded token
+      const userData = decodedToken;
+
+      dispatch({ type: "LOGIN_SUCCESS", payload: userData });
+      console.log(userData);
+      console.log(userData.role);
+      return navigate("/");
+    } catch (error) {
+      dispatch({ type: "LOGIN_FAILURE" });
+      setErrorMsg("*Incorrect email or password.");
+    }
   };
 
   useEffect(() => {
@@ -63,17 +57,6 @@ const Login = () => {
     return () => clearInterval(interval);
   }, []);
 
-  //   const handlePrevSlide = () => {
-  //     setCurrentImage((prevImage) =>
-  //       prevImage === 0 ? images.length - 1 : prevImage - 1
-  //     );
-  //   };
-
-  //   const handleNextSlide = () => {
-  //     setCurrentImage((prevImage) =>
-  //       prevImage === images.length - 1 ? 0 : prevImage + 1
-  //     );
-  //   };
   const handleSlideChange = (index) => {
     setCurrentImage(index);
   };
@@ -111,9 +94,13 @@ const Login = () => {
         </div>
       </div>
       <div className="w-1/2 flex items-center justify-center">
-        <div className="w-80 bg-white p-8 rounded-md shadow-lg">
-          <h1 className="text-2xl font-bold mb-6 text-center">
-            Welcome to Logic Fruit Technologies!
+        <div className="w-96 bg-white p-10 rounded-md shadow-lg">
+          <div className="w-full ml-8 mr-8 -mt-12">
+            <img src={logo} alt="Logo" className="h-56 w-56 cursor-pointer" />
+          </div>
+          <h1 className="text-2xl font-bold mb-6 text-center -mt-8">
+            Welcome to <br />
+            Logic Fruit Technologies!
           </h1>
           <h2 className="text-3xl font-semibold mb-4">Login</h2>
           <form>
@@ -124,7 +111,7 @@ const Login = () => {
               <input
                 type="email"
                 id="email"
-                onChange={handleEmailChange}
+                ref={userRef}
                 autoComplete="email"
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
@@ -140,7 +127,7 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
-                onChange={handlePasswordChange}
+                ref={passwordRef}
                 autoComplete="current-password"
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
@@ -152,12 +139,16 @@ const Login = () => {
                 Remember me
               </label>
             </div>
-            <p>{errorMsg}</p>
+            <p className="text-red-500 text-base font-bold mb-2">{errorMsg}</p>
             <button
               type="submit"
-              // disabled={submitButtonDisabled}
+              disabled={isFetching}
               onClick={handleSignin}
-              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+              className={`w-full py-2 rounded-md ${
+                isFetching
+                  ? "bg-red-300 cursor-not-allowed"
+                  : "bg-blue-500 text-white hover:bg-blue-600"
+              }`}
             >
               Login
             </button>
@@ -168,6 +159,7 @@ const Login = () => {
         .slideshow-container {
           display: flex;
           justify-content: center;
+          align-items: center;
           height: 100%;
           overflow: hidden;
         }
@@ -176,12 +168,11 @@ const Login = () => {
           flex: 0 0 100%;
           transition: transform 0.5s ease-in-out;
           opacity: 0;
-          visibility: hidden;
         }
 
         .active {
           opacity: 1;
-          visibility: visible;
+          transform: translateX(-100%);
         }
 
         .carousel-control-prev,

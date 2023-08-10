@@ -518,12 +518,12 @@ const UserCategory = () => {
     <div className="bg-blue-50 p-2 shadow rounded-lg -mb-6 w-full h-108">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold ml-2">User Category</h2>
-        <button
+        {/* <button
           className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-400 hover:bg-blue-600 text-white focus:outline-none mb-2 mt-2 mr-2"
           onClick={handleToggleContent}
         >
           <span className="text-3xl mb-2">{showContent ? "-" : "+"}</span>
-        </button>
+        </button> */}
       </div>
       {showContent && (
         <div className="overflow-x-auto mt-2 overflow-y-auto">
@@ -532,14 +532,14 @@ const UserCategory = () => {
               <thead className="sticky top-0">
                 <tr className="bg-gray-200 text-gray-600">
                   <th
-                    className="bg-blue-100 py-2 px-4"
+                    className="bg-red-200 py-2 px-4"
                     rowSpan="2"
                     align="center"
                   >
                     Category
                   </th>
                   <th
-                    className="bg-blue-200 py-2 px-4"
+                    className="bg-red-200 py-2 px-4"
                     rowSpan="2"
                     align="center"
                   >
@@ -569,7 +569,7 @@ const UserCategory = () => {
                 {visibleCategories.map((category) => (
                   <React.Fragment key={category.id}>
                     <tr>
-                      <td className="bg-blue-100 py-2 px-4">
+                      <td className="bg-red-200 py-2 px-4">
                         <a
                           href={`/category/${category.id}`} // Replace with the actual category page URL
                           onClick={(e) => {
@@ -581,9 +581,7 @@ const UserCategory = () => {
                           {category.name}
                         </a>
                       </td>
-                      <td className="bg-blue-200 py-2 px-4">
-                        {category.total}
-                      </td>
+                      <td className="bg-red-200 py-2 px-4">{category.total}</td>
                       <td className="bg-green-200 py-2 px-4">
                         {category.gurgaon.desktop}
                       </td>

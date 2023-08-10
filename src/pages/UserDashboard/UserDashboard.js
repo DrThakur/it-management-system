@@ -1,12 +1,5 @@
 import React from "react";
 import InfoBox from "../../components/InfoBox/InfoBox";
-// import Pie from "../Pie";
-// import DashboardCategory from "../../data/dashboardData/DashboardCategory";
-// import RecentActivity from "../../components/RecentActivity/RecentActivity";
-// import AssetLocation from "../../components/AssetLocation/AssetLocation";
-// import UserCategory from "../../components/UserCategory/UserCategory";
-// import NewUserCategory from "../../components/NewUserCategory/NewUserCategory";
-// import DoughnutChartDemo from "../PieChart";
 import userData from "../../data/UserData/UserData";
 import RecentTicket from "../../components/RecentTicket/RecentTicket";
 import SystemRights from "../../components/SystemRights/SystemRights";

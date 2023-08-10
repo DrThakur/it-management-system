@@ -1,37 +1,18 @@
 // import logo from "./logo.svg";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-// import Notification from "./components/Notification/Notification";
-// import Login from "./pages/login";
-// import AdminDashboard from "./pages/Admindashboard";
-// import Header from "./components/Header/Header";
-// import Sidebar from "./components/Sidebar/Sidebar";
-// import Footer from "./components/Footer/Footer";
-// import Layout from "./components/Layout/Layout";
-// import Dashboard from "./pages/Dashboard/Dashboard";
-// import Carousel from "./pages/carousel";
-// import Sidebar from "./components/Sidebar/Sidebar";
 import Layout from "./components/Layout/Layout";
 import InfoBox from "./components/InfoBox/InfoBox";
 import assetCategory from "./data/AssetData/AssetCategory";
 import softwareCategory from "./data/SoftwareData/SoftwareCategory";
 import ticketCategory from "./data/TicketData/TicketCategory";
-import selfSupportCategory from "./data/SelfSupportCategory/SelfSupportCategory";
 import Table from "./components/Table/Table";
-// import Form from "./components/Form/Form";
-import AssetForm from "./components/Asset/AssetForm/AssetForm";
 import UserLayout from "./components/UserLayout/UserLayout";
-// import Login from "./pages/login";
 import Dashboard from "./pages/FinalDashboard/Dashboard";
 import RecentActivityPage from "./pages/RecentActivityPage";
 import accessoryCategory from "./data/AccessoriesData/AccessoriesCategory";
-import consumablesCategory from "./data/Consumables/ConsumablesCategory";
-import componentsCategory from "./data/Components/ComponentsCategory";
 import Reports from "./pages/Reports";
-import AdminRights from "./pages/AdminRights";
-import NotificationMenu from "./components/Notification/Notification";
-import AssetLocation from "./components/AssetLocation/AssetLocation";
 import AssetLocationPage from "./pages/AssetLocationPage";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import UserAsset from "./components/UserAsset/UserAsset";
@@ -42,245 +23,410 @@ import ConsumablesPage from "./pages/ConsumablesPage/ConsumablesPage";
 import AssetFormPage from "./pages/AssetFormPage/AssetFormPage";
 import TicketFormPage from "./pages/TicketFormPage/TicketFormPage";
 import TicketPage from "./pages/TicketPage/TicketPage";
-// import PieChart from "./components/PieChart/PieChart";
+import Users from "./pages/Users/Users";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+import UserCreationPage from "./pages/UserCreationPage/UserCreationPage";
+import UserViewPage from "./pages/UserViewPage/UserViewPage";
+import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
+import Tickets from "./pages/Tickets/Tickets";
+import Login from "./pages/login";
+import MyTicketsPage from "./pages/MyTicketsPage/MyTicketsPage";
+import MyAssetPage from "./pages/MyAssetPage/MyAssetPage";
+import MyAccessoryPage from "./pages/MyAccessoryPage/MyAccessoryPage";
+import SystemRightPage from "./pages/SystemRightPage/SystemRightPage";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
+import IndividualAssetPage from "./pages/IndividualAssetPage/IndividualAssetPage";
+import { Context } from "./context/Context";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const { user } = useContext(Context);
 
   const handleCategoryFilter = (category) => {
     setSelectedCategory(selectedCategory);
   };
+  const hasAdminRole = (user) => {
+    return (user && user.role === "SUPER ADMIN") || user.role === "ADMIN";
+  };
 
-  // const myChartData = [
-  //   { name: "Asset 1", value: 50 },
-  //   { name: "Asset 2", value: 30 },
-  //   { name: "Asset 3", value: 20 },
-  // ];
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
-        {/* <Route path="/" element={<AdminDashboard />} /> */}
-        {/* <Route path="/" element={<Header />} /> */}
-        {/* <Route path="/" element={<Sidebar />} /> */}
-        {/* <Route path="/" element={<Sidebar />} /> */}
-        {/* <Route path="/" element={<Footer />} /> */}
-        {/* <Route path="/" element={<Layout />} /> */}
+        <Route path="/login" element={<Login />} />
 
-        {/* <Route path="/" element={<Dashboard />} /> */}
-        {/* <Route path="/" element={<Notification />} /> */}
-
-        {/* <Route
-          path="/"
-          element={
-            <Layout>
-              <InfoBox categories={DashboardCategory} />
-            </Layout>
-          }
-        /> */}
         <Route
           path="/"
           element={
-            <Layout>
-              <Dashboard />
-            </Layout>
+            user ? (
+              hasAdminRole(user) ? (
+                <Layout>
+                  <Dashboard />
+                </Layout>
+              ) : (
+                <UserLayout>
+                  <UserDashboard />
+                </UserLayout>
+              )
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/assets"
           element={
-            <Layout>
-              <InfoBox categories={assetCategory} title="Assets" />
-            </Layout>
+            user ? (
+              <Layout>
+                <InfoBox categories={assetCategory} title="Assets" />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/accessories"
           element={
-            <Layout>
-              <InfoBox categories={accessoryCategory} title="Accessories" />
-            </Layout>
+            user ? (
+              <Layout>
+                <InfoBox categories={accessoryCategory} title="Accessories" />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
-        {/* <Route
-          path="/consumables"
-          element={
-            <Layout>
-              <InfoBox categories={consumablesCategory} title="Consumables" />
-            </Layout>
-          }
-        /> */}
+
         <Route
           path="/consumables"
           element={
-            <Layout>
-              <ConsumablesPage />
-            </Layout>
+            user ? (
+              <Layout>
+                <ConsumablesPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
-        {/* <Route
-          path="/components"
-          element={
-            <Layout>
-              <InfoBox categories={componentsCategory} title="Components" />
-            </Layout>
-          }
-        /> */}
+
         <Route
           path="/components"
           element={
-            <Layout>
-              <ComponentsPage />
-            </Layout>
+            user ? (
+              <Layout>
+                <ComponentsPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/licences"
           element={
-            <Layout>
-              <InfoBox categories={softwareCategory} title="Licences" />
-            </Layout>
+            user ? (
+              <Layout>
+                <InfoBox categories={softwareCategory} title="Licences" />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/tickets"
           element={
-            <Layout>
-              <TicketPage />
-            </Layout>
+            user ? (
+              <Layout>
+                <TicketPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
 
         <Route
           path="/it-support"
           element={
-            <Layout>
-              <InfoBox categories={ticketCategory} title="IT Support" />
-            </Layout>
-          }
-        />
-        {/* <Route
-          path="/self-support"
-          element={
-            <Layout>
-              <InfoBox categories={selfSupportCategory} title="Self Support" />
-            </Layout>
-          }
-        /> */}
-        <Route
-          path="/self-support"
-          element={
-            <Layout>
-              <SelfSupportPage />
-            </Layout>
+            user ? (
+              <Layout>
+                <InfoBox categories={ticketCategory} title="IT Support" />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
 
         <Route
-          path="/admin-rights"
+          path="/self-support"
           element={
-            <UserLayout>
-              <UserDashboard />
-            </UserLayout>
+            user ? (
+              hasAdminRole(user) ? (
+                <Layout>
+                  <SelfSupportPage />
+                </Layout>
+              ) : (
+                <UserLayout>
+                  <SelfSupportPage />
+                </UserLayout>
+              )
+            ) : (
+              <Login />
+            )
           }
         />
-        {/* <Route
-          path="/admin-rights"
+        <Route
+          path="/:assetType"
           element={
-            <Layout>
-              <AdminRights />
-            </Layout>
+            user ? (
+              <Layout>
+                <IndividualAssetPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
-        /> */}
+        />
         <Route
           path="/users"
           element={
-            <Layout>
-              <Table />
-            </Layout>
+            user ? (
+              <Layout>
+                <Users />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
-        {/* <Route
-          path="/admin-rights"
+        <Route
+          path="/new-user"
           element={
-            <Layout>
-              <AssetForm />
-            </Layout>
+            user ? (
+              <Layout>
+                <UserCreationPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
-        /> */}
+        />
+        <Route
+          path="/userview"
+          element={
+            user ? (
+              <Layout>
+                <UserViewPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/userProfilePage"
+          element={
+            user ? (
+              <Layout>
+                <UserProfilePage />
+              </Layout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/all-tickets"
+          element={
+            user ? (
+              <Layout>
+                <Tickets />
+              </Layout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/my-tickets"
+          element={
+            user ? (
+              <UserLayout>
+                <MyTicketsPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/my-assets"
+          element={
+            user ? (
+              <UserLayout>
+                <MyAssetPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/my-accessories"
+          element={
+            user ? (
+              <UserLayout>
+                <MyAccessoryPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/system-right"
+          element={
+            user ? (
+              <UserLayout>
+                <SystemRightPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            user ? (
+              hasAdminRole(user) ? (
+                <Layout>
+                  <SettingsPage />
+                </Layout>
+              ) : (
+                <UserLayout>
+                  <SettingsPage />
+                </UserLayout>
+              )
+            ) : (
+              <Login />
+            )
+          }
+        />
 
         <Route
           path="/:category"
           element={
-            <Layout>
-              <Table selectedCategory={selectedCategory} />
-            </Layout>
+            user ? (
+              <Layout>
+                <Table selectedCategory={selectedCategory} />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
 
         <Route
           path="/recent-activity"
           element={
-            <Layout>
-              <RecentActivityPage />
-            </Layout>
+            user ? (
+              <Layout>
+                <RecentActivityPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/asset-location"
           element={
-            <Layout>
-              <AssetLocationPage />
-            </Layout>
+            user ? (
+              <Layout>
+                <AssetLocationPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/reports"
           element={
-            <Layout>
-              <Reports />
-            </Layout>
+            user ? (
+              <Layout>
+                <Reports />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/create-asset"
           element={
-            <Layout>
-              <AssetFormPage />
-            </Layout>
+            user ? (
+              <Layout>
+                <AssetFormPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/new-ticket"
           element={
-            <Layout>
-              <TicketFormPage />
-            </Layout>
+            user ? (
+              <Layout>
+                <TicketFormPage />
+              </Layout>
+            ) : (
+              <Login />
+            )
           }
         />
-        {/* <Route
-          path="/users"
+        <Route
+          path="/user/new-ticket"
           element={
-            <UserLayout>
-              <Table />
-            </UserLayout>
+            user ? (
+              <UserLayout>
+                <TicketFormPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
           }
-        /> */}
+        />
+
         <Route
           path="/assets-issued"
           element={
-            <UserLayout>
-              <UserAsset />
-            </UserLayout>
+            user ? (
+              <UserLayout>
+                <UserAsset />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
           }
         />
         <Route
           path="/accessories-issued"
           element={
-            <UserLayout>
-              {/* <UserAsset /> */}
-              <UserTable />
-            </UserLayout>
+            user ? (
+              <UserLayout>
+                <UserTable />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
           }
         />
       </Routes>

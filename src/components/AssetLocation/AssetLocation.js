@@ -437,12 +437,12 @@ const AssetLocation = () => {
     <div className="bg-blue-50 p-2 shadow rounded-lg -mb-6 w-[98%] h-108">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold ml-2">Asset By Location</h2>
-        <button
+        {/* <button
           className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-400 hover:bg-blue-600 text-white focus:outline-none mb-2 mt-2 mr-2"
           onClick={handleToggleContent}
         >
           <span className="text-3xl mb-2">{showContent ? "-" : "+"}</span>
-        </button>
+        </button> */}
       </div>
       {showContent && (
         <div className="overflow-x-auto mt-2 overflow-y-auto">
@@ -451,9 +451,9 @@ const AssetLocation = () => {
               <thead className="sticky top-0">
                 <tr className="bg-gray-200 text-gray-600 border-b-2 border-gray-500">
                   <th className="bg-blue-200 py-2 px-4">Location</th>
-                  <th className="bg-green-200 py-2 px-4">Total</th>
-                  <th className="bg-yellow-200 py-2 px-4">Assigned</th>
-                  <th className="bg-red-200 py-2 px-4">Remaining</th>
+                  <th className="bg-blue-200 py-2 px-4">Total</th>
+                  <th className="bg-blue-200 py-2 px-4">Assigned</th>
+                  <th className="bg-blue-200 py-2 px-4">Remaining</th>
                 </tr>
               </thead>
               <tbody>
@@ -465,13 +465,13 @@ const AssetLocation = () => {
                     >
                       {location.location}
                     </td>
-                    <td className="bg-green-200 py-2 px-4 pl-8">
+                    <td className="bg-blue-200 py-2 px-4 pl-8">
                       {location.total}
                     </td>
-                    <td className="bg-yellow-200 py-2 px-4 pl-12">
+                    <td className="bg-blue-200 py-2 px-4 pl-12">
                       {location.assigned}
                     </td>
-                    <td className="bg-red-200 py-2 px-4 pl-10">
+                    <td className="bg-blue-200 py-2 px-4 pl-10">
                       {location.remaining}
                     </td>
                   </tr>
