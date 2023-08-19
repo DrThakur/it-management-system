@@ -1,6 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const DialogBox = ({ onClose, ticketDetails }) => {
+  const navigate = useNavigate(); // Initialize the useHistory hook
+
+  const handleViewDetails = () => {
+    // Navigate to the ticket detail page with the ticket ID
+    navigate(`/ticketView`);
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center backdrop">
       <div className="bg-white p-4 rounded-lg shadow-lg">
@@ -30,7 +38,7 @@ const DialogBox = ({ onClose, ticketDetails }) => {
           </button>
           <button
             className="mt-4 p-2 bg-green-500 text-white rounded-md cursor-pointer"
-            onClick={onClose}
+            onClick={handleViewDetails}
           >
             View Details
           </button>

@@ -5,7 +5,7 @@ import PermissionForm from "../PermissionForm/PermissionForm";
 
 import UserView from "../UserView/UserView";
 
-const ViewPageWithTabs = () => {
+const ViewPageWithTabs = ({ userId }) => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
   return (
@@ -25,7 +25,7 @@ const ViewPageWithTabs = () => {
         </TabList>
 
         <TabPanel>
-          <UserView />
+          <UserView userId={userId} />
         </TabPanel>
 
         <TabPanel>

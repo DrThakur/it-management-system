@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
@@ -12,11 +12,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useRef } from "react";
+import { Context } from "../../context/Context";
 
-const TicketTable = () => {
+const UserTicketTable = () => {
   const [tickets, setTickets] = useState([]);
-  const dt = useRef(null);
+  const { user, dispatch } = useContext(Context);
   const navigate = useNavigate();
   const [sizeOptions] = useState([
     { label: "Small", value: "small" },
@@ -41,8 +41,10 @@ const TicketTable = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const res = await axios.get("http://localhost:8002/tickets");
-        console.log("response data", res.data);
+        const res = await axios.get(
+          `http://localhost:8002/ticketByUserId?userId=${user._id}`
+        );
+        console.log(res);
         setTickets(res.data);
       } catch (error) {
         console.error("Error", error);
@@ -50,7 +52,9 @@ const TicketTable = () => {
     };
     fetchTickets();
     initFilters();
-  }, []);
+  }, [user._id]);
+  console.log(user);
+  console.log(user._id);
 
   const formatDate = (date) => {
     const options = { day: "2-digit", month: "short", year: "numeric" };
@@ -154,7 +158,6 @@ const TicketTable = () => {
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
       name: { value: null, matchMode: FilterMatchMode.CONTAINS },
       ticketId: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      createdBy: { value: null, matchMode: FilterMatchMode.CONTAINS },
       requestType: { value: null, matchMode: FilterMatchMode.CONTAINS },
       createdAt: { value: null, matchMode: FilterMatchMode.CONTAINS },
       priority: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -186,7 +189,6 @@ const TicketTable = () => {
   };
   const userBodyTemplate = (rowData) => {
     const createdBy = rowData.createdBy;
-    // console.log(createdBy);
 
     return (
       <div className="flex flex-col align-items-center gap-2 mr-2">
@@ -198,7 +200,7 @@ const TicketTable = () => {
             height="40"
           />
           <Link
-            to={`/userview/${rowData._id}`}
+            to="/userview"
             className="ml-2 text-green-500 hover:text-green-900"
           >
             {createdBy.name}
@@ -220,18 +222,18 @@ const TicketTable = () => {
             height="40"
           />
           <Link
-            to={`/userview/${rowData._id}`}
+            to="/userview"
             className="ml-2 text-green-500 hover:text-green-900"
           >
             {assignedTo.name}
           </Link>
-          <button
+          {/* <button
             className="bg-blue-500 hover:bg-blue-700 border-none p-3 rounded-lg text-white ml-4 -mr-6"
             onClick={handleTicketAssignment}
             disabled={rowData.isAssigned}
           >
             {rowData.isAssigned ? "Assigned to You" : "Take Ownership"}
-          </button>
+          </button> */}
         </div>
       </div>
     );
@@ -269,9 +271,9 @@ const TicketTable = () => {
       field: "id",
       header: "S.No",
       body: (rowData) => (
-        <Link to="/ticketView" className="text-blue-500 hover:text-blue-900">
+        <a href="/ticketView" className="text-blue-500 hover:text-blue-900">
           {rowData.serialNumber}
-        </Link>
+        </a>
       ),
       sortable: true,
       bodyStyle: {
@@ -282,9 +284,9 @@ const TicketTable = () => {
       field: "ticketId",
       header: "Ticket ID",
       body: (rowData) => (
-        <Link to="/ticketView" className="text-blue-500 hover:text-blue-900">
+        <a href="/ticketView" className="text-blue-500 hover:text-blue-900">
           {rowData.ticketId}
-        </Link>
+        </a>
       ),
       bodyStyle: {
         textAlign: "center",
@@ -293,19 +295,19 @@ const TicketTable = () => {
       editor: (options) => textEditor(options),
       sortable: true,
     },
-    {
-      field: "createdeBy",
-      header: "Created By",
-      body: userBodyTemplate,
-      bodyStyle: {
-        textAlign: "center",
-        minWidth: "8rem",
-        // Customize the style as needed
-      },
-      style: { minWidth: "150px" },
-      editor: (options) => textEditor(options),
-      sortable: true,
-    },
+    //  {
+    //    field: "name",
+    //    header: "Created By",
+    //    body: userBodyTemplate,
+    //    bodyStyle: {
+    //      textAlign: "center",
+    //      minWidth: "8rem",
+    //      // Customize the style as needed
+    //    },
+    //    style: { minWidth: "150px" },
+    //    editor: (options) => textEditor(options),
+    //    sortable: true,
+    //  },
     {
       field: "requestType",
       header: "Request Type",
@@ -314,9 +316,9 @@ const TicketTable = () => {
         minWidth: "10rem", // Customize the style as needed
       },
       body: (rowData) => (
-        <Link to="/userview" className="text-blue-500 hover:text-blue-900">
+        <a href="/userview" className="text-blue-500 hover:text-blue-900">
           {rowData.requestType}
-        </Link>
+        </a>
       ),
       editor: (options) => textEditor(options),
       sortable: true,
@@ -329,10 +331,10 @@ const TicketTable = () => {
         minWidth: "8rem",
       },
       body: (rowData) => (
-        <Link to="/userview" className="text-yellow-500 hover:text-blue-900">
+        <a href="/userview" className="text-yellow-500 hover:text-blue-900">
           {/* {new Date(rowData.createdAt).toDateString()} */}
           {formatDate(rowData.createdAt)}
-        </Link>
+        </a>
       ),
       editor: (options) => textEditor(options),
       sortable: true,
@@ -366,9 +368,9 @@ const TicketTable = () => {
       body: assignedBodyTemplate,
       bodyStyle: {
         textAlign: "center",
-        minWidth: "15rem", // Customize the style as needed
+        // Customize the style as needed
       },
-      style: { minWidth: "200px" },
+      // style: { minWidth: "100px" },
       editor: (options) => textEditor(options),
       sortable: true,
     },
@@ -382,11 +384,11 @@ const TicketTable = () => {
       editor: (options) => statusEditor(options),
       sortable: true,
     },
-    {
-      rowEditor: true,
-      headerStyle: { width: "10%", minWidth: "8rem" },
-      bodyStyle: { textAlign: "center" },
-    },
+    //  {
+    //    rowEditor: true,
+    //    headerStyle: { width: "10%", minWidth: "8rem" },
+    //    bodyStyle: { textAlign: "center" },
+    //  },
   ];
   const [visibleColumns, setVisibleColumns] = useState(columns);
 
@@ -408,70 +410,6 @@ const TicketTable = () => {
     });
   };
 
-  const exportColumns = columns.map((col) => ({
-    title: col.header,
-    dataKey: col.field,
-  }));
-  const preprocessDataForExport = (data) => {
-    console.log("Data for Export:", data);
-    return data.map((ticket) => ({
-      ...ticket,
-      createdBy: ticket.createdBy.name, // Extract the relevant property
-      assignedTo: ticket.assignedTo.name, // Extract the relevant property
-    }));
-  };
-
-  const exportCSV = (selectionOnly) => {
-    const exportedData = preprocessDataForExport(tickets);
-    dt.current.exportCSV({ selectionOnly, value: exportedData });
-  };
-
-  const exportPdf = () => {
-    const exportedData = preprocessDataForExport(tickets);
-
-    import("jspdf").then((jsPDF) => {
-      import("jspdf-autotable").then(() => {
-        const doc = new jsPDF.default(0, 0);
-
-        doc.autoTable(exportColumns, exportedData);
-
-        doc.save("tickets.pdf");
-      });
-    });
-  };
-
-  const exportExcel = () => {
-    const exportedData = preprocessDataForExport(tickets);
-    import("xlsx").then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(exportedData);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
-      const excelBuffer = xlsx.write(workbook, {
-        bookType: "xlsx",
-        type: "array",
-      });
-
-      saveAsExcelFile(excelBuffer, "tickets");
-    });
-  };
-
-  const saveAsExcelFile = (buffer, fileName) => {
-    import("file-saver").then((module) => {
-      if (module && module.default) {
-        let EXCEL_TYPE =
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-        let EXCEL_EXTENSION = ".xlsx";
-        const data = new Blob([buffer], {
-          type: EXCEL_TYPE,
-        });
-
-        module.default.saveAs(
-          data,
-          fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
-        );
-      }
-    });
-  };
-
   const header = (
     <div className="flex justify-between mb-4">
       <div className="flex justify-content-center mb-4">
@@ -485,7 +423,7 @@ const TicketTable = () => {
           className="w-32 md:w-14rem"
         />
       </div>
-      <div>
+      {/* <div>
         <MultiSelect
           value={visibleColumns}
           options={columns}
@@ -494,7 +432,7 @@ const TicketTable = () => {
           className="w-32 sm:w-20rem ml-2"
           display="chip"
         />
-      </div>
+      </div> */}
       <div className="w-1/2 ml-2">
         <button
           className="bg-green-500 border-none p-3 rounded-lg text-white"
@@ -503,35 +441,7 @@ const TicketTable = () => {
           Create New Ticket
         </button>
       </div>
-      <div className="flex align-items-center justify-content-end gap-2 mr-4">
-        <Button
-          type="button"
-          icon="pi pi-file"
-          rounded
-          onClick={() => exportCSV(false)}
-          data-pr-tooltip="CSV"
-          title="Export CSV"
-        />
-        <Button
-          type="button"
-          icon="pi pi-file-excel"
-          severity="success"
-          rounded
-          onClick={exportExcel}
-          data-pr-tooltip="XLS"
-          title="Export Excel"
-        />
-        <Button
-          type="button"
-          icon="pi pi-file-pdf"
-          severity="warning"
-          rounded
-          onClick={exportPdf}
-          data-pr-tooltip="PDF"
-          title="Export PDF"
-        />
-      </div>
-      <div className="flex justify-center items-center mr-2 -mt-3 w-1/4">
+      <div className="flex items-center">
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -555,14 +465,13 @@ const TicketTable = () => {
 
   return (
     <div className="w-full overflow-hidden card p-fluid">
-      <h1>All Tickets</h1>
+      {/* <h1>All Tickets</h1> */}
       <div style={{ overflowX: "auto", width: "100%" }}>
         <DataTable
           value={tickets}
           header={header}
           showGridlines
           size={size}
-          ref={dt}
           tableStyle={{ overflow: "auto" }}
           className="shadow-md rounded-lg"
           stripedRows
@@ -576,7 +485,6 @@ const TicketTable = () => {
           globalFilterFields={[
             "name",
             "ticketId",
-            "createdBy",
             "requestType",
             "createdAt",
             "priority",
@@ -586,7 +494,7 @@ const TicketTable = () => {
           ]}
           emptyMessage="No Tickets found."
           editMode="row"
-          dataKey="_id"
+          dataKey="id"
           onRowEditComplete={onRowEditComplete}
           scrollable
           scrollHeight="400px"
@@ -596,7 +504,7 @@ const TicketTable = () => {
         >
           <Column
             selectionMode="multiple"
-            headerStyle={{ width: "3rem" }}
+            // headerStyle={{ width: "3rem" }}
           ></Column>
           {visibleColumns.map((column, index) => (
             <Column
@@ -614,4 +522,4 @@ const TicketTable = () => {
   );
 };
 
-export default TicketTable;
+export default UserTicketTable;
