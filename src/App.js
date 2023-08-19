@@ -66,7 +66,7 @@ function App() {
                 </Layout>
               ) : (
                 <UserLayout>
-                  <UserDashboard />
+                  <UserDashboard user={user} />
                 </UserLayout>
               )
             ) : (
@@ -217,7 +217,7 @@ function App() {
           }
         />
         <Route
-          path="/userview"
+          path="/userview/:id"
           element={
             user ? (
               <Layout>
@@ -233,7 +233,7 @@ function App() {
           element={
             user ? (
               <Layout>
-                <UserProfilePage />
+                <UserProfilePage user={user} />
               </Layout>
             ) : (
               <Login />

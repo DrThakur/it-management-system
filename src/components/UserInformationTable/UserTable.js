@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
@@ -11,9 +11,12 @@ import { MultiSelect } from "primereact/multiselect";
 import { Link, useNavigate } from "react-router-dom";
 import "./Table.css";
 import axios from "axios";
+import { Toast } from "primereact/toast";
+import { FileUpload } from "primereact/fileupload";
 
 const Table = () => {
   const [users, setUsers] = useState([]);
+  const dt = useRef(null);
   const navigate = useNavigate();
   const [sizeOptions] = useState([
     { label: "Small", value: "small" },
@@ -33,12 +36,19 @@ const Table = () => {
     "Hyedrabad",
     "Kolkata",
   ]);
-  const [selectedProducts, setSelectedProducts] = useState(null);
+  const [selectedUsers, setSelectedUsers] = useState(null);
   const [filters, setFilters] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
 
   const statusBodyTemplate = (user) => {
-    return <Tag value={user.active} severity={getSeverity(user)}></Tag>;
+    console.log("status user", user);
+    return (
+      <Tag
+        value={user.status}
+        severity={getSeverity(user)}
+        style={{ fontSize: "10px" }}
+      ></Tag>
+    );
   };
 
   useEffect(() => {
@@ -56,13 +66,13 @@ const Table = () => {
 
   const getSeverity = (user) => {
     switch (user.status) {
-      case "ACTIVE":
+      case "Active":
         return "success";
 
-      case "HOLD":
+      case "Hold":
         return "warning";
 
-      case "INACTIVE":
+      case "Inactive":
         return "danger";
 
       default:
@@ -119,7 +129,7 @@ const Table = () => {
 
     return (
       <div className="flex flex-col align-items-center gap-2 mr-2">
-        <div className="flex flex-row align-items-center">
+        <div className="flex flex-row items-center justify-start">
           <img
             alt={employee.firstName}
             src={`http://localhost:8002${employee.profileImageURL}`}
@@ -127,7 +137,7 @@ const Table = () => {
             height="32"
           />
           <Link
-            to="/userview"
+            to={`/userview/${rowData._id}`}
             className="ml-2 text-green-500 hover:text-green-900"
           >
             {employee.firstName}
@@ -166,12 +176,16 @@ const Table = () => {
 
   const columns = [
     {
-      field: "id",
-      header: "ID",
+      field: "employeeCode",
+      header: "Employee Code",
       sortable: true,
+      bodyStyle: {
+        textAlign: "center",
+        minWidth: "12rem", // Customize the style as needed
+      },
     },
     {
-      field: "name",
+      field: "firstName",
       header: "Name",
       body: employeeBodyTemplate,
       bodyStyle: {
@@ -189,7 +203,10 @@ const Table = () => {
         minWidth: "12rem", // Customize the style as needed
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.designation}
         </a>
       ),
@@ -203,7 +220,10 @@ const Table = () => {
         textAlign: "center",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-yellow-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-yellow-500 hover:text-blue-900"
+        >
           {rowData.email}
         </a>
       ),
@@ -217,7 +237,10 @@ const Table = () => {
         textAlign: "center",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.phoneNumber}
         </a>
       ),
@@ -231,7 +254,10 @@ const Table = () => {
         textAlign: "center",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.username}
         </a>
       ),
@@ -246,7 +272,10 @@ const Table = () => {
         width: "20%",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.department}
         </a>
       ),
@@ -260,7 +289,10 @@ const Table = () => {
         textAlign: "center",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.location}
         </a>
       ),
@@ -274,7 +306,10 @@ const Table = () => {
         textAlign: "center",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.reportingManager}
         </a>
       ),
@@ -288,7 +323,10 @@ const Table = () => {
         textAlign: "center",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.issuedAssets || 5}
         </a>
       ),
@@ -302,7 +340,10 @@ const Table = () => {
         textAlign: "center",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.issuedLicence || 5}
         </a>
       ),
@@ -317,7 +358,10 @@ const Table = () => {
         // Customize the style as needed
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <a
+          href={`/userview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.totalRaisedTickets || 10}
         </a>
       ),
@@ -341,6 +385,7 @@ const Table = () => {
     },
   ];
   const [visibleColumns, setVisibleColumns] = useState(columns);
+  const toast = useRef(null);
 
   const onColumnToggle = (event) => {
     let selectedColumns = event.value;
@@ -355,8 +400,67 @@ const Table = () => {
     navigate("/new-user");
   };
 
+  const exportColumns = columns.map((col) => ({
+    title: col.header,
+    dataKey: col.field,
+  }));
+
+  const exportCSV = (selectionOnly) => {
+    dt.current.exportCSV({ selectionOnly });
+  };
+
+  const exportPdf = () => {
+    import("jspdf").then((jsPDF) => {
+      import("jspdf-autotable").then(() => {
+        const doc = new jsPDF.default(0, 0);
+
+        doc.autoTable(exportColumns, users);
+        doc.save("users.pdf");
+      });
+    });
+  };
+
+  const exportExcel = () => {
+    import("xlsx").then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(users);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const excelBuffer = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+
+      saveAsExcelFile(excelBuffer, "users");
+    });
+  };
+
+  const saveAsExcelFile = (buffer, fileName) => {
+    import("file-saver").then((module) => {
+      if (module && module.default) {
+        let EXCEL_TYPE =
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+        let EXCEL_EXTENSION = ".xlsx";
+        const data = new Blob([buffer], {
+          type: EXCEL_TYPE,
+        });
+
+        module.default.saveAs(
+          data,
+          fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+        );
+      }
+    });
+  };
+
+  const onUpload = () => {
+    toast.current.show({
+      severity: "info",
+      summary: "Success",
+      detail: "File Uploaded",
+    });
+  };
+
   const header = (
-    <div className="flex justify-between mb-4">
+    <div className="flex flex-row justify-between mb-4">
       <div className="flex justify-content-center mb-4">
         <Dropdown
           value={size}
@@ -383,10 +487,47 @@ const Table = () => {
           className="bg-green-500 border-none p-3 rounded-lg text-white"
           onClick={handleNewUserCreation}
         >
-          Create User
+          Create New User
         </button>
       </div>
-      <div className="flex items-center">
+      <div className="card flex justify-content-center mr-2 w-full">
+        <Toast ref={toast}></Toast>
+        <FileUpload
+          mode="basic"
+          name="file"
+          url="http://localhost:8002/users/importFile"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          maxFileSize={1000000}
+          onUpload={onUpload}
+          chooseLabel="Import New Users"
+        />
+      </div>
+      <div className="flex align-items-center justify-content-end gap-2 mr-4">
+        <Button
+          type="button"
+          icon="pi pi-file"
+          rounded
+          onClick={() => exportCSV(false)}
+          data-pr-tooltip="CSV"
+        />
+        <Button
+          type="button"
+          icon="pi pi-file-excel"
+          severity="success"
+          rounded
+          onClick={exportExcel}
+          data-pr-tooltip="XLS"
+        />
+        <Button
+          type="button"
+          icon="pi pi-file-pdf"
+          severity="warning"
+          rounded
+          onClick={exportPdf}
+          data-pr-tooltip="PDF"
+        />
+      </div>
+      <div className="flex justify-center items-center mr-2 -mt-3 w-1/2">
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -415,6 +556,7 @@ const Table = () => {
         value={users}
         header={header}
         size={size}
+        ref={dt}
         showGridlines
         tableStyle={{ overflow: "auto" }}
         className="shadow-md rounded-lg"
@@ -438,13 +580,13 @@ const Table = () => {
         ]}
         emptyMessage="No User found."
         editMode="row"
-        dataKey="id"
+        dataKey="_id"
         onRowEditComplete={onRowEditComplete}
         scrollable
         scrollHeight="400px"
-        selectionMode={"checkbox"}
-        selection={selectedProducts}
-        onSelectionChange={(e) => setSelectedProducts(e.value)}
+        selectionMode="checkbox"
+        selection={selectedUsers}
+        onSelectionChange={(e) => setSelectedUsers(e.value)}
       >
         <Column
           selectionMode="multiple"

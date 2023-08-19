@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const UserProfile = () => {
+const UserProfile = ({ user }) => {
   const [firstName, setFirstName] = useState("John");
   const [lastName, setLastName] = useState("Doe");
   const [username, setUsername] = useState("johndoe");
@@ -20,15 +20,15 @@ const UserProfile = () => {
       <div className="w-4/12 pr-8 bg-white rounded shadow text-center">
         <div className="mb-4 mt-6">
           <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+            src={`http://localhost:8002${user.profileImageURL}`}
             alt="User Profile"
             className="w-32 h-32 rounded-full mx-auto"
           />
         </div>
         <div className="mb-4 text-center">
-          <p className="text-lg font-semibold">{`${firstName} ${lastName}`}</p>
-          <p className="text-gray-500">{username}</p>
-          <p className="text-gray-500">Software Engineer</p>
+          <p className="text-lg font-semibold">{`${user.firstName} ${user.lastName}`}</p>
+          <p className="text-gray-500">{user.username || "DrG"}</p>
+          <p className="text-gray-500">{user.designation}</p>
         </div>
         <div className="border-t border-gray-300">
           <ul className="mt-4 space-y-2">
@@ -75,7 +75,7 @@ const UserProfile = () => {
               <label className="block mb-1 font-medium">First Name</label>
               <input
                 type="text"
-                value={firstName}
+                value={user.firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 className="w-full border rounded p-2"
                 disabled={!isEditMode}
@@ -85,7 +85,7 @@ const UserProfile = () => {
               <label className="block mb-1 font-medium">Last Name</label>
               <input
                 type="text"
-                value={lastName}
+                value={user.lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 className="w-full border rounded p-2"
                 disabled={!isEditMode}
@@ -95,7 +95,7 @@ const UserProfile = () => {
               <label className="block mb-1 font-medium">Username</label>
               <input
                 type="text"
-                value={username}
+                value={user.username || "DrG"}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full border rounded p-2"
                 disabled={!isEditMode}
@@ -104,7 +104,7 @@ const UserProfile = () => {
             <div>
               <label className="block mb-1 font-medium">Gender</label>
               <select
-                value={gender}
+                value={user.gender || "Male"}
                 onChange={(e) => setGender(e.target.value)}
                 className="w-full border rounded p-2"
                 disabled={!isEditMode}
@@ -131,7 +131,7 @@ const UserProfile = () => {
               <label className="block mb-1 font-medium">Phone Number</label>
               <input
                 type="tel"
-                value={phoneNumber}
+                value={user.phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 className="w-full border rounded p-2"
                 disabled={!isEditMode}
@@ -141,7 +141,7 @@ const UserProfile = () => {
               <label className="block mb-1 font-medium">Email</label>
               <input
                 type="email"
-                value={email}
+                value={user.email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border rounded p-2"
                 disabled={!isEditMode}

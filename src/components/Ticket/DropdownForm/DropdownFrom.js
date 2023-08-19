@@ -1,26 +1,13 @@
-import React, { useState } from "react";
-import employees from "../../../data/EmployeesData/EmployeesData";
+import React, { useContext, useEffect, useState } from "react";
+// import employees from "../../../data/EmployeesData/EmployeesData";
+import EmployeeOption from "./EmployeeOptions";
 import Select from "react-select";
 import DialogBox from "./DialogBox";
 import axios from "axios";
-
-const EmployeeOption = ({ employee }) => (
-  <div className="flex items-center">
-    <img
-      src={employee.imageUrl}
-      alt={`${employee.name}'s profile`}
-      className="w-8 h-8 rounded-full mr-2"
-    />
-    <div>
-      <p className="font-medium">{employee.name}</p>
-      <p className="text-sm text-gray-700">
-        {employee.position} ({employee.code})
-      </p>
-    </div>
-  </div>
-);
+import { Context } from "../../../context/Context";
 
 const DropdownForm = () => {
+  const [employeeOptions, setEmployeeOptions] = useState([]);
   const [requestType, setRequestType] = useState("");
   const [assetRequiredFor, setAssetRequiredFor] = useState("");
   const [requestFor, setRequestFor] = useState("");
@@ -38,6 +25,7 @@ const DropdownForm = () => {
     issue: "",
     submissionTime: null,
   });
+  const { user, dispatch } = useContext(Context);
   const isButtonDisabled =
     !requestType ||
     (!requestFor && requestType === "Request Something") ||
@@ -172,7 +160,7 @@ const DropdownForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(user);
     let isComplete = true;
 
     if (requestType === "Request Something") {
@@ -213,6 +201,8 @@ const DropdownForm = () => {
     if (isComplete) {
       setIsFormSubmitted(true);
 
+      formData.userId = user._id;
+
       // Making Post request usin axios for form submission
       try {
         const response = await axios.post(
@@ -252,10 +242,25 @@ const DropdownForm = () => {
     setPriority("");
   };
 
-  const employeeOptions = employees.map((employee) => ({
-    value: employee.name,
-    label: <EmployeeOption employee={employee} />,
-  }));
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get("http://localhost:8002/users");
+        console.log(res);
+        // setTickets(res.data);
+        console.log(res.data);
+        const employees = res.data;
+        const options = employees.map((employee) => ({
+          value: employee.firstName + " " + employee.lastName,
+          label: <EmployeeOption employee={employee} />,
+        }));
+        setEmployeeOptions(options);
+      } catch (error) {
+        console.error("Error", error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   // const isFormIncomplete =
   //   !requestType ||

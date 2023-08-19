@@ -1,22 +1,37 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-const UserView = () => {
-  const user = {
-    name: "John Doe",
-    company: "Example Corp",
-    username: "johndoe",
-    email: "johndoe@example.com",
-    lastLogin: "2023-08-05 10:30 AM",
-    createdAt: "2023-01-15",
-    active: true,
-    employeeCode: "EMP123",
-    designation: "Senior Developer",
-    reportingManager: "Jane Smith",
-    department: "Engineering",
-    location: "New York",
-    phoneNumber: "+1 123-456-7890",
-    profileImage: "https://example.com/profile.jpg", // Replace with actual image URL
-  };
+const UserView = ({ userId }) => {
+  const [user, setUser] = useState({});
+  // const user = {
+  //   name: "John Doe",
+  //   company: "Example Corp",
+  //   username: "johndoe",
+  //   email: "johndoe@example.com",
+  //   lastLogin: "2023-08-05 10:30 AM",
+  //   createdAt: "2023-01-15",
+  //   active: true,
+  //   employeeCode: "EMP123",
+  //   designation: "Senior Developer",
+  //   reportingManager: "Jane Smith",
+  //   department: "Engineering",
+  //   location: "New York",
+  //   phoneNumber: "+1 123-456-7890",
+  //   profileImage: "https://example.com/profile.jpg", // Replace with actual image URL
+  // };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8002/users/${userId}`);
+        console.log("specific user data", res.data);
+        setUser(res.data);
+      } catch (error) {
+        console.error("Error", error);
+      }
+    };
+    fetchUser();
+  }, [userId]);
 
   return (
     <div className="w-full h-full p-8 flex bg-white -mt-2">
@@ -24,10 +39,10 @@ const UserView = () => {
       <div className="w-7/12 pr-8">
         <h2 className="text-xl font-semibold mb-4">User Information</h2>
         <p>
-          <strong>Name:</strong> {user.name}
+          <strong>Name:</strong> {user.firstName + " " + user.lastName}
         </p>
         <p>
-          <strong>Company:</strong> {user.company}
+          <strong>Company:</strong> Logic Fruit Technologies
         </p>
         <p>
           <strong>Username:</strong> {user.username}
@@ -68,9 +83,9 @@ const UserView = () => {
       <div className="w-5/12 pl-8 border-l border-gray-300">
         <div className="flex flex-col items-center space-y-4">
           <img
-            src="https://media.istockphoto.com/id/1300512215/photo/headshot-portrait-of-smiling-ethnic-businessman-in-office.jpg?b=1&s=612x612&w=0&k=20&c=5QE_Qf5Vth9bCHcD5OpdZ1PoPhn36j3GtRVzaFAa22c="
+            src={`http://localhost:8002${user.profileImageURL}`}
             alt="Profile"
-            className="w-32 h-32 rounded-full object-cover"
+            className="w-48 h-48 rounded-full object-cover"
           />
           <button className="w-2/3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Edit User
