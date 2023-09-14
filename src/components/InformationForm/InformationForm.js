@@ -6,8 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const InformationForm = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     username: "",
     password: "",
     confirmPassword: "",
@@ -18,6 +17,7 @@ const InformationForm = () => {
     designation: "",
     reportingManager: "",
     department: "",
+    role: "",
     location: "",
     phoneNumber: "",
     notes: "",
@@ -44,12 +44,13 @@ const InformationForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Handle form submission logic here
+    console.log("My User Creation form Data", formData);
     try {
       const res = await axios.post("http://localhost:8002/users", formData);
       console.log(res);
       // Reset the form after successful submission
       setFormData({
-        firstName: "",
+        fullName: "",
         lastName: "",
         username: "",
         password: "",
@@ -61,6 +62,7 @@ const InformationForm = () => {
         designation: "",
         reportingManager: "",
         department: "",
+        role: "",
         location: "",
         phoneNumber: "",
         notes: "",
@@ -84,21 +86,21 @@ const InformationForm = () => {
         <div className="mb-4 flex items-center">
           <label
             className="w-1/3 text-gray-700 font-bold -mr-8 ml-6"
-            htmlFor="firstName"
+            htmlFor="fullName"
           >
-            First Name:
+            Full Name:
           </label>
           <input
             className="w-1/2 px-3 py-2 border rounded focus:outline-none focus:shadow-outline -ml-6"
             type="text"
-            name="firstName"
-            value={formData.firstName}
+            name="fullName"
+            value={formData.fullName}
             onChange={handleInputChange}
             required
           />
         </div>
 
-        <div className="mb-4 flex items-center">
+        {/* <div className="mb-4 flex items-center">
           <label
             className="w-1/3 text-gray-700 font-bold -mr-8 ml-6"
             htmlFor="lastName"
@@ -113,7 +115,8 @@ const InformationForm = () => {
             onChange={handleInputChange}
             required
           />
-        </div>
+        </div> */}
+
         <div className="mb-4 flex items-center">
           <label
             className="w-1/3 text-gray-700 font-bold -mr-8 ml-6"
@@ -259,6 +262,42 @@ const InformationForm = () => {
             onChange={handleInputChange}
             required
           />
+        </div>
+        {/* <div className="mb-4 flex items-center">
+          <label
+            className="w-1/3 text-gray-700 font-bold -mr-8 ml-6"
+            htmlFor="role"
+          >
+            Role:
+          </label>
+          <input
+            className="w-1/2  px-3 py-2 border rounded focus:outline-none focus:shadow-outline -ml-6"
+            type="text"
+            name="role"
+            value={formData.role}
+            onChange={handleInputChange}
+            required
+          />
+        </div> */}
+        <div className="mb-4 flex items-center">
+          <label
+            className="w-1/3 text-gray-700 font-bold -mr-8 ml-6"
+            htmlFor="role"
+          >
+            Role:
+          </label>
+          <select
+            className="w-1/2 px-3 py-2 border rounded focus:outline-none focus:shadow-outline -ml-6"
+            name="role"
+            value={formData.role}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Select a role</option>
+            <option value="ADMINISTRATOR">Administrator</option>
+            <option value="TECHNICIAN">Technician</option>
+            <option value="USER">User</option>
+          </select>
         </div>
         <div className="mb-4 flex items-center">
           <label

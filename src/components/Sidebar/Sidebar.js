@@ -18,7 +18,7 @@ import { HiOutlineKey } from "react-icons/hi";
 import { ImRadioChecked } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 
-const Sidebar = ({ isSideOpen }) => {
+const Sidebar = ({ isSideOpen, user }) => {
   const [activeItem, setActiveItem] = useState(null);
   const navigate = useNavigate();
 
@@ -171,6 +171,13 @@ const Sidebar = ({ isSideOpen }) => {
               <ImRadioChecked className="mr-2" />
               <Link to="/new-ticket" className="text-black">
                 Create New Ticket
+              </Link>
+            </div>
+            {user && user.role === "TECHNICIAN"}
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <Link to="/myassignedtickets" className="text-black">
+                Assigned Tickets
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">

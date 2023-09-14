@@ -131,7 +131,7 @@ const Table = () => {
       <div className="flex flex-col align-items-center gap-2 mr-2">
         <div className="flex flex-row items-center justify-start">
           <img
-            alt={employee.firstName}
+            alt={employee.fullName}
             src={`http://localhost:8002${employee.profileImageURL}`}
             width="32"
             height="32"
@@ -140,7 +140,7 @@ const Table = () => {
             to={`/userview/${rowData._id}`}
             className="ml-2 text-green-500 hover:text-green-900"
           >
-            {employee.firstName}
+            {employee.fullName}
           </Link>
         </div>
       </div>
@@ -185,12 +185,12 @@ const Table = () => {
       },
     },
     {
-      field: "firstName",
+      field: "fullName",
       header: "Name",
       body: employeeBodyTemplate,
       bodyStyle: {
         textAlign: "center",
-        minWidth: "15rem", // Customize the style as needed
+        minWidth: "16rem", // Customize the style as needed
       },
       editor: (options) => textEditor(options),
       sortable: true,
@@ -241,7 +241,7 @@ const Table = () => {
           href={`/userview/${rowData._id}`}
           className="text-blue-500 hover:text-blue-900"
         >
-          {rowData.phoneNumber}
+          {rowData.phoneNumber || "N/A"}
         </a>
       ),
       editor: (options) => textEditor(options),

@@ -1,7 +1,7 @@
 import React from "react";
 import UnderConstructionPage from "../../components/UnderConstructionPage/UnderConstructionPage";
 import { useParams } from "react-router-dom";
-import TicketView from "../../components/TicketView/TicketView";
+// import TicketView from "../../components/TicketView/TicketView";
 
 const IndividualAssetPage = () => {
   const { assetType } = useParams();
@@ -18,8 +18,8 @@ const IndividualAssetPage = () => {
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold">{formatString(assetType)}</h1>
-      {/* <UnderConstructionPage /> */}
-      <TicketView />
+      <UnderConstructionPage />
+      {/* <TicketView /> */}
     </div>
   );
 };

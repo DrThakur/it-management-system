@@ -118,18 +118,24 @@ const UserSidebar = () => {
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/my-tickets" className="text-black">
+                My Tickets
+              </Link>
+            </div>
+            <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <Link to="/my-pending-tickets" className="text-black">
                 Pending Tickets
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/my-tickets" className="text-black">
+              <Link to="/my-closed-tickets" className="text-black">
                 Closed Tickets
               </Link>
             </div>
             <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/my-tickets" className="text-black">
+              <Link to="/my-all-tickets" className="text-black">
                 All Tickets
               </Link>
             </div>
