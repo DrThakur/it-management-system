@@ -5,9 +5,7 @@ import UserTicketTable from "../../components/UserTicketTable/UserTicketTable";
 const MyTicketsPage = () => {
   return (
     <div className="w-full">
-      <h1 className="text-lg font-bold">My Tickets</h1>
-      {/* <UnderConstructionPage /> */}
-      <UserTicketTable />
+      <UserTicketTable title={"My Tickets"} />
     </div>
   );
 };

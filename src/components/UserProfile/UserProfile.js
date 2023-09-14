@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Toast } from "primereact/toast";
+import { FileUpload } from "primereact/fileupload";
+import axios from "axios";
 
 const UserProfile = ({ user }) => {
   const [firstName, setFirstName] = useState("John");
@@ -9,25 +12,88 @@ const UserProfile = ({ user }) => {
   const [phoneNumber, setPhoneNumber] = useState("123-456-7890");
   const [email, setEmail] = useState("johndoe@example.com");
   const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const toast = useRef(null);
 
   const handleSave = () => {
     // Perform save logic here
     setIsEditMode(false);
   };
 
+  const onUpload = async (event) => {
+    if (!selectedFile) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("user", JSON.stringify(user)); // Append user data
+    console.log("My Profile formadata", formData);
+    try {
+      const response = await axios.post(
+        "http://localhost:8002/users/uploadProfileImage",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Handle successful upload, maybe refresh user data
+        toast.current.show({
+          severity: "success",
+          summary: "Success",
+          detail: "Profile Image and User Data Updated",
+        });
+      } else {
+        // Handle upload error
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Failed to update profile image and user data",
+        });
+      }
+    } catch (error) {
+      // Handle network error
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Network error while updating profile image and user data",
+      });
+    }
+  };
+
+  console.log("User Profile user", user);
+
   return (
     <div className="flex p-8 w-full">
       <div className="w-4/12 pr-8 bg-white rounded shadow text-center">
-        <div className="mb-4 mt-6">
+        <div className="flrx flex-col justify-cemter items-center mb-4 mt-6">
           <img
             src={`http://localhost:8002${user.profileImageURL}`}
             alt="User Profile"
             className="w-32 h-32 rounded-full mx-auto"
           />
+          <div className="card flex justify-content-center ml-44">
+            <Toast ref={toast}></Toast>
+            <FileUpload
+              mode="basic"
+              name="file"
+              accept="image/*"
+              chooseLabel="Change Profile"
+              maxFileSize={1000000}
+              customUpload={true}
+              uploadHandler={(event) => {
+                setSelectedFile(event.files[0]);
+                onUpload();
+              }}
+            />
+          </div>
         </div>
         <div className="mb-4 text-center">
-          <p className="text-lg font-semibold">{`${user.firstName} ${user.lastName}`}</p>
-          <p className="text-gray-500">{user.username || "DrG"}</p>
+          <p className="text-lg font-semibold">{`${user.fullName}`}</p>
+          <p className="text-gray-500">{user.employeeCode}</p>
           <p className="text-gray-500">{user.designation}</p>
         </div>
         <div className="border-t border-gray-300">
@@ -72,10 +138,10 @@ const UserProfile = ({ user }) => {
           <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block mb-1 font-medium">First Name</label>
+              <label className="block mb-1 font-medium">Full Name</label>
               <input
                 type="text"
-                value={user.firstName}
+                value={user.fullName}
                 onChange={(e) => setFirstName(e.target.value)}
                 className="w-full border rounded p-2"
                 disabled={!isEditMode}
@@ -92,10 +158,10 @@ const UserProfile = ({ user }) => {
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium">Username</label>
+              <label className="block mb-1 font-medium">Designation</label>
               <input
                 type="text"
-                value={user.username || "DrG"}
+                value={user.designation}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full border rounded p-2"
                 disabled={!isEditMode}

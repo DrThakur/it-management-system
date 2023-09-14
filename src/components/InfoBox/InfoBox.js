@@ -1,90 +1,26 @@
-// import React, { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { RiUserLine, RiShoppingCartLine, RiMailLine } from "react-icons/ri";
-
-// const InfoBox = ({ categories, title }) => {
-//   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     console.log(selectedCategory); // Verify selectedCategory value on each change
-//   }, [selectedCategory]);
-
-//   const handleCategoryClick = (category) => {
-//     setSelectedCategory(category);
-//     navigate(`/${category.name.replace(/\s+/g, "-").toLowerCase()}`);
-//     //  console.log("I am navigating to", category);
-//     //  console.log(selectedCategory);
-//   };
-
-//   const getRandomColor = (index) => {
-//     const colors = [
-//       "bg-green-100",
-//       "bg-blue-100",
-//       "bg-orange-100",
-//       "bg-yellow-100",
-//       "bg-lime-100",
-//       "bg-cyan-100",
-//       "bg-sky-100",
-//       "bg-indigo-100",
-//       "bg-fuchsia-100",
-//     ];
-//     const colorIndex = index % colors.length;
-//     return colors[colorIndex];
-//   };
-//   return (
-//     <div className="w-full h-full ml-1 mr-0">
-//       <h1 className="mb-2 ml-2 font-semibold text-2xl">{title}</h1>
-//       <div className="grid grid-cols-4 gap-4">
-//         {categories.map((category, index) => (
-//           //  const Icon = eval(category.icon);
-//           <div
-//             key={index}
-//             className={`rounded-lg shadow-md flex flex-col justify-center items-center cursor-pointer p-4 ${
-//               selectedCategory.name === category.name
-//                 ? "bg-blue-200 rounded-lg"
-//                 : getRandomColor(index)
-//             }`}
-//             onClick={() => handleCategoryClick(category)}
-//           >
-//             {category.count !== undefined && (
-//               <div className="flex flex-col ">
-//                 <div className="flex flex-row justify-center items-center space-x-4">
-//                   <span className="text-4xl">{category.icon}</span>
-//                   <h3 className="font-bold text-4xl">{category.count}</h3>
-//                 </div>
-//                 {category.assigned && category.remaining && (
-//                   <div className="flex flex-col justify-center items-center mt-2">
-//                     <h2 className="text-gray-500 text-sm">
-//                       Assigned: {category.assigned}
-//                     </h2>
-//                     <h2 className="text-gray-500 text-sm">
-//                       Remaining: {category.remaining}
-//                     </h2>
-//                   </div>
-//                 )}
-//               </div>
-//             )}
-//             <p className=" text-gray-500 font-bold pt-2 text-lg">
-//               {category.name}
-//             </p>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default InfoBox;
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RiUserLine, RiShoppingCartLine, RiMailLine } from "react-icons/ri";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
+import axios from "axios";
 
 const InfoBox = ({ categories, title }) => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8002/tickets`);
+        console.log("My Dashboard Ticket Responses", res);
+        setTickets(res.data);
+      } catch (error) {
+        console.error("Error", error);
+      }
+    };
+    fetchTickets();
+  }, []);
 
   useEffect(() => {
     console.log(selectedCategory); // Verify selectedCategory value on each change

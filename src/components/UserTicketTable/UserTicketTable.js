@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Context } from "../../context/Context";
 
-const UserTicketTable = () => {
+const UserTicketTable = ({ title }) => {
   const [tickets, setTickets] = useState([]);
   const { user, dispatch } = useContext(Context);
   const navigate = useNavigate();
@@ -24,12 +24,8 @@ const UserTicketTable = () => {
     { label: "Large", value: "large" },
   ]);
   const [size, setSize] = useState(sizeOptions[0].value);
-  const [priorities] = useState([
-    "High Priority",
-    "Medium Priority",
-    "Low Priority",
-  ]);
-  const [statuses] = useState(["Resolved", "Pending", "New"]);
+  const [priorities] = useState(["High", "Medium", "Low"]);
+  const [statuses] = useState(["Resolved", "Open", "New", "Closed"]);
   const [selectedTickets, setSelectedTickets] = useState(null);
   const [filters, setFilters] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
@@ -38,13 +34,15 @@ const UserTicketTable = () => {
   //   TicketService.getTicketsMini().then((data) => setTickets(data));
   //   initFilters();
   // }, []);
+
+  console.log("My uuuuuser id", user._id);
   useEffect(() => {
     const fetchTickets = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8002/ticketByUserId?userId=${user._id}`
+          `http://localhost:8002/tickets/createdBy/${user._id}`
         );
-        console.log(res);
+        console.log("My Ticket Responses", res);
         setTickets(res.data);
       } catch (error) {
         console.error("Error", error);
@@ -57,18 +55,21 @@ const UserTicketTable = () => {
   console.log(user._id);
 
   const formatDate = (date) => {
-    const options = { day: "2-digit", month: "short", year: "numeric" };
+    const options = {
+      weekday: "short", // Mon
+      day: "2-digit", // 21
+      month: "short", // Aug
+      year: "numeric", // 2023
+      hour: "2-digit", // 12
+      minute: "2-digit", // 05
+      second: "2-digit", // 21
+    };
     const formattedDate = new Date(date).toLocaleDateString("en-US", options);
-
-    // Split the formatted date into day, month, and year parts
-    const [month, day, year] = formattedDate.split(" ");
-
-    // Convert the month abbreviation to uppercase
-    const capitalizedMonth = month.toUpperCase();
-
-    // Return the formatted date with uppercase month abbreviation and desired format
-    return `${day} ${capitalizedMonth} ${year}`;
+    return formattedDate;
   };
+
+  const handleApprove = () => {};
+  const handleReject = () => {};
 
   const statusBodyTemplate = (ticket) => {
     return (
@@ -100,14 +101,17 @@ const UserTicketTable = () => {
 
   const getSeverity = (ticket) => {
     switch (ticket.status) {
-      case "Resolved":
+      case "Closed":
         return "success";
 
       case "New":
-        return "warning";
+        return "info";
 
-      case "Pending":
-        return "danger";
+      case "Open":
+        return "dnager";
+
+      case "Resolved":
+        return "warning";
 
       default:
         return null;
@@ -115,13 +119,13 @@ const UserTicketTable = () => {
   };
   const getPrioritySeverity = (ticket) => {
     switch (ticket.priority) {
-      case "Low Priority":
+      case "Low":
         return "success";
 
-      case "Medium Priority":
+      case "Medium":
         return "warning";
 
-      case "High Priority":
+      case "High":
         return "danger";
 
       default:
@@ -134,6 +138,9 @@ const UserTicketTable = () => {
         return "success";
 
       case "Not Required":
+        return "warning";
+
+      case "Awaited":
         return "warning";
 
       case "No":
@@ -194,8 +201,8 @@ const UserTicketTable = () => {
       <div className="flex flex-col align-items-center gap-2 mr-2">
         <div className="flex flex-row items-center justify-start">
           <img
-            alt={createdBy.name}
-            src={`http://localhost:8002${createdBy.profilePicture}`}
+            alt={createdBy.fullName}
+            src={`http://localhost:8002${createdBy.profileImageURL}`}
             width="40"
             height="40"
           />
@@ -203,40 +210,80 @@ const UserTicketTable = () => {
             to="/userview"
             className="ml-2 text-green-500 hover:text-green-900"
           >
-            {createdBy.name}
+            {createdBy.fullName}
           </Link>
         </div>
       </div>
     );
   };
   const assignedBodyTemplate = (rowData) => {
-    const assignedTo = rowData.assignedTo;
+    console.log("Row Row Data", rowData);
 
-    return (
-      <div className="flex flex-col align-items-center gap-2 mr-2">
-        <div className="flex flex-row  items-center justify-start">
-          <img
-            alt={assignedTo.name}
-            src={`http://localhost:8002${assignedTo.profilePicture}`}
-            width="40"
-            height="40"
-          />
-          <Link
-            to="/userview"
-            className="ml-2 text-green-500 hover:text-green-900"
-          >
-            {assignedTo.name}
-          </Link>
-          {/* <button
-            className="bg-blue-500 hover:bg-blue-700 border-none p-3 rounded-lg text-white ml-4 -mr-6"
-            onClick={handleTicketAssignment}
-            disabled={rowData.isAssigned}
-          >
-            {rowData.isAssigned ? "Assigned to You" : "Take Ownership"}
-          </button> */}
+    const assignedTo = rowData.assignedTo;
+    console.log("Assigned To data", assignedTo);
+    if (!assignedTo._id) {
+      // Ticket is unassigned
+      return (
+        <div className="flex flex-col align-items-center gap-2 mr-2">
+          <div className="flex flex-row items-center justify-start">
+            <span>Not Assigned Yet</span>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      // tIcket Is Assigned
+      return (
+        <div className="flex flex-col align-items-center gap-2 mr-2">
+          <div className="flex flex-row  items-center justify-start">
+            <img
+              alt={assignedTo.fullName}
+              src={`http://localhost:8002${assignedTo.profileImageURL}`}
+              width="40"
+              height="40"
+            />
+            <Link
+              to="/userview"
+              className="ml-2 text-green-500 hover:text-green-900"
+            >
+              {assignedTo.fullName}
+            </Link>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  const approvalStatusBodyTemplate = (rowData) => {
+    const currentUserFullName = user.fullName; // Assuming you have access to the current user's fullName
+    const reportingManager = rowData.reportingManager;
+
+    if (!reportingManager) {
+      // No reporting manager defined for the ticket, display "Not Required"
+      return <span>Not Required</span>;
+    }
+
+    if (currentUserFullName === reportingManager) {
+      // Current user is the reporting manager, display "Approve" and "Reject" buttons
+      return (
+        <div>
+          <button
+            className="p-button-success"
+            onClick={() => handleApprove(rowData)} // Define your approve logic
+          >
+            Approve
+          </button>{" "}
+          <button
+            className="p-button-danger"
+            onClick={() => handleReject(rowData)} // Define your reject logic
+          >
+            Reject
+          </button>
+        </div>
+      );
+    }
+
+    // Current user is not the reporting manager, display "Not Required"
+    return <span>Not Required</span>;
   };
 
   const priorityEditor = (options) => {
@@ -271,9 +318,9 @@ const UserTicketTable = () => {
       field: "id",
       header: "S.No",
       body: (rowData) => (
-        <a href="/ticketView" className="text-blue-500 hover:text-blue-900">
+        <Link to="/ticketView" className="text-blue-500 hover:text-blue-900">
           {rowData.serialNumber}
-        </a>
+        </Link>
       ),
       sortable: true,
       bodyStyle: {
@@ -284,9 +331,12 @@ const UserTicketTable = () => {
       field: "ticketId",
       header: "Ticket ID",
       body: (rowData) => (
-        <a href="/ticketView" className="text-blue-500 hover:text-blue-900">
+        <Link
+          to={`/ticketview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.ticketId}
-        </a>
+        </Link>
       ),
       bodyStyle: {
         textAlign: "center",
@@ -295,19 +345,19 @@ const UserTicketTable = () => {
       editor: (options) => textEditor(options),
       sortable: true,
     },
-    //  {
-    //    field: "name",
-    //    header: "Created By",
-    //    body: userBodyTemplate,
-    //    bodyStyle: {
-    //      textAlign: "center",
-    //      minWidth: "8rem",
-    //      // Customize the style as needed
-    //    },
-    //    style: { minWidth: "150px" },
-    //    editor: (options) => textEditor(options),
-    //    sortable: true,
-    //  },
+    {
+      field: "name",
+      header: "Created By",
+      body: userBodyTemplate,
+      bodyStyle: {
+        textAlign: "center",
+        minWidth: "8rem",
+        // Customize the style as needed
+      },
+      style: { minWidth: "150px" },
+      editor: (options) => textEditor(options),
+      sortable: true,
+    },
     {
       field: "requestType",
       header: "Request Type",
@@ -316,9 +366,9 @@ const UserTicketTable = () => {
         minWidth: "10rem", // Customize the style as needed
       },
       body: (rowData) => (
-        <a href="/userview" className="text-blue-500 hover:text-blue-900">
+        <Link to="/userview" className="text-blue-500 hover:text-blue-900">
           {rowData.requestType}
-        </a>
+        </Link>
       ),
       editor: (options) => textEditor(options),
       sortable: true,
@@ -331,10 +381,10 @@ const UserTicketTable = () => {
         minWidth: "8rem",
       },
       body: (rowData) => (
-        <a href="/userview" className="text-yellow-500 hover:text-blue-900">
+        <Link to="/userview" className="text-yellow-500 hover:text-blue-900">
           {/* {new Date(rowData.createdAt).toDateString()} */}
           {formatDate(rowData.createdAt)}
-        </a>
+        </Link>
       ),
       editor: (options) => textEditor(options),
       sortable: true,
@@ -351,7 +401,7 @@ const UserTicketTable = () => {
       sortable: true,
     },
     {
-      field: "approvesByManager",
+      field: "approvedByManager",
       header: "Manager Approval",
       body: priorityApprovalTemplate,
       bodyStyle: {
@@ -384,11 +434,21 @@ const UserTicketTable = () => {
       editor: (options) => statusEditor(options),
       sortable: true,
     },
-    //  {
-    //    rowEditor: true,
-    //    headerStyle: { width: "10%", minWidth: "8rem" },
-    //    bodyStyle: { textAlign: "center" },
-    //  },
+    {
+      field: "action",
+      header: "Action",
+      bodyStyle: {
+        textAlign: "center",
+      },
+      body: approvalStatusBodyTemplate,
+      editor: (options) => statusEditor(options),
+      sortable: true,
+    },
+    // {
+    //   rowEditor: true,
+    //   headerStyle: { width: "10%", minWidth: "8rem" },
+    //   bodyStyle: { textAlign: "center" },
+    // },
   ];
   const [visibleColumns, setVisibleColumns] = useState(columns);
 
@@ -402,7 +462,7 @@ const UserTicketTable = () => {
   };
 
   const handleNewTicketCreation = () => {
-    navigate("/new-ticket");
+    navigate("/user/new-ticket");
   };
   const handleTicketAssignment = () => {
     toast.success("New user created!", {
@@ -465,7 +525,7 @@ const UserTicketTable = () => {
 
   return (
     <div className="w-full overflow-hidden card p-fluid">
-      {/* <h1>All Tickets</h1> */}
+      <h1>{title}</h1>
       <div style={{ overflowX: "auto", width: "100%" }}>
         <DataTable
           value={tickets}
@@ -491,6 +551,7 @@ const UserTicketTable = () => {
             "assignedTo",
             "location",
             "status",
+            "action",
           ]}
           emptyMessage="No Tickets found."
           editMode="row"

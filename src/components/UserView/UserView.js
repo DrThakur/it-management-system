@@ -39,7 +39,7 @@ const UserView = ({ userId }) => {
       <div className="w-7/12 pr-8">
         <h2 className="text-xl font-semibold mb-4">User Information</h2>
         <p>
-          <strong>Name:</strong> {user.firstName + " " + user.lastName}
+          <strong>Name:</strong> {user.fullName}
         </p>
         <p>
           <strong>Company:</strong> Logic Fruit Technologies
@@ -57,7 +57,7 @@ const UserView = ({ userId }) => {
           <strong>Created At:</strong> {user.createdAt}
         </p>
         <p>
-          <strong>Active:</strong> {user.active ? "Yes" : "No"}
+          <strong>Status:</strong> {user.status}
         </p>
         <p>
           <strong>Employee Code:</strong> {user.employeeCode}

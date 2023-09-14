@@ -305,7 +305,7 @@ const AssetBox = ({ title, count, assets, details, backgroundColor }) => {
   };
 
   return (
-    <div className={`p-4 mb-4 rounded-md -mr-2 w-full ${backgroundColor}`}>
+    <div className={`p-4 mb-12 rounded-md -mr-2 w-full ${backgroundColor}`}>
       <div
         className={`flex justify-between items-center cursor-pointer ${
           showDetails ? "font-bold text-center" : ""
@@ -318,7 +318,7 @@ const AssetBox = ({ title, count, assets, details, backgroundColor }) => {
         assets.map((asset) => (
           <div className="mt-4">
             <div className="font-bold mt-4 mb-4">{`${asset.name}`}</div>
-            <div className="mb-4">
+            <div className="mb-4 w-full">
               <UserTable />
             </div>
           </div>

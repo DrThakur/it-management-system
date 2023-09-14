@@ -3,9 +3,9 @@ import { MdKeyboard } from "react-icons/md";
 import { CgSoftwareDownload } from "react-icons/cg";
 
 const userData = [
-  { name: "Assets Issued", count: 5, icon: <FaLaptopCode /> },
-  { name: "Accessories Issued", count: 9, icon: <MdKeyboard /> },
-  { name: "Licence Issued", count: 3, icon: <CgSoftwareDownload /> },
+  { name: "Assets Issued", count: 0, icon: <FaLaptopCode /> },
+  { name: "Accessories Issued", count: 0, icon: <MdKeyboard /> },
+  { name: "Licence Issued", count: 0, icon: <CgSoftwareDownload /> },
 
   // Add other categories here
 ];

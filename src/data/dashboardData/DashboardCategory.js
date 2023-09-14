@@ -2,71 +2,54 @@ import { FaLaptopCode } from "react-icons/fa";
 import { CgSoftwareDownload } from "react-icons/cg";
 import { MdCable, MdKeyboard } from "react-icons/md";
 import { FiHardDrive } from "react-icons/fi";
-import {
-  BsFillPeopleFill,
-  BsTicket,
-  BsTicketPerforated,
-  BsTicketPerforatedFill,
-} from "react-icons/bs";
+import { BsFillPeopleFill, BsTicketPerforated } from "react-icons/bs";
 
 const DashboardCategory = [
   {
     name: "Assets",
-    count: 100,
-    assigned: 75,
-    remaining: 25,
+    count: 0,
+    assigned: 0,
+    remaining: 0,
     icon: <FaLaptopCode />,
   },
   {
     name: "Accessories",
-    count: 20,
+    count: 0,
     assigned: 13,
     remaining: 7,
     icon: <MdKeyboard />,
   },
   {
     name: "Consumables",
-    count: 20,
-    assigned: 15,
-    remaining: 5,
+    count: 0,
+    assigned: 0,
+    remaining: 0,
     icon: <MdCable />,
   },
   {
     name: "Components",
-    count: 20,
-    assigned: 17,
-    remaining: 3,
+    count: 0,
+    assigned: 0,
+    remaining: 0,
     icon: <FiHardDrive />,
   },
   {
     name: "Tickets",
-    count: 95,
-    assigned: 65,
-    remaining: 30,
+    count: 15,
+    assigned: 0,
+    remaining: 15,
     icon: <BsTicketPerforated />,
   },
   {
     name: "Licences",
-    count: 10,
+    count: 0,
     icon: <CgSoftwareDownload />,
   },
   {
     name: "Users",
-    count: 20,
+    count: 250,
     icon: <BsFillPeopleFill />,
   },
-
-  // {
-  //   name: "Closed Tickets",
-  //   count: 65,
-  //   icon: <BsTicketPerforatedFill />,
-  // },
-  // {
-  //   name: "Open Tickets",
-  //   count: 30,
-  //   icon: <BsTicket />,
-  // },
-  // Add other categories here
 ];
 
 export default DashboardCategory;

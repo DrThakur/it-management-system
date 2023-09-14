@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import NotificationMenu from "../Notification/Notification";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, user }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
 
@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
   return (
     <div className="flex flex-col h-screen bg-white">
       <div className="flex flex-grow h-screen">
-        {isSidebarOpen && <Sidebar isSideOpen={isSidebarOpen} />}
+        {isSidebarOpen && <Sidebar isSideOpen={isSidebarOpen} user={user} />}
         <div className="flex flex-col flex-grow">
           <Header
             toggleSidebar={toggleSidebar}

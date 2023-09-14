@@ -24,18 +24,22 @@ const Login = () => {
   const handleSignin = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
+    console.log("Email", userRef.current.value);
+    console.log("Pass", passwordRef.current.value);
     try {
       const res = await axios.post("http://localhost:8002/users/login", {
         email: userRef.current.value,
         password: passwordRef.current.value,
       });
-      console.log(res);
+      console.log("response from backend", res);
       console.log(res.data);
       const token = res.data;
+      console.log(token);
       const decodedToken = jwtDecode(token);
       console.log(decodedToken);
       //Accessimg user data from decoded token
       const userData = decodedToken;
+      console.log("UserData", userData);
 
       dispatch({ type: "LOGIN_SUCCESS", payload: userData });
       console.log(userData);

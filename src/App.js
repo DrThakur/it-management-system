@@ -39,6 +39,18 @@ import SystemRightPage from "./pages/SystemRightPage/SystemRightPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import IndividualAssetPage from "./pages/IndividualAssetPage/IndividualAssetPage";
 import { Context } from "./context/Context";
+import TicketView from "./components/TicketView/TicketView";
+import TicektViewPage from "./pages/TicketViewPage/TicektViewPage";
+import ClosedTicketPage from "./pages/ClosedTicketPage/ClosedTicketPage";
+import PendingTicketPage from "./pages/PendingTicketPage/PendingTicketPage";
+import UserClosedTicketPage from "./pages/UserClosedTicketPage/UserClosedTicketPage";
+import UserPendingTicketPage from "./pages/UserPendingTicketPage/UserPendingTicketPage";
+import MyLicencesPage from "./pages/MyLicencesPage/MyLicencesPage";
+import ApprovalRequestPage from "./pages/ApprovalRequestPage/ApprovalRequestPage";
+import MyAssignedTickets from "./pages/MyAssignedTickets/MyAssignedTickets";
+import UserAllTicket from "./pages/UserAllTicket/UserAllTicket";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -48,11 +60,14 @@ function App() {
     setSelectedCategory(selectedCategory);
   };
   const hasAdminRole = (user) => {
-    return (user && user.role === "SUPER ADMIN") || user.role === "ADMIN";
+    return (
+      (user && user.role === "ADMINISTRATOR") || user.role === "TECHNICIAN"
+    );
   };
 
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
 
@@ -74,6 +89,8 @@ function App() {
             )
           }
         />
+
+        {/* Admin Layout */}
         <Route
           path="/assets"
           element={
@@ -150,6 +167,19 @@ function App() {
         />
 
         <Route
+          path="/myassignedtickets"
+          element={
+            user ? (
+              <Layout user={user}>
+                <MyAssignedTickets user={user} />
+              </Layout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+
+        <Route
           path="/it-support"
           element={
             user ? (
@@ -180,18 +210,26 @@ function App() {
             )
           }
         />
+
         <Route
           path="/:assetType"
           element={
             user ? (
-              <Layout>
-                <IndividualAssetPage />
-              </Layout>
+              hasAdminRole(user) ? (
+                <Layout>
+                  <IndividualAssetPage />
+                </Layout>
+              ) : (
+                <UserLayout>
+                  <IndividualAssetPage />
+                </UserLayout>
+              )
             ) : (
               <Login />
             )
           }
         />
+
         <Route
           path="/users"
           element={
@@ -204,6 +242,7 @@ function App() {
             )
           }
         />
+
         <Route
           path="/new-user"
           element={
@@ -228,78 +267,65 @@ function App() {
             )
           }
         />
+
         <Route
           path="/userProfilePage"
           element={
             user ? (
-              <Layout>
-                <UserProfilePage user={user} />
-              </Layout>
+              hasAdminRole(user) ? (
+                <Layout>
+                  <UserProfilePage user={user} />
+                </Layout>
+              ) : (
+                <UserLayout>
+                  <UserProfilePage user={user} />
+                </UserLayout>
+              )
             ) : (
               <Login />
             )
           }
         />
+
         <Route
           path="/all-tickets"
           element={
             user ? (
               <Layout>
-                <Tickets />
+                <Tickets user={user} />
               </Layout>
             ) : (
               <Login />
             )
           }
         />
+
         <Route
-          path="/my-tickets"
+          path="/closed-ticket"
           element={
             user ? (
-              <UserLayout>
-                <MyTicketsPage />
-              </UserLayout>
+              <Layout>
+                <ClosedTicketPage />
+              </Layout>
             ) : (
               <Login />
             )
           }
         />
+
         <Route
-          path="/my-assets"
+          path="/pending-ticket"
           element={
             user ? (
-              <UserLayout>
-                <MyAssetPage />
-              </UserLayout>
+              <Layout>
+                <PendingTicketPage />
+              </Layout>
             ) : (
               <Login />
             )
           }
         />
-        <Route
-          path="/my-accessories"
-          element={
-            user ? (
-              <UserLayout>
-                <MyAccessoryPage />
-              </UserLayout>
-            ) : (
-              <Login />
-            )
-          }
-        />
-        <Route
-          path="/system-right"
-          element={
-            user ? (
-              <UserLayout>
-                <SystemRightPage />
-              </UserLayout>
-            ) : (
-              <Login />
-            )
-          }
-        />
+
         <Route
           path="/settings"
           element={
@@ -344,6 +370,7 @@ function App() {
             )
           }
         />
+
         <Route
           path="/asset-location"
           element={
@@ -392,6 +419,126 @@ function App() {
             )
           }
         />
+
+        {/* User Layout  */}
+        <Route
+          path="/ticketview/:id"
+          element={
+            user ? (
+              hasAdminRole(user) ? (
+                <Layout>
+                  <TicektViewPage user={user} />
+                </Layout>
+              ) : (
+                <UserLayout>
+                  <TicektViewPage user={user} />
+                </UserLayout>
+              )
+            ) : (
+              <Login />
+            )
+          }
+        />
+
+        {/* <Route
+          path="/view-ticket/:id"
+          element={
+            user ? (
+              <UserLayout>
+                <TicektViewPage user={user} />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        /> */}
+
+        <Route
+          path="/my-tickets"
+          element={
+            user ? (
+              <UserLayout>
+                <MyTicketsPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/my-all-tickets"
+          element={
+            user ? (
+              <UserLayout>
+                <UserAllTicket />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/my-closed-tickets"
+          element={
+            user ? (
+              <UserLayout>
+                <UserClosedTicketPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/my-pending-tickets"
+          element={
+            user ? (
+              <UserLayout>
+                <UserPendingTicketPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/my-assets"
+          element={
+            user ? (
+              <UserLayout>
+                {/* <MyAssetPage /> */}
+                <UserAsset />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/my-accessories"
+          element={
+            user ? (
+              <UserLayout>
+                <MyAccessoryPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/system-right"
+          element={
+            user ? (
+              <UserLayout>
+                <SystemRightPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+
         <Route
           path="/user/new-ticket"
           element={
@@ -422,7 +569,31 @@ function App() {
           element={
             user ? (
               <UserLayout>
-                <UserTable />
+                <MyAccessoryPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/licence-issued"
+          element={
+            user ? (
+              <UserLayout>
+                <MyLicencesPage />
+              </UserLayout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route
+          path="/approvalrequest"
+          element={
+            user ? (
+              <UserLayout>
+                <ApprovalRequestPage />
               </UserLayout>
             ) : (
               <Login />

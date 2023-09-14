@@ -22,6 +22,8 @@ const Header = ({
   const { user, dispatch } = useContext(Context);
   const navigate = useNavigate();
 
+  console.log("My Normal User", user);
+
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
     // Implement dark mode logic here
@@ -68,7 +70,7 @@ const Header = ({
         </button>
         <h3 className="text-lg">
           <span className="font-semibold text-white">Welcome </span>
-          <span className="text-white font-semibold">{user.firstName}</span>
+          <span className="text-white font-semibold">{user.fullName}</span>
         </h3>
       </div>
       <div className="text-center ml-24">
@@ -119,7 +121,7 @@ const Header = ({
                 </li>
                 <li className="flex items-center hover:text-blue-500 hover:bg-gray-200 p-2 rounded cursor-pointer">
                   <Link
-                    to="/userProfilePage"
+                    to="/settings"
                     className="flex flex-row justify-center items-center"
                   >
                     <FaCog className="mr-2" />

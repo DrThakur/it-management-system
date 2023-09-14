@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRef } from "react";
 
-const TicketTable = () => {
+const TicketTable = ({ user }) => {
   const [tickets, setTickets] = useState([]);
   const dt = useRef(null);
   const navigate = useNavigate();
@@ -34,10 +34,22 @@ const TicketTable = () => {
   const [filters, setFilters] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
 
-  // useEffect(() => {
-  //   TicketService.getTicketsMini().then((data) => setTickets(data));
-  //   initFilters();
-  // }, []);
+  console.log("my logged Inuse", user);
+
+  const formatDate = (date) => {
+    const options = {
+      weekday: "short", // Mon
+      day: "2-digit", // 21
+      month: "short", // Aug
+      year: "numeric", // 2023
+      hour: "2-digit", // 12
+      minute: "2-digit", // 05
+      second: "2-digit", // 21
+    };
+    const formattedDate = new Date(date).toLocaleDateString("en-US", options);
+    return formattedDate;
+  };
+
   useEffect(() => {
     const fetchTickets = async () => {
       try {
@@ -51,20 +63,6 @@ const TicketTable = () => {
     fetchTickets();
     initFilters();
   }, []);
-
-  const formatDate = (date) => {
-    const options = { day: "2-digit", month: "short", year: "numeric" };
-    const formattedDate = new Date(date).toLocaleDateString("en-US", options);
-
-    // Split the formatted date into day, month, and year parts
-    const [month, day, year] = formattedDate.split(" ");
-
-    // Convert the month abbreviation to uppercase
-    const capitalizedMonth = month.toUpperCase();
-
-    // Return the formatted date with uppercase month abbreviation and desired format
-    return `${day} ${capitalizedMonth} ${year}`;
-  };
 
   const statusBodyTemplate = (ticket) => {
     return (
@@ -96,14 +94,17 @@ const TicketTable = () => {
 
   const getSeverity = (ticket) => {
     switch (ticket.status) {
-      case "Resolved":
+      case "Closed":
         return "success";
 
       case "New":
-        return "warning";
+        return "info";
 
-      case "Pending":
+      case "Open":
         return "danger";
+
+      case "Resolved":
+        return "warning";
 
       default:
         return null;
@@ -111,13 +112,13 @@ const TicketTable = () => {
   };
   const getPrioritySeverity = (ticket) => {
     switch (ticket.priority) {
-      case "Low Priority":
+      case "Low":
         return "success";
 
-      case "Medium Priority":
+      case "Medium":
         return "warning";
 
-      case "High Priority":
+      case "High":
         return "danger";
 
       default:
@@ -152,7 +153,7 @@ const TicketTable = () => {
   const initFilters = () => {
     setFilters({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      location: { value: null, matchMode: FilterMatchMode.CONTAINS },
       ticketId: { value: null, matchMode: FilterMatchMode.CONTAINS },
       createdBy: { value: null, matchMode: FilterMatchMode.CONTAINS },
       requestType: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -175,25 +176,26 @@ const TicketTable = () => {
     setTickets(_tickets);
   };
 
-  const textEditor = (options) => {
-    return (
-      <InputText
-        type="text"
-        value={options.value}
-        onChange={(e) => options.editorCallback(e.target.value)}
-      />
-    );
-  };
+  // const textEditor = (options) => {
+  //   return (
+  //     <InputText
+  //       type="text"
+  //       value={options.value}
+  //       onChange={(e) => options.editorCallback(e.target.value)}
+  //     />
+  //   );
+  // };
   const userBodyTemplate = (rowData) => {
+    console.log("My ROM Data", rowData);
     const createdBy = rowData.createdBy;
-    // console.log(createdBy);
+    console.log("My latest Created By Should be Object right", createdBy);
 
     return (
       <div className="flex flex-col align-items-center gap-2 mr-2">
         <div className="flex flex-row items-center justify-start">
           <img
-            alt={createdBy.name}
-            src={`http://localhost:8002${createdBy.profilePicture}`}
+            alt={createdBy.fullName}
+            src={`http://localhost:8002${createdBy.profileImageURL}`}
             width="40"
             height="40"
           />
@@ -201,75 +203,129 @@ const TicketTable = () => {
             to={`/userview/${rowData._id}`}
             className="ml-2 text-green-500 hover:text-green-900"
           >
-            {createdBy.name}
+            {createdBy.fullName}
           </Link>
         </div>
       </div>
     );
+  };
+
+  const sendMessageOnTicketAssignment = async (data) => {
+    const messageData = {
+      ticketId: data._id,
+      senderId: user._id,
+      senderName: user.fullName,
+      senderImage: user.profileImageURL,
+      text: `Ticket has been assigned to  ${user.fullName} on ${formatDate(
+        Date.now()
+      )}`,
+    };
+
+    // send the message to the backend API
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8002/messages`,
+        messageData
+      );
+      console.log("resojnse", response.data);
+
+      // setMessages([...messages, response.data]);
+      // setLatestMessage(response.data);
+    } catch (error) {
+      console.error("Error sending message: ", error);
+    }
   };
   const assignedBodyTemplate = (rowData) => {
+    // console.log("Raw Ticket data", rowData._id);
     const assignedTo = rowData.assignedTo;
+    console.log("My Latest Assigned To", assignedTo);
 
-    return (
-      <div className="flex flex-col align-items-center gap-2 mr-2">
-        <div className="flex flex-row  items-center justify-start">
-          <img
-            alt={assignedTo.name}
-            src={`http://localhost:8002${assignedTo.profilePicture}`}
-            width="40"
-            height="40"
-          />
-          <Link
-            to={`/userview/${rowData._id}`}
-            className="ml-2 text-green-500 hover:text-green-900"
-          >
-            {assignedTo.name}
-          </Link>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 border-none p-3 rounded-lg text-white ml-4 -mr-6"
-            onClick={handleTicketAssignment}
-            disabled={rowData.isAssigned}
-          >
-            {rowData.isAssigned ? "Assigned to You" : "Take Ownership"}
-          </button>
+    if (!assignedTo._id) {
+      // Ticket is unassigned
+      return (
+        <div className="flex flex-col align-items-center gap-2 mr-2">
+          <div className="flex flex-row items-center justify-center">
+            {/* <span>Not Assigned Yet</span> */}
+            <button
+              className="bg-blue-500 hover:bg-blue-700 border-none p-3 rounded-lg text-white ml-4 -mr-6"
+              onClick={() => {
+                handleTicketAssignment(rowData._id, rowData.ticketId);
+                sendMessageOnTicketAssignment(rowData);
+              }}
+              // disabled={rowData.isAssigned}
+            >
+              Take Ownership
+            </button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      // tIcket Is Assigned
+      return (
+        <div className="flex flex-col align-items-center gap-2 mr-2">
+          <div className="flex flex-row  items-center justify-start">
+            <img
+              alt={assignedTo.fullName}
+              src={`http://localhost:8002${assignedTo.profileImageURL}`}
+              width="40"
+              height="40"
+            />
+            <Link
+              to={`/userview/${rowData._id}`}
+              className="ml-2 text-green-500 hover:text-green-900"
+            >
+              {assignedTo.fullName}
+            </Link>
+            {/* <button
+              className="bg-blue-500 hover:bg-blue-700 border-none p-3 rounded-lg text-white ml-4 -mr-6"
+              // onClick={handleTicketAssignment}
+              // disabled={rowData.isAssigned}
+            >
+              Assigned to You
+            </button> */}
+          </div>
+        </div>
+      );
+    }
   };
 
-  const priorityEditor = (options) => {
-    return (
-      <Dropdown
-        value={options.value}
-        options={priorities}
-        onChange={(e) => options.editorCallback(e.value)}
-        placeholder="Select Priority"
-        itemTemplate={(option) => {
-          return <Tag value={option} severity={getSeverity(option)}></Tag>;
-        }}
-      />
-    );
-  };
-  const statusEditor = (options) => {
-    return (
-      <Dropdown
-        value={options.value}
-        options={statuses}
-        onChange={(e) => options.editorCallback(e.value)}
-        placeholder="Change Status"
-        itemTemplate={(option) => {
-          return <Tag value={option} severity={getSeverity(option)}></Tag>;
-        }}
-      />
-    );
-  };
+  // const priorityEditor = (options) => {
+  //   return (
+  //     <Dropdown
+  //       value={options.value}
+  //       options={priorities}
+  //       onChange={(e) => options.editorCallback(e.value)}
+  //       placeholder="Select Priority"
+  //       itemTemplate={(option) => {
+  //         return <Tag value={option} severity={getSeverity(option)}></Tag>;
+  //       }}
+  //     />
+  //   );
+  // };
+  // const statusEditor = (options) => {
+  //   return (
+  //     <Dropdown
+  //       value={options.value}
+  //       options={statuses}
+  //       onChange={(e) => options.editorCallback(e.value)}
+  //       placeholder="Change Status"
+  //       itemTemplate={(option) => {
+  //         return <Tag value={option} severity={getSeverity(option)}></Tag>;
+  //       }}
+  //     />
+  //   );
+  // };
 
   const columns = [
     {
       field: "id",
       header: "S.No",
       body: (rowData) => (
-        <Link to="/ticketView" className="text-blue-500 hover:text-blue-900">
+        <Link
+          to={`/ticketview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.serialNumber}
         </Link>
       ),
@@ -282,7 +338,10 @@ const TicketTable = () => {
       field: "ticketId",
       header: "Ticket ID",
       body: (rowData) => (
-        <Link to="/ticketView" className="text-blue-500 hover:text-blue-900">
+        <Link
+          to={`/ticketview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.ticketId}
         </Link>
       ),
@@ -290,11 +349,10 @@ const TicketTable = () => {
         textAlign: "center",
         minWidth: "7rem",
       },
-      editor: (options) => textEditor(options),
       sortable: true,
     },
     {
-      field: "createdeBy",
+      field: "createdBy",
       header: "Created By",
       body: userBodyTemplate,
       bodyStyle: {
@@ -303,7 +361,25 @@ const TicketTable = () => {
         // Customize the style as needed
       },
       style: { minWidth: "150px" },
-      editor: (options) => textEditor(options),
+      sortable: true,
+    },
+    {
+      field: "location",
+      header: "Location",
+      body: (rowData) => (
+        <Link
+          to={`/ticketview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
+          {rowData.location || "N/A"}
+        </Link>
+      ),
+      bodyStyle: {
+        textAlign: "center",
+        minWidth: "8rem",
+        // Customize the style as needed
+      },
+      style: { minWidth: "100px" },
       sortable: true,
     },
     {
@@ -314,11 +390,13 @@ const TicketTable = () => {
         minWidth: "10rem", // Customize the style as needed
       },
       body: (rowData) => (
-        <Link to="/userview" className="text-blue-500 hover:text-blue-900">
+        <Link
+          to={`/ticketview/${rowData._id}`}
+          className="text-blue-500 hover:text-blue-900"
+        >
           {rowData.requestType}
         </Link>
       ),
-      editor: (options) => textEditor(options),
       sortable: true,
     },
     {
@@ -329,12 +407,14 @@ const TicketTable = () => {
         minWidth: "8rem",
       },
       body: (rowData) => (
-        <Link to="/userview" className="text-yellow-500 hover:text-blue-900">
+        <Link
+          to={`/ticketview/${rowData._id}`}
+          className="text-yellow-500 hover:text-blue-900"
+        >
           {/* {new Date(rowData.createdAt).toDateString()} */}
           {formatDate(rowData.createdAt)}
         </Link>
       ),
-      editor: (options) => textEditor(options),
       sortable: true,
     },
     {
@@ -345,11 +425,10 @@ const TicketTable = () => {
         textAlign: "center",
         pointer: "cursor",
       },
-      editor: (options) => priorityEditor(options),
       sortable: true,
     },
     {
-      field: "approvesByManager",
+      field: "approvedByManager",
       header: "Manager Approval",
       body: priorityApprovalTemplate,
       bodyStyle: {
@@ -357,7 +436,6 @@ const TicketTable = () => {
         pointer: "cursor",
         minWidth: "6rem",
       },
-      editor: (options) => priorityEditor(options),
       sortable: true,
     },
     {
@@ -369,7 +447,6 @@ const TicketTable = () => {
         minWidth: "15rem", // Customize the style as needed
       },
       style: { minWidth: "200px" },
-      editor: (options) => textEditor(options),
       sortable: true,
     },
     {
@@ -379,13 +456,7 @@ const TicketTable = () => {
         textAlign: "center",
       },
       body: statusBodyTemplate,
-      editor: (options) => statusEditor(options),
       sortable: true,
-    },
-    {
-      rowEditor: true,
-      headerStyle: { width: "10%", minWidth: "8rem" },
-      bodyStyle: { textAlign: "center" },
     },
   ];
   const [visibleColumns, setVisibleColumns] = useState(columns);
@@ -402,10 +473,36 @@ const TicketTable = () => {
   const handleNewTicketCreation = () => {
     navigate("/new-ticket");
   };
-  const handleTicketAssignment = () => {
-    toast.success("New user created!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+
+  const handleTicketAssignment = async (ticketObjId, ticketId) => {
+    console.log("My assignemnt User", user);
+    try {
+      const assignTicketTo = {
+        assignedTo: {
+          _id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+          employeeCode: user.employeeCode,
+          profileImageURL: user.profileImageURL,
+        },
+        status: "Open",
+      };
+
+      //Pathch request for updatingh ticket
+      const res = await axios.patch(
+        `http://localhost:8002/tickets/${ticketObjId}`,
+        assignTicketTo
+      );
+      console.log(`Ticket ${ticketObjId} assigned successfully!`, res);
+      toast.success(`Ticket ${ticketId} assigned successfully!`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (error) {
+      console.error(`Error assigning ticket ${ticketObjId}`, error);
+      toast.error(`Error assigning ticket ${ticketObjId}`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const exportColumns = columns.map((col) => ({
@@ -482,7 +579,7 @@ const TicketTable = () => {
           optionLabel="label"
           editable
           placeholder="Change Size"
-          className="w-32 md:w-14rem"
+          className="w-32 md:w-14rem h-14"
         />
       </div>
       <div>
@@ -491,32 +588,33 @@ const TicketTable = () => {
           options={columns}
           optionLabel="header"
           onChange={onColumnToggle}
-          className="w-32 sm:w-20rem ml-2"
+          className="w-48 sm:w-20rem ml-2 h-14"
           display="chip"
         />
       </div>
       <div className="w-1/2 ml-2">
         <button
-          className="bg-green-500 border-none p-3 rounded-lg text-white"
+          className="bg-green-500 border-none p-3 rounded-lg text-white h-14"
           onClick={handleNewTicketCreation}
         >
           Create New Ticket
         </button>
       </div>
-      <div className="flex align-items-center justify-content-end gap-2 mr-4">
+      <div className="flex flex-row align-items-center justify-content-end gap-2 mr-4 w-1/2 h-14">
         <Button
           type="button"
           icon="pi pi-file"
-          rounded
+          label="Export CSV"
           onClick={() => exportCSV(false)}
           data-pr-tooltip="CSV"
           title="Export CSV"
+          className="w-1/2"
         />
         <Button
           type="button"
           icon="pi pi-file-excel"
+          label="Export Excel"
           severity="success"
-          rounded
           onClick={exportExcel}
           data-pr-tooltip="XLS"
           title="Export Excel"
@@ -524,20 +622,21 @@ const TicketTable = () => {
         <Button
           type="button"
           icon="pi pi-file-pdf"
+          label="Export PDF"
           severity="warning"
-          rounded
           onClick={exportPdf}
           data-pr-tooltip="PDF"
           title="Export PDF"
         />
       </div>
-      <div className="flex justify-center items-center mr-2 -mt-3 w-1/4">
+      <div className="flex justify-center items-center mr-2 -mt-2 w-1/4">
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
             placeholder="Search"
+            className="h-14"
           />
         </span>
         <Button
@@ -547,7 +646,9 @@ const TicketTable = () => {
           outlined
           style={{ marginLeft: "5px" }}
           onClick={clearFilter}
-          className={globalFilterValue ? "p-button-danger p-ml-2" : ""}
+          className={` h-14 ${
+            globalFilterValue ? "p-button-danger p-ml-2" : ""
+          }`}
         />
       </div>
     </div>
@@ -570,11 +671,10 @@ const TicketTable = () => {
           rows={10}
           rowsPerPageOptions={[5, 10, 25, 50]}
           removableSort
-          sortField="id"
+          sortField="createdAt"
           sortOrder={-1}
           filters={filters}
           globalFilterFields={[
-            "name",
             "ticketId",
             "createdBy",
             "requestType",
