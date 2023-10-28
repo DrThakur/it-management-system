@@ -517,7 +517,7 @@ const UserCategory = () => {
   return (
     <div className="bg-blue-50 p-2 shadow rounded-lg -mb-6 w-full h-108">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold ml-2">User Category</h2>
+        <h2 className="text-2xl font-bold ml-2">Employee By Category</h2>
         {/* <button
           className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-400 hover:bg-blue-600 text-white focus:outline-none mb-2 mt-2 mr-2"
           onClick={handleToggleContent}

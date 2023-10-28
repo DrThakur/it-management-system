@@ -69,7 +69,7 @@ const Sidebar = ({ isSideOpen, user }) => {
         />
         <NavItem
           icon={<FiMonitor />}
-          label="Assets"
+          label="Employee Corner"
           active={activeItem === "Assets"}
           onItemClick={handleItemClick}
         >
@@ -79,24 +79,48 @@ const Sidebar = ({ isSideOpen, user }) => {
             >
               <FaBorderAll className="mr-2" />
               <Link to="/assets" className="text-black">
-                All
+                Dashboard
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/monitor" className="text-black">
-                Monitor
+              Personal Info
               </Link>
             </div>
             <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <span className="text-black">Desktop</span>
+              <span className="text-black">My Projects</span>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <span className="text-black">My Tasks</span>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <span className="text-black">My Skills</span>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <span className="text-black">Timesheets</span>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <span className="text-black">Appraisal Record</span>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <span className="text-black">Trainings</span>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <span className="text-black">My Awards</span>
             </div>
           </div>
         </NavItem>
         <NavItem
           icon={<FaMouse />}
-          label="Accessories"
+          label="Project Management"
           active={activeItem === "Accessories"}
           onItemClick={handleItemClick}
         >
@@ -104,65 +128,89 @@ const Sidebar = ({ isSideOpen, user }) => {
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/accessories" className="text-black">
-                All
+                Dashbaord
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/keyboard" className="text-black">
-                Keyboard
+                Misc Info
               </Link>
             </div>
             <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/mouse" className="text-black">
-                Mouse
+                Invoicing
+              </Link>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <Link to="/mouse" className="text-black">
+                Project Expense
               </Link>
             </div>
           </div>
         </NavItem>
         <NavItem
           icon={<MdCable />}
-          label="Consumables"
+          label="IT Operations"
           active={activeItem === "Consumables"}
           onItemClick={handleItemClick}
         />
         <NavItem
           icon={<FiHardDrive />}
-          label="Components"
+          label="Admin Operations"
           active={activeItem === "Components"}
           onItemClick={handleItemClick}
         />
         <NavItem
           icon={<HiOutlineKey />}
-          label="Licences"
+          label="HR Operations"
           active={activeItem === "Licences"}
           onItemClick={handleItemClick}
         >
           <div className="flex flex-col -ml-2">
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
-              <Link to="/all" className="text-black cursor-pointer">
-                All
+              <Link to="/hroperations" className="text-black cursor-pointer">
+                Dashbaord
               </Link>
             </div>
             <div className="flex items-center mb-4 px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2 " />
               <Link to="/fpga" className="text-black">
-                FPGA Software
+                Employee Record
               </Link>
             </div>
             <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
               <ImRadioChecked className="mr-2" />
               <Link to="/hardware" className="text-black">
-                Hardware Software
+                Hiring
+              </Link>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <Link to="/hardware" className="text-black">
+                Appraisals
+              </Link>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <Link to="/hardware" className="text-black">
+                Event Calender
+              </Link>
+            </div>
+            <div className="flex items-center px-4 py-1 hover:bg-black hover:bg-opacity-20 hover:text-black hover:rounded-lg cursor-pointer hover:mr-10 hover:px-4 hover:py-1">
+              <ImRadioChecked className="mr-2" />
+              <Link to="/hardware" className="text-black">
+                Report Generations
               </Link>
             </div>
           </div>
         </NavItem>
         <NavItem
           icon={<FiBriefcase />}
-          label="IT Support"
+          label="Finance Operations"
           active={activeItem === "IT Support"}
           onItemClick={handleItemClick}
         >
@@ -202,31 +250,37 @@ const Sidebar = ({ isSideOpen, user }) => {
         </NavItem>
         <NavItem
           icon={<MdSupportAgent />}
-          label="Self Support"
+          label="S&M Operations"
           active={activeItem === "Self Support"}
           onItemClick={handleItemClick}
         />
         <NavItem
           icon={<FiShield />}
-          label="Admin Rights"
+          label="Procurement Operations"
           active={activeItem === "Admin Rights"}
           onItemClick={handleItemClick}
         />
         <NavItem
           icon={<FiUser />}
-          label="Users"
+          label="R&D Operations"
           active={activeItem === "Users"}
           onItemClick={handleItemClick}
         />
         <NavItem
           icon={<TbReportSearch />}
-          label="Reports"
+          label="Management"
           active={activeItem === "Reports"}
           onItemClick={handleItemClick}
         />
         <NavItem
           icon={<FiSettings className="animate-[spin_3s_linear_infinite]" />}
-          label="Settings"
+          label="Helpdesk"
+          active={activeItem === "Settings"}
+          onItemClick={handleItemClick}
+        />
+        <NavItem
+          icon={<FiSettings className="animate-[spin_3s_linear_infinite]" />}
+          label="Document Center"
           active={activeItem === "Settings"}
           onItemClick={handleItemClick}
         />
