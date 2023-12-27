@@ -23,6 +23,8 @@ const Header = ({
   const navigate = useNavigate();
 
   console.log("My Normal User", user);
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const port = process.env.REACT_APP_BACKEND_PORT;
 
   const handleDarkModeToggle = () => {
     setDarkMode(!darkMode);
@@ -155,7 +157,7 @@ const Header = ({
           <div className="relative w-10 h-10">
             <div className="absolute inset-0 flex items-center justify-center rounded-full border-2">
               <img
-                src={`http://localhost:8002${user.profileImageURL}`}
+                src={`http://${baseURL}:${port}${user.profileImageURL}`}
                 alt="Profile"
                 className="rounded-full w-full h-full object-cover"
               />

@@ -23,6 +23,9 @@ const InformationForm = () => {
     notes: "",
   });
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const port = process.env.REACT_APP_BACKEND_PORT;
+
   const handleInputChange = (event) => {
     const { name, type, checked, files } = event.target;
     let newValue;
@@ -46,7 +49,7 @@ const InformationForm = () => {
     // Handle form submission logic here
     console.log("My User Creation form Data", formData);
     try {
-      const res = await axios.post("http://localhost:8002/users", formData);
+      const res = await axios.post(`http://${baseURL}:${port}/users`, formData);
       console.log(res);
       // Reset the form after successful submission
       setFormData({

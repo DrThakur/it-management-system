@@ -34,15 +34,19 @@ const UserTicketTableByStatus = ({ title, statuses }) => {
   const [filters, setFilters] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const port = process.env.REACT_APP_BACKEND_PORT;
+
   // useEffect(() => {
   //   TicketService.getTicketsMini().then((data) => setTickets(data));
   //   initFilters();
   // }, []);
+
   useEffect(() => {
     const fetchTickets = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8002/ticketByUserId?userId=${user._id}`
+          `http://${baseURL}:${port}/ticketByUserId?userId=${user._id}`
         );
         console.log("My Ticket Responses", res);
         // Filter the fetched data based on desired statuses
@@ -207,7 +211,7 @@ const UserTicketTableByStatus = ({ title, statuses }) => {
         <div className="flex flex-row items-center justify-start">
           <img
             alt={createdBy?.fullName}
-            src={`http://localhost:8002${createdBy.profileImageURL}`}
+            src={`http://${baseURL}:${port}${createdBy.profileImageURL}`}
             width="40"
             height="40"
           />
@@ -242,7 +246,7 @@ const UserTicketTableByStatus = ({ title, statuses }) => {
           <div className="flex flex-row  items-center justify-start">
             <img
               alt={assignedTo.fullName}
-              src={`http://localhost:8002${assignedTo.profileImageURL}`}
+              src={`http://${baseURL}:${port}${assignedTo.profileImageURL}`}
               width="40"
               height="40"
             />

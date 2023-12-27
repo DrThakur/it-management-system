@@ -19,11 +19,14 @@ const UserView = ({ userId }) => {
   //   phoneNumber: "+1 123-456-7890",
   //   profileImage: "https://example.com/profile.jpg", // Replace with actual image URL
   // };
+  const baseURL = process.env.REACT_APP_BASE_URL
+  const port= process.env.REACT_APP_BACKEND_PORT
+
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`http://localhost:8002/users/${userId}`);
+        const res = await axios.get(`http://${baseURL}:${port}/users/${userId}`);
         console.log("specific user data", res.data);
         setUser(res.data);
       } catch (error) {
@@ -83,7 +86,7 @@ const UserView = ({ userId }) => {
       <div className="w-5/12 pl-8 border-l border-gray-300">
         <div className="flex flex-col items-center space-y-4">
           <img
-            src={`http://localhost:8002${user.profileImageURL}`}
+            src={`http://${baseURL}:${port}${user.profileImageURL}`}
             alt="Profile"
             className="w-48 h-48 rounded-full object-cover"
           />

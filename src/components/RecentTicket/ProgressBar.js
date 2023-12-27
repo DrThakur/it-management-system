@@ -31,11 +31,14 @@ const ProgressBar = ({ user }) => {
     return formattedDate;
   };
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const port = process.env.REACT_APP_BACKEND_PORT;
+
   useEffect(() => {
     const fetchLatestTicket = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8002/ticketByUserId?userId=${user._id}`
+          `http://${baseURL}:${port}/ticketByUserId?userId=${user._id}`
         );
         const latestTicket = res.data[res.data.length - 1]; // Assuming the latest ticket is the first one
         console.log("My Latest Ticket Data", latestTicket);

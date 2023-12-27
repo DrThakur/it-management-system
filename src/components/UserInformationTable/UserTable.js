@@ -40,6 +40,9 @@ const Table = () => {
   const [filters, setFilters] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const port = process.env.REACT_APP_BACKEND_PORT;
+
   const statusBodyTemplate = (user) => {
     console.log("status user", user);
     return (
@@ -54,7 +57,7 @@ const Table = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://localhost:8002/users");
+        const res = await axios.get(`http://${baseURL}:${port}/users`);
         setUsers(res.data);
       } catch (error) {
         console.error("Error", error);
@@ -132,7 +135,7 @@ const Table = () => {
         <div className="flex flex-row items-center justify-start">
           <img
             alt={employee.fullName}
-            src={`http://localhost:8002${employee.profileImageURL}`}
+            src={`http://${baseURL}:${port}${employee.profileImageURL}`}
             width="32"
             height="32"
           />
@@ -495,7 +498,7 @@ const Table = () => {
         <FileUpload
           mode="basic"
           name="file"
-          url="http://localhost:8002/users/importFile"
+          url={`http://${baseURL}:${port}/users/importFile`}
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
           maxFileSize={1000000}
           onUpload={onUpload}

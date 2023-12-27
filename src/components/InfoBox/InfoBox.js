@@ -9,10 +9,13 @@ const InfoBox = ({ categories, title }) => {
   const [tickets, setTickets] = useState([]);
   const navigate = useNavigate();
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const port = process.env.REACT_APP_BACKEND_PORT;
+
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const res = await axios.get(`http://localhost:8002/tickets`);
+        const res = await axios.get(`http://${baseURL}:${port}/tickets`);
         console.log("My Dashboard Ticket Responses", res);
         setTickets(res.data);
       } catch (error) {

@@ -22,6 +22,9 @@ const TicketThread = ({
   //   return members.find((member) => member._id === senderId) || null;
   // };
 
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const port = process.env.REACT_APP_BACKEND_PORT;
+
   return (
     <div className="bg-white rounded-lg h-80 overflow-y-scroll ">
       <div
@@ -32,7 +35,7 @@ const TicketThread = ({
         } `}
       >
         <img
-          src={`http://localhost:8002${ticket.createdBy?.profileImageURL}`}
+          src={`http://${baseURL}:${port}${ticket.createdBy?.profileImageURL}`}
           alt="user avatar"
           className="w-32 h-32 rounded-full ml-3 mt-2"
         />
@@ -67,7 +70,7 @@ const TicketThread = ({
             ref={scrollRef}
           >
             <img
-              src={`http://localhost:8002${message.senderImage}`}
+              src={`http://${baseURL}:${port}${message.senderImage}`}
               alt="user avatar"
               className="w-32 h-32 rounded-full ml-3 mt-2"
             />
