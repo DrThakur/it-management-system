@@ -19,7 +19,7 @@ const Pie = () => {
       }}
     >
       <div className="flex flex-row justify-between items-center mb-2 -mt-2 ">
-        <h1 className="text-xl font-bold ml-1">Tickets Status</h1>
+        <h1 className="text-xl font-bold ml-1">Department Status</h1>
         {/* <button
           className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-400 hover:bg-blue-600 text-white focus:outline-none ml-7"
           onClick={handleToggleContent}
@@ -32,7 +32,7 @@ const Pie = () => {
           <CChart
             type="doughnut"
             data={{
-              labels: ["Open", "Closed", "All", "In Process"],
+              labels: ["HR", "Finance", "R&D", "IT"],
               datasets: [
                 {
                   backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],

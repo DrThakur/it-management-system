@@ -51,7 +51,6 @@ import MyAssignedTickets from "./pages/MyAssignedTickets/MyAssignedTickets";
 import UserAllTicket from "./pages/UserAllTicket/UserAllTicket";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -98,7 +97,7 @@ function App() {
           element={
             user ? (
               <Layout>
-                <InfoBox categories={assetCategory} title="Assets" />
+                <InfoBox categories={assetCategory} title="Employee Corner" />
               </Layout>
             ) : (
               <Login />
@@ -110,7 +109,20 @@ function App() {
           element={
             user ? (
               <Layout>
-                <InfoBox categories={accessoryCategory} title="Accessories" />
+                <InfoBox categories={accessoryCategory} title="Project Management" />
+              </Layout>
+            ) : (
+              <Login />
+            )
+          }
+        />
+
+<Route
+          path="/hroperations"
+          element={
+            user ? (
+              <Layout>
+                <HrDashboard/>
               </Layout>
             ) : (
               <Login />
