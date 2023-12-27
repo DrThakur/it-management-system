@@ -51,6 +51,7 @@ import MyAssignedTickets from "./pages/MyAssignedTickets/MyAssignedTickets";
 import UserAllTicket from "./pages/UserAllTicket/UserAllTicket";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -70,7 +71,7 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/user/forgot-password" element={<ForgotPassword/>}/>
+        <Route path="/user/forgot-password" element={<ForgotPassword />} />
 
         <Route
           path="/"
@@ -109,20 +110,10 @@ function App() {
           element={
             user ? (
               <Layout>
-                <InfoBox categories={accessoryCategory} title="Project Management" />
-              </Layout>
-            ) : (
-              <Login />
-            )
-          }
-        />
-
-<Route
-          path="/hroperations"
-          element={
-            user ? (
-              <Layout>
-                <HrDashboard/>
+                <InfoBox
+                  categories={accessoryCategory}
+                  title="Project Management"
+                />
               </Layout>
             ) : (
               <Login />
